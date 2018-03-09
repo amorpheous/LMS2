@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -18,7 +19,7 @@ namespace LMS2.Models
             { return moduleName; }
             set
             {
-               moduleName =  InitialCapital(value);
+                moduleName = InitialCapital(value);
             }
         }
         protected string moduleName { get; set; }
@@ -26,11 +27,6 @@ namespace LMS2.Models
         [StringLength(200, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Required]
         public string Description { get; set; }
-        
-        //Navigational property
-        [Display(Name = "Course")]
-        public virtual Course Course { get; set; }
-
         [Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
@@ -40,23 +36,19 @@ namespace LMS2.Models
         [Range(1, int.MaxValue, ErrorMessage = "Only positive integers are valid")]
         public int DurationDays { get; set; }
         [Display(Name = "End date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
-        [Display(Name = "Created")]
-        public DateTime CreationTime { get; } = DateTime.Now;
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
         [StringLength(5000, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Display(Name = "Module Info")]
         public string ModuleInfo { get; set; }
-        [Display(Name = "Activities")]
-        public virtual ICollection<Activity> Activities { get; set; }
+        //navigational property
+        public virtual Course Course { get; set; }
+        public virtual ICollection<Activity> Activities {get; set;}
 
         /*        Appendices*/
 
 
-
-
-    //var lägger sådana här så att flera sidor når dem??? fattar inte varför det inte fungerar enkelt
-    public string InitialCapital(string value)
+        public string InitialCapital(string value)
     {
         if (value == null | value.Trim().Length == 0) value = "";
         if (value.Trim().Length > 1)

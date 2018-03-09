@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace LMS2.Models
-{
+namespace LMS.Models
+{nu
     public class Course
     {
         public int Id { get; set; }
@@ -31,7 +31,7 @@ namespace LMS2.Models
         public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
         [Display(Name = "Urgent information")]
         public string UrgentInfo { get; set; }
-
+        
         //Appendices/Documents
 
         public virtual ICollection<ApplicationUser> AttendingStudents { get; set; }
