@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201803090948571_init.Designer.cs">
       <DependentUpon>201803090948571_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803091016482_Seed and validated IndentityModel.cs" />
+    <Compile Include="Migrations\201803091016482_Seed and validated IndentityModel.Designer.cs">
+      <DependentUpon>201803091016482_Seed and validated IndentityModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -313,6 +317,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803090948571_init.resx">
       <DependentUpon>201803090948571_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803091016482_Seed and validated IndentityModel.resx">
+      <DependentUpon>201803091016482_Seed and validated IndentityModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
