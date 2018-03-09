@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,20 +13,37 @@ namespace LMS2.Models
     public class ApplicationUser : IdentityUser
     {
         //public int UserId { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
         public string LastName { get; set; }
+
         public string FullName { get { return FirstName + " " + LastName; } }
+
+        [StringLength(20, ErrorMessage = "Not more than 20 characters long, please")]
         public string NickName { get; set; }
-      //  public string Email { get; set; }
+        //  public string Email { get; set; }
+
+
         public bool? IsActive { get; set; }
+
+
+        [StringLength(200, ErrorMessage = "Additional info can at most be 200 characters long")]
         public string AdditionalInfo { get; set; }
+
+
+        [StringLength(200, ErrorMessage = "Special info can at most be 200 characters long")]
         public string SpecialInfo { get; set; }
 
         public virtual Course Course_ { get; set; }
 
         //fundera på det här
-       // public virtual Roles Role_ { get; set; }
+        // public virtual Roles Role_ { get; set; }
 
+             
 
 
 

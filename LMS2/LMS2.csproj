@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201803090906571_Init.Designer.cs">
       <DependentUpon>201803090906571_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803091016482_Seed and validated IndentityModel.cs" />
+    <Compile Include="Migrations\201803091016482_Seed and validated IndentityModel.Designer.cs">
+      <DependentUpon>201803091016482_Seed and validated IndentityModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -314,6 +318,9 @@
     <EmbeddedResource Include="Migrations\201803090906571_Init.resx">
       <DependentUpon>201803090906571_Init.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803091016482_Seed and validated IndentityModel.resx">
+      <DependentUpon>201803091016482_Seed and validated IndentityModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -329,7 +336,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62187</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
