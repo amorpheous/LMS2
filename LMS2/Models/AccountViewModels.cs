@@ -64,6 +64,21 @@ namespace LMS2.Models
 
     public class RegisterViewModel
     {
+
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get { return FirstName + " " + LastName; } }
+        public string NickName { get; set; }
+        public bool IsActive { get; set; }
+        public string AdditionalInfo { get; set; }
+        public string SpecialInfo { get; set; }
+
+        public virtual Course Course_ { get; set; }
+        public virtual Roles Role_ { get; set; }
+
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
