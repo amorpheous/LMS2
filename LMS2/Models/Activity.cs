@@ -33,8 +33,8 @@ namespace LMS2.Models
         public DateTime StartDate { get; set; }
         [Display(Name = "Duration (days)")]
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Only positive integers are valid")]
-        public int DurationDays { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Only positive values are valid")]
+        public double DurationDays { get; set; }
         [Display(Name = "End date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
