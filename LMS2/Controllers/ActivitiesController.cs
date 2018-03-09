@@ -36,6 +36,7 @@ namespace LMS2.Controllers
         }
 
         // GET: Activities/Create
+
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {

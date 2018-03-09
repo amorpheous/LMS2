@@ -52,9 +52,25 @@ namespace LMS2.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+
+            
+         //   userIdentity.AddClaim(new Claim("FirstName", this.FirstName));
+
+
             return userIdentity;
         }
-        
+
+        //public string GetFirstName(this System.Security.Principal.IPrincipal usr)
+        //{
+        //    var firstNameClaim = ((ClaimsIdentity)usr.Identity).FindFirst("FirstName");
+        //    if (firstNameClaim != null)
+        //        return firstNameClaim.Value;
+        // @using HelperNamespace skall läggas i partiallogin
+
+        //    return "";
+        //}
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
