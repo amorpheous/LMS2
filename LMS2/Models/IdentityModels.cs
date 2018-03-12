@@ -21,7 +21,17 @@ namespace LMS2.Models
         [Display(Name = "First Name")]
         public string LastName { get; set; }
 
-        public string FullName { get { return FirstName + " " + LastName; } }
+        public string FullName
+        {
+            get
+            {
+
+                if (NickName != null && NickName.Length > 0)
+                    return NickName + " " + LastName;
+                else
+                    return FirstName + " " + LastName;
+            }
+        }
 
         [StringLength(20, ErrorMessage = "Not more than 20 characters long, please")]
         public string NickName { get; set; }
