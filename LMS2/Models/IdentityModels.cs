@@ -21,7 +21,17 @@ namespace LMS2.Models
         [Display(Name = "First Name")]
         public string LastName { get; set; }
 
-        public string FullName { get { return FirstName + " " + LastName; } }
+        public string FullName
+        {
+            get
+            {
+
+                if (NickName != null && NickName.Length > 0)
+                    return NickName + " " + LastName;
+                else
+                    return FirstName + " " + LastName;
+            }
+        }
 
         [StringLength(20, ErrorMessage = "Not more than 20 characters long, please")]
         public string NickName { get; set; }
@@ -52,9 +62,25 @@ namespace LMS2.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+
+            
+         //   userIdentity.AddClaim(new Claim("FirstName", this.FirstName));
+
+
             return userIdentity;
         }
-        
+
+        //public string GetFirstName(this System.Security.Principal.IPrincipal usr)
+        //{
+        //    var firstNameClaim = ((ClaimsIdentity)usr.Identity).FindFirst("FirstName");
+        //    if (firstNameClaim != null)
+        //        return firstNameClaim.Value;
+        // @using HelperNamespace skall läggas i partiallogin
+
+        //    return "";
+        //}
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -52,7 +52,7 @@ namespace LMS2.Models
     {
         if (value == null | value.Trim().Length == 0) value = "";
         if (value.Trim().Length > 1)
-        value = value.Trim().Substring(1, 1).ToUpper() + value.Trim().Substring(1, value.Length - 1).ToLower();
+        value = value.Trim().Substring(0, 1).ToUpper() + value.Trim().Substring(1, value.Length - 1).ToLower();
                 else
                 value = value.Trim().ToUpper();
         return value;
