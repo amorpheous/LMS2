@@ -120,215 +120,215 @@ ActivityInfo = "The act of causing a system to stop functioning by gradually red
 
 
 
-//new Activity {
-//ActivityName = "Communism3:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "Communism3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
-//new Activity {
-//ActivityName = "Communism3:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "Communism3:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
-//new Activity {
-//ActivityName = "Communism3:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 31, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-
-
-
-
-
-//new Activity {
-//ActivityName = "SheepFarming1:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 28, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming1:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming1:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-
-
-
-//new Activity {
-//ActivityName = "SheepFarming2:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 01, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming2:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 02, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming2:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 03, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "Communism3:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 31, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
 
 
 
 
-//new Activity {
-//ActivityName = "SheepFarming3:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 28, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+
+new Activity {
+ActivityName = "SheepFarming1:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 28, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming1:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming1:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
 
-//new Activity {
-//ActivityName = "SheepFarming4:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming4:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming4:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 01, 31, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming5:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 05, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming5:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming5:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 07, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "SheepFarming6:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "BerryProduction2:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 05, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "BerryProduction2:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
-
-//new Activity {
-//ActivityName = "BerryProduction2:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
 
 
-//new Activity {
-//ActivityName = "BerryProduction3:1",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "SheepFarming2:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 01, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
-//new Activity {
-//ActivityName = "BerryProduction3:2",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "SheepFarming2:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 02, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
-//new Activity {
-//ActivityName = "BerryProduction3:3",
-//Description = "Lecture: ",
-//StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
-//DurationDays = (2/6+1/24),
-//ActivityInfo = ""},
+new Activity {
+ActivityName = "SheepFarming2:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 03, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+
+
+
+
+new Activity {
+ActivityName = "SheepFarming3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 28, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+
+new Activity {
+ActivityName = "SheepFarming4:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 29, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming4:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 30, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming4:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 01, 31, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming5:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 05, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming5:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming5:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 07, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "SheepFarming6:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "BerryProduction2:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 05, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "BerryProduction2:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "BerryProduction2:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 06, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+
+new Activity {
+ActivityName = "BerryProduction3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 19, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "BerryProduction3:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 20, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
+
+new Activity {
+ActivityName = "BerryProduction3:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 02, 21, 8, 0, 0),
+DurationDays = (2/6+1/24),
+ActivityInfo = " "},
 
             };
 
