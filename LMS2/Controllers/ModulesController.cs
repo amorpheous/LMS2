@@ -39,6 +39,7 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
+            ViewBag.Create = new SelectList(db.Courses.ToList(), "Course", "CourseName");
             return View();
         }
 
