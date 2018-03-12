@@ -136,7 +136,7 @@ namespace LMS2.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = Roles.Teacher)]
         public ActionResult Register()
         {
             return View();
@@ -145,7 +145,7 @@ namespace LMS2.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
