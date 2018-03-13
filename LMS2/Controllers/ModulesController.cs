@@ -38,17 +38,17 @@ namespace LMS2.Controllers
             else if (searchBy == "StartYear")
             {
                 return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else if (searchBy == "Duration")
             {
                 return View(modules.OrderBy(v => v.DurationDays).Where(v => v.DurationDays.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else if (searchBy == "CourseName")
             {
                 return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else
             {
@@ -96,7 +96,7 @@ namespace LMS2.Controllers
                         break;
                 }
 
-                return View(modules.ToList().ToPagedList(page ?? 1, 10));
+                return View(modules.ToList().ToPagedList(page ?? 1, 25));
             }
 }
 

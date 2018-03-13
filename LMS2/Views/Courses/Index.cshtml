@@ -1,4 +1,14 @@
-﻿@model IEnumerable<LMS2.Models.Course>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+<script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+
+@model IEnumerable<LMS2.Models.Course>
 
 @{
     ViewBag.Title = "Index";
@@ -7,8 +17,8 @@
 <h2>Index</h2>
 
 @Html.ActionLink("Present/Future", "Index", new { id = 0 }) |
-@Html.ActionLink("Past", "Index", new { id = 1 }) |
-@Html.ActionLink("All", "Index", new { id = 2 })
+@Html.ActionLink("Past", "Index", new { id = 2 }) |
+@Html.ActionLink("All", "Index", new { id = 3 })
 
 <p>
 
@@ -41,7 +51,7 @@
     {
         <tr class="btn-success">
             <td>
-               <b>(C)</b> @Html.DisplayFor(modelItem => item.CourseName)
+                <b>(C)</b> @Html.DisplayFor(modelItem => item.CourseName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -62,18 +72,18 @@
 
             <td>
                 @if (User.IsInRole("Teacher"))
-    {
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) <span>|</span>
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span>|</span>
-            @Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id },null)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span>|</span>
+                    @Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)
 
-}
+                }
 
                 @if (User.IsInRole("Student"))
-    {
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
-}
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                }
 
             </td>
         </tr>
@@ -129,18 +139,34 @@
                         @Html.DisplayFor(modelItem => item3.ActivityInfo)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null) |
-                        @Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
+                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null) |
+                        @Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)
                     </td>
 
                 </tr>
+
+
+
             }
 
         }
 
+        <tr>
+            <td></td>
+        </tr>
 
 
     }
 
-    </table>
+</table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
+{
+    page
+    //searchBy = Request.QueryString["searchBy"]
+    //search = Request.QueryString["search"]
+    //Display = PagedListDisplayMode.IfNeeded,
+    //DisplayItemSliceAndTotal = true
+}))
+

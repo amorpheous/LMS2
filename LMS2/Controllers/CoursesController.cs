@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS2.Models;
+using PagedList;
 
 namespace LMS2.Controllers
 {
@@ -15,14 +16,16 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             if (id==null|id==0)
-            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
             else if (id == 1)
-            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+                return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+            else if (id == 2)
+            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
             else
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
 
         }
 
