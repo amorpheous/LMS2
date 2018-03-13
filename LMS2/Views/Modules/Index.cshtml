@@ -72,34 +72,79 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.CourseName) (@Html.DisplayFor(modelItem => item.Course.StartDate))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModuleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationDays)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModuleInfo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-    }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName) (@Html.DisplayFor(modelItem => item.Course.StartDate))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DurationDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleInfo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>        
+            <tr>
+                @foreach (var item2 in item.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName))
+        {
+            <tr class="alert-danger">
+                <td>
+                    @Html.DisplayFor(modelItem => item2.ActivityType.ActivityTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.ActivityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.DurationDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.ActivityInfo)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+}
 
-</table>
+
+
+                </tr>
+                }
+
+            </table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
+{
+    page
+    //searchBy = Request.QueryString["searchBy"]
+    //search = Request.QueryString["search"]
+    //Display = PagedListDisplayMode.IfNeeded,
+    //DisplayItemSliceAndTotal = true
+}))

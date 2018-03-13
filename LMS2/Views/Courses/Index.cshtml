@@ -6,7 +6,12 @@
 
 <h2>Index</h2>
 
+@Html.ActionLink("Present/Future", "Index", new { id = 0 }) |
+@Html.ActionLink("Past", "Index", new { id = 1 }) |
+@Html.ActionLink("All", "Index", new { id = 2 })
+
 <p>
+
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -32,43 +37,44 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationDays)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UrgentInfo)
-        </td>
-
-
-        <td>
-            @if (User.IsInRole("Teacher"))
+    @foreach (var item in Model)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) <span>|</span>
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-}
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DurationDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrgentInfo)
+            </td>
 
-            @if (User.IsInRole("Student"))
-    {
-        @Html.ActionLink("Details", "Details", new { id = item.Id })
-}
 
-        </td>
-    </tr>
-}
+            <td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+
+                @if (User.IsInRole("Student"))
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                }
+
+            </td>
+        </tr>
+    }
 
 </table>

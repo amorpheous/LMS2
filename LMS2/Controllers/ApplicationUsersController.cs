@@ -17,7 +17,10 @@ namespace LMS2.Controllers
         // GET: ApplicationUsers
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+
+            //            return View(db.Users.OrderBy(x => x.Course_.StartDate).ThenBy(x => x.Course_.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FullName).ThenBy(x => x.FirstName).ToList());
+
+            return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x=>x.Email).ToList());
         }
 
         // GET: ApplicationUsers/Details/5
