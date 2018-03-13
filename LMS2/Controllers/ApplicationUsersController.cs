@@ -10,125 +10,115 @@ using LMS2.Models;
 
 namespace LMS2.Controllers
 {
-    public class ActivitiesController : Controller
+    public class ApplicationUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Activities
+        // GET: ApplicationUsers
         public ActionResult Index()
         {
-            return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName).ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Activities/Details/5
-        public ActionResult Details(int? id)
+        // GET: ApplicationUsers/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
-            if (activity == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(activity);
+            return View(applicationUser);
         }
 
-        // GET: Activities/Create
-
+        // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
-            return View(ViewModel);
+            return View();
         }
 
-        // POST: Activities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = Roles.Teacher)]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Activities.Add(activity);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
-
-            return View(activity);
-        }
-
-        // GET: Activities/Edit/5
-        [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit(int? id)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activity activity = db.Activities.Find(id);
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
-
-            if (activity == null)
-            {
-                return HttpNotFound();
-            }
-            return View(activity);
-        }
-
-        // POST: Activities/Edit/5
+        // POST: ApplicationUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
         {
+
+           
             if (ModelState.IsValid)
             {
-                db.Entry(activity).State = EntityState.Modified;
+                applicationUser.UserName = applicationUser.Email;
+                db.Users.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
-
-            return View(activity);
+            return View(applicationUser);
         }
 
-        // GET: Activities/Delete/5
-        [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Delete(int? id)
+        // GET: ApplicationUsers/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
-            if (activity == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(activity);
+            return View(applicationUser);
         }
 
-        // POST: Activities/Delete/5
+        // POST: ApplicationUsers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
+        {
+            if (ModelState.IsValid)
+            {
+                applicationUser.UserName = applicationUser.Email;
+                db.Entry(applicationUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(applicationUser);
+        }
+
+        // GET: ApplicationUsers/Delete/5
+        [Authorize(Roles = Roles.Teacher)]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(applicationUser);
+        }
+
+        // POST: ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult DeleteConfirmed(int id)
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
         {
-            Activity activity = db.Activities.Find(id);
-            db.Activities.Remove(activity);
+            ApplicationUser applicationUser = db.Users.Find(id);
+            db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
