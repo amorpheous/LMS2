@@ -117,12 +117,19 @@ namespace LMS2.Controllers
 
         // GET: Modules/Create
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create()
+        public ActionResult Create(string CourseId)
         {
             //ViewBag.Course = db.Courses.ToList();
             // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             var ViewModel = new Module { Courses = db.Courses.ToList() };
-
+            bool r2c = false;
+            if (CourseId == null)
+            {
+                CourseId = "0";
+                r2c = true;
+            }
+            ViewBag.CourseId = CourseId;
+            ViewModel.CourseId = int.Parse(CourseId);
             return View(ViewModel);
         }
 
@@ -139,7 +146,8 @@ namespace LMS2.Controllers
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("Index","Courses");
             }
             module.Courses = db.Courses.ToList();
 
@@ -179,7 +187,7 @@ namespace LMS2.Controllers
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
            
             module.Courses = db.Courses.ToList();
@@ -212,7 +220,7 @@ namespace LMS2.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Courses");
         }
 
         protected override void Dispose(bool disposing)

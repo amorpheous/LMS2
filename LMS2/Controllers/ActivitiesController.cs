@@ -56,7 +56,7 @@ namespace LMS2.Controllers
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
             activity.Modules = db.Modules.ToList();
             activity.ActivityTypes = db.ActivityTypes.ToList();
@@ -96,7 +96,7 @@ namespace LMS2.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
 
             activity.Modules = db.Modules.ToList();
@@ -130,7 +130,7 @@ namespace LMS2.Controllers
             Activity activity = db.Activities.Find(id);
             db.Activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Courses");
         }
 
         protected override void Dispose(bool disposing)
