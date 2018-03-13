@@ -10,130 +10,115 @@ using LMS2.Models;
 
 namespace LMS2.Controllers
 {
-    public class CoursesController : Controller
+    public class ApplicationUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Courses
-        public ActionResult Index(int? id)
+        // GET: ApplicationUsers
+        public ActionResult Index()
         {
-            if (id==null)
-            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
-            else if (id == 0)
-            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
-            else
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
-
+            return View(db.Users.ToList());
         }
 
-
-        //public ActionResult StudentCourse(int userId)
-        public ActionResult StudentCourse()
-        {
-            //var user = db.Users.Find(userId);
-            //var course = db.Courses.Find(user.CourseId);
-            var course = db.Courses.FirstOrDefault();
-            return View(course);
-        }
-
-        // GET: Courses/Details/5
-        public ActionResult Details(int? id)
+        // GET: ApplicationUsers/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(applicationUser);
         }
 
-        // GET: Courses/Create
-
+        // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Courses/Create
+        // POST: ApplicationUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
         {
+
+           
             if (ModelState.IsValid)
             {
-                db.Courses.Add(course);
+                applicationUser.UserName = applicationUser.Email;
+                db.Users.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(applicationUser);
         }
 
-        // GET: Courses/Edit/5
-        [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit(int? id)
+        // GET: ApplicationUsers/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(applicationUser);
         }
 
-        // POST: Courses/Edit/5
+        // POST: ApplicationUsers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
+                applicationUser.UserName = applicationUser.Email;
+                db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(course);
+            return View(applicationUser);
         }
 
-        // GET: Courses/Delete/5
+        // GET: ApplicationUsers/Delete/5
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(applicationUser);
         }
 
-        // POST: Courses/Delete/5
-        [Authorize(Roles = Roles.Teacher)]
+        // POST: ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
+            ApplicationUser applicationUser = db.Users.Find(id);
+            db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

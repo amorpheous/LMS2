@@ -1,10 +1,37 @@
-﻿@model IEnumerable<LMS2.Models.Module>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+<script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@model IEnumerable<LMS2.Models.Module>
+
+<form method="get">
+
+    <div class="table-bordered">
+
+        <b>@Html.RadioButton("searchBy", "StartYear", true) <text>Start year</text></b>
+        <b>@Html.RadioButton("searchBy", "ModuleName") <text>Module name</text></b>
+        <b>@Html.RadioButton("searchBy", "CourseName") <text>Course name</text></b>
+        <b>@Html.RadioButton("searchBy", "Duration") <text>Duration</text></b>
+        <br />
+    </div>
+
+    <div class=table-responsive>
+        @Html.TextBox("search")<input type="submit" value="Search" />
+    </div>
+
+</form>
+
+
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Module list";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title </h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,28 +39,43 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+
+        </th>
+
+        <th>
             @Html.DisplayNameFor(model => model.ModuleName)
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.ModuleNameSortParm })
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.DescriptionSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.StartDateSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DurationDays)
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.DurationSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ModuleInfo)
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.ModuleInfoSortParm })
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName) (@Html.DisplayFor(modelItem => item.Course.StartDate))
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ModuleName)
         </td>
@@ -53,11 +95,11 @@
             @Html.DisplayFor(modelItem => item.ModuleInfo)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
-}
+    }
 
 </table>

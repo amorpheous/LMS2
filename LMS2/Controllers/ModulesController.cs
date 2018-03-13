@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS2.Models;
+using PagedList;
 
 namespace LMS2.Controllers
 {
@@ -15,10 +16,91 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
-        public ActionResult Index()
+        public ActionResult Index(string searchBy, string search, int? page, string sortOrder)
         {
-            return View(db.Modules.ToList());
-        }
+
+            //ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "ParkingSlot_desc" : "ParkingSlot";
+            ViewBag.StartDateSortParm = sortOrder == "StartDate" ? "StartDate_desc" : "StartDate";
+            ViewBag.ModuleNameSortParm = sortOrder == "ModuleName" ? "ModuleName_desc" : "ModuleName";
+            ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
+            ViewBag.ModuleInfoSortParm = sortOrder == "ModuleInfo" ? "ModuleInfo_desc" : "ModuleInfo";
+            ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_desc" : "Description";
+
+            var modules = db.Modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName).AsQueryable();
+
+
+
+
+            if (searchBy == "ModuleName")
+            {
+                // listsearch
+                return View(modules.OrderBy(v => v.ModuleName).Where(v => v.ModuleName.ToString().Contains(search)
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
+            }
+            else if (searchBy == "StartYear")
+            {
+                return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
+                || search == null).ToList().ToPagedList(page ?? 1, 10));
+            }
+            else if (searchBy == "Duration")
+            {
+                return View(modules.OrderBy(v => v.DurationDays).Where(v => v.DurationDays.ToString().Contains(search)
+                || search == null).ToList().ToPagedList(page ?? 1, 10));
+            }
+            else if (searchBy == "CourseName")
+            {
+                return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
+                || search == null).ToList().ToPagedList(page ?? 1, 10));
+            }
+            else
+            {
+                switch (sortOrder)
+                {
+                    case "StartDate_desc":
+                        modules = modules.OrderByDescending(s => s.StartDate);
+                        break;
+                    case "StartDate":
+                        modules = modules.OrderBy(s => s.StartDate);
+                        break;
+                    case "ModuleName_desc":
+                        modules = modules.OrderByDescending(s => s.ModuleName);
+                        break;
+                    case "ModuleName":
+                        modules = modules.OrderBy(s => s.ModuleName);
+                        break;
+
+                    case "Duration_desc":
+                        modules = modules.OrderByDescending(s => s.DurationDays);
+                        break;
+                    case "Duration":
+                        modules = modules.OrderBy(s => s.DurationDays);
+                        break;
+                    case "Description_desc":
+                        modules = modules.OrderByDescending(s => s.Description);
+                        break;
+                    case "Description":
+                        modules = modules.OrderBy(s => s.Description);
+                        break;
+                    case "ModuleInfo_desc":
+                        modules = modules.OrderByDescending(s => s.ModuleInfo);
+                        break;
+                    case "ModuleInfo":
+                        modules = modules.OrderBy(s => s.ModuleInfo);
+                        break;
+                    case "CourseName_desc":
+                        modules = modules.OrderByDescending(s => s.Course.CourseName);
+                        break;
+                    case "CourseName":
+                        modules = modules.OrderBy(s => s.Course.CourseName);
+                        break;
+                    default:
+                        modules = modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName);
+                        break;
+                }
+
+                return View(modules.ToList().ToPagedList(page ?? 1, 10));
+            }
+}
 
         // GET: Modules/Details/5
         public ActionResult Details(int? id)
@@ -39,9 +121,11 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            ViewBag.Course = db.Courses.ToList();
-           // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
-            return View();
+            //ViewBag.Course = db.Courses.ToList();
+            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
+            var ViewModel = new Module { Courses = db.Courses.ToList() };
+
+            return View(ViewModel);
         }
 
         // POST: Modules/Create
@@ -59,8 +143,7 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Course = db.Courses;
+            module.Courses = db.Courses.ToList();
 
             return View(module);
         }
@@ -69,13 +152,14 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
-            ViewBag.Course = db.Courses;
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            module.Courses = db.Courses.ToList();
+
             if (module == null)
             {
                 return HttpNotFound();
@@ -99,7 +183,8 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Course = db.Courses;
+           
+            module.Courses = db.Courses.ToList();
 
             return View(module);
         }

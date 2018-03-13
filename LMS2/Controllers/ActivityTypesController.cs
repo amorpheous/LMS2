@@ -17,7 +17,7 @@ namespace LMS2.Controllers
         // GET: ActivityTypes
         public ActionResult Index()
         {
-            return View(db.ActivityTypes.ToList());
+            return View(db.ActivityTypes.OrderBy(x => x.ActivityTypeName).ToList());
         }
 
         // GET: ActivityTypes/Details/5
