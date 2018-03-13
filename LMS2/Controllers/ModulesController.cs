@@ -29,8 +29,6 @@ namespace LMS2.Controllers
             var modules = db.Modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName).AsQueryable();
 
 
-
-
             if (searchBy == "ModuleName")
             {
                 // listsearch
