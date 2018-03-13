@@ -17,9 +17,9 @@ namespace LMS2.Controllers
         // GET: Courses
         public ActionResult Index(int? id)
         {
-            if (id==null)
+            if (id==null|id==0)
             return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
-            else if (id == 0)
+            else if (id == 1)
             return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
             else
             return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
