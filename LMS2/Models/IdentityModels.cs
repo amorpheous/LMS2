@@ -37,10 +37,8 @@ namespace LMS2.Models
         public string NickName { get; set; }
         //  public string Email { get; set; }
 
-        protected bool isActive;
         [Display(Name = "Is the user active?")]
-        public bool IsActive { get { return isActive; } set { if (value == null || value == true) isActive = true; else isActive = false; ; } }
-
+        public bool IsActive { get; set; }
 
         [Display(Name = "About me")]
         [StringLength(200, ErrorMessage = "Additional info can at most be 200 characters long")]
