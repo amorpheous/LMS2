@@ -199,17 +199,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803121401472_Init.cs" />
-    <Compile Include="Migrations\201803121401472_Init.Designer.cs">
-      <DependentUpon>201803121401472_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201803121502441_1.cs" />
+    <Compile Include="Migrations\201803121502441_1.Designer.cs">
+      <DependentUpon>201803121502441_1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803121422504_Init2.cs" />
-    <Compile Include="Migrations\201803121422504_Init2.Designer.cs">
-      <DependentUpon>201803121422504_Init2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803121432475_Init3.cs" />
-    <Compile Include="Migrations\201803121432475_Init3.Designer.cs">
-      <DependentUpon>201803121432475_Init3.cs</DependentUpon>
+    <Compile Include="Migrations\201803130819586_2.cs" />
+    <Compile Include="Migrations\201803130819586_2.Designer.cs">
+      <DependentUpon>201803130819586_2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -319,14 +315,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803121401472_Init.resx">
-      <DependentUpon>201803121401472_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803121502441_1.resx">
+      <DependentUpon>201803121502441_1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803121422504_Init2.resx">
-      <DependentUpon>201803121422504_Init2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803121432475_Init3.resx">
-      <DependentUpon>201803121432475_Init3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803130819586_2.resx">
+      <DependentUpon>201803130819586_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

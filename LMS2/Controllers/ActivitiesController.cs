@@ -40,13 +40,8 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-
-            ViewBag.Module = db.Modules;
-            ViewBag.ActivityType = db.ActivityTypes;
-
-
-
-            return View();
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
+            return View(ViewModel);
         }
 
         // POST: Activities/Create
@@ -63,8 +58,8 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Module = db.Modules;
-            ViewBag.ActivityType = db.ActivityTypes;
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }
@@ -74,14 +69,14 @@ namespace LMS2.Controllers
         public ActionResult Edit(int? id)
         {
 
-            ViewBag.Module = db.Modules;
-            ViewBag.ActivityType = db.ActivityTypes;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Activity activity = db.Activities.Find(id);
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
+
             if (activity == null)
             {
                 return HttpNotFound();
@@ -103,8 +98,9 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Module = db.Modules;
-            ViewBag.ActivityType = db.ActivityTypes;
+
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }
