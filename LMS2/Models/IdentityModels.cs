@@ -48,12 +48,14 @@ namespace LMS2.Models
         [StringLength(200, ErrorMessage = "Special info can at most be 200 characters long")]
         public string SpecialInfo { get; set; }
 
-        public virtual Course Course_ { get; set; }
+        public virtual Course Course { get; set; }
+
+        public int? CourseId { get; set; }
 
         //fundera på det här
         // public virtual Roles Role_ { get; set; }
 
-             
+
 
 
 

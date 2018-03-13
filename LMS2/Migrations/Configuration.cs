@@ -460,14 +460,14 @@ ActivityInfo = " ",
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             var originalUsers = new[] {
-                new ApplicationUser {  FirstName = "Georgios", LastName = "Rastapopulous" , Email = "badguy@tintin.com", NickName = "Archvillain", UserName = "badguy@tintin.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "SheepFarming")},
-                new ApplicationUser {  FirstName = "Francois", LastName = "Haddock" , Email = "kapten@tintin.com", NickName = "Kapten", UserName = "kapten@tintin.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "SheepFarming")},
-                new ApplicationUser {  FirstName = "Karl", LastName = "Kalkyl", Email = "kalkyl@tintin.com", NickName = "Professorn", UserName = "kalkyl@tintin.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "Communism")},
-                new ApplicationUser {  FirstName = "Johannes", LastName = "Gabrielsson", Email = "johannes@gmail.com", NickName = "The Worm", UserName = "johannes@gmail.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "Communism")},
-                new ApplicationUser {  FirstName = "Rikard", LastName = "Nyström", Email = "LittleBunny@uu.se", NickName = "Dog with rabies", UserName = "LittleBunny@uu.se", Course_ = courses.SingleOrDefault(c => c.CourseName == "Communism")},
-                new ApplicationUser {  FirstName = "William", LastName = "Smith", Email = "VilleViking@live.se", NickName = "Tjommen", UserName = "VilleViking@live.se", Course_ = courses.SingleOrDefault(c => c.CourseName == "BerryProduction")},
-                new ApplicationUser {  FirstName = "Anna", LastName = "Holmström", Email = "Anna_Virrpanna@gmail.com", NickName = "Please help me", UserName = "Anna_Virrpanna@gmail.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "BerryProduction")},
-                new ApplicationUser {  FirstName = "Fredrik", LastName = "Nyqvist", Email = "lapinkultaMums@gmail.com", NickName = "Mamas Boy", UserName = "lapinkultaMums@gmail.com", Course_ = courses.SingleOrDefault(c => c.CourseName == "BerryProduction")},
+                new ApplicationUser {  FirstName = "Georgios", LastName = "Rastapopulous" , Email = "badguy@tintin.com", NickName = "Archvillain", UserName = "badguy@tintin.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
+                new ApplicationUser {  FirstName = "Francois", LastName = "Haddock" , Email = "kapten@tintin.com", NickName = "Kapten", UserName = "kapten@tintin.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
+                new ApplicationUser {  FirstName = "Karl", LastName = "Kalkyl", Email = "kalkyl@tintin.com", NickName = "Professorn", UserName = "kalkyl@tintin.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "Johannes", LastName = "Gabrielsson", Email = "johannes@gmail.com", NickName = "The Worm", UserName = "johannes@gmail.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "Rikard", LastName = "Nyström", Email = "LittleBunny@uu.se", NickName = "Dog with rabies", UserName = "LittleBunny@uu.se", CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "William", LastName = "Smith", Email = "VilleViking@live.se", NickName = "Tjommen", UserName = "VilleViking@live.se", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Anna", LastName = "Holmström", Email = "Anna_Virrpanna@gmail.com", NickName = "Please help me", UserName = "Anna_Virrpanna@gmail.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Fredrik", LastName = "Nyqvist", Email = "lapinkultaMums@gmail.com", NickName = "Mamas Boy", UserName = "lapinkultaMums@gmail.com", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
             };
 
 
@@ -488,7 +488,7 @@ ActivityInfo = " ",
 
             var originalTeachers = new[] {
                 new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe", UserName = "zano@lexicon.se"},
-                 new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se"}
+                new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se"}
                             };
 
 
