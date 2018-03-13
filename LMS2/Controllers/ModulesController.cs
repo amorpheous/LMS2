@@ -39,7 +39,8 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
+            ViewBag.Course = db.Courses.ToList();
+           // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             return View();
         }
 
@@ -49,14 +50,17 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,EndDate,CreationTime,ModuleInfo")] Module module)
+        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
         {
+
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Course = db.Courses;
 
             return View(module);
         }
@@ -65,6 +69,8 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
+            ViewBag.Course = db.Courses;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,14 +89,18 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,EndDate,CreationTime,ModuleInfo")] Module module)
+        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Course = db.Courses;
+
             return View(module);
         }
 

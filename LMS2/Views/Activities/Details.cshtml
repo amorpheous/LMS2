@@ -50,7 +50,26 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 
- 
+        <dt>
+            @Html.DisplayNameFor(model => model.Module)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Module.ModuleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityType.ActivityTypeName)
+        </dd>
+
+
+
+
+
         <dt>
             @Html.DisplayNameFor(model => model.ActivityInfo)
         </dt>
