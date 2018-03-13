@@ -48,6 +48,9 @@ namespace LMS2.Models
         public string ModuleInfo { get; set; }
 
         public int CourseId { get; set; }
+        public IEnumerable<Course> Courses { get; set; }
+       
+
         //navigational property
         public virtual Course Course { get; set; }
         public virtual ICollection<Activity> Activities {get; set;}

@@ -39,9 +39,11 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            ViewBag.Course = db.Courses.ToList();
-           // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
-            return View();
+            //ViewBag.Course = db.Courses.ToList();
+            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
+            var ViewModel = new Module { Courses = db.Courses.ToList() };
+
+            return View(ViewModel);
         }
 
         // POST: Modules/Create
@@ -59,8 +61,7 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Course = db.Courses;
+            module.Courses = db.Courses.ToList();
 
             return View(module);
         }
@@ -69,13 +70,14 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
-            ViewBag.Course = db.Courses;
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            module.Courses = db.Courses.ToList();
+
             if (module == null)
             {
                 return HttpNotFound();
@@ -99,7 +101,8 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Course = db.Courses;
+           
+            module.Courses = db.Courses.ToList();
 
             return View(module);
         }
