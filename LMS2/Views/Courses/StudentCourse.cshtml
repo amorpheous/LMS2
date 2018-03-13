@@ -65,7 +65,7 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.AttendingStudents)
+                @foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
                 {
                 <tr>
                     <td>
