@@ -52,8 +52,6 @@ namespace LMS2.Models
 
         public int? CourseId { get; set; }
 
-        public int? CourseId { get; set; }
-
         //fundera på det här
         // public virtual Roles Role_ { get; set; }
 
