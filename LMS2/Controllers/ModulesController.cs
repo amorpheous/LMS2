@@ -17,7 +17,7 @@ namespace LMS2.Controllers
         // GET: Modules
         public ActionResult Index()
         {
-            return View(db.Modules.ToList());
+            return View(db.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.ModuleName).ToList());
         }
 
         // GET: Modules/Details/5

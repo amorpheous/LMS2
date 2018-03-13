@@ -17,7 +17,7 @@ namespace LMS2.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            return View(db.Activities.ToList());
+            return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName).ToList());
         }
 
         // GET: Activities/Details/5

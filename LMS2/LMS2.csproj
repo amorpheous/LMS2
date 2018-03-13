@@ -211,6 +211,22 @@
     <Compile Include="Migrations\201803121432475_Init3.Designer.cs">
       <DependentUpon>201803121432475_Init3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803131006105_Init4.cs" />
+    <Compile Include="Migrations\201803131006105_Init4.Designer.cs">
+      <DependentUpon>201803131006105_Init4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803131037420_Init5.cs" />
+    <Compile Include="Migrations\201803131037420_Init5.Designer.cs">
+      <DependentUpon>201803131037420_Init5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803131039584_Init6.cs" />
+    <Compile Include="Migrations\201803131039584_Init6.Designer.cs">
+      <DependentUpon>201803131039584_Init6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803131043310_Init7.cs" />
+    <Compile Include="Migrations\201803131043310_Init7.Designer.cs">
+      <DependentUpon>201803131043310_Init7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -327,6 +343,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803121432475_Init3.resx">
       <DependentUpon>201803121432475_Init3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131006105_Init4.resx">
+      <DependentUpon>201803131006105_Init4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131037420_Init5.resx">
+      <DependentUpon>201803131037420_Init5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131039584_Init6.resx">
+      <DependentUpon>201803131039584_Init6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131043310_Init7.resx">
+      <DependentUpon>201803131043310_Init7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

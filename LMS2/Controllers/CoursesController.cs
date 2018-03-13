@@ -15,10 +15,17 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Courses.ToList());
+            if (id==null)
+            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            else if (id == 0)
+            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            else
+            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+
         }
+
 
         //public ActionResult StudentCourse(int userId)
         public ActionResult StudentCourse()

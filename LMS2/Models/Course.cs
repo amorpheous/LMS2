@@ -28,9 +28,23 @@ namespace LMS2.Models
         public int DurationDays { get; set; }
         [Display(Name = "End date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
+        public DateTime EndDate
+        { get { return StartDate.AddDays(DurationDays - 1); } }
         [Display(Name = "Urgent information")]
         public string UrgentInfo { get; set; }
+        protected bool historic;
+        public bool Historic
+        {
+            get {
+                return historic; }
+            set
+            {
+                if (EndDate < DateTime.Now.Date)
+                    historic = true;
+                else historic = false;
+            }
+        }
+
 
         //Appendices/Documents
 
