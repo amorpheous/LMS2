@@ -26,13 +26,10 @@ namespace LMS2.Controllers
 
         }
 
-
-        //public ActionResult StudentCourse(int userId)
         public ActionResult StudentCourse()
         {
-            //var user = db.Users.Find(userId);
-            //var course = db.Courses.Find(user.CourseId);
-            var course = db.Courses.FirstOrDefault();
+            var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+            var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
             return View(course);
         }
 
