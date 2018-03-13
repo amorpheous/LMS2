@@ -40,6 +40,12 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
+
+            ViewBag.Module = db.Modules;
+            ViewBag.ActivityType = db.ActivityTypes;
+
+
+
             return View();
         }
 
@@ -49,7 +55,7 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ActivityType,Description,StartDate,DurationDays,EndDate,CreationTime,ActivityInfo")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +63,8 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Module = db.Modules;
+            ViewBag.ActivityType = db.ActivityTypes;
 
             return View(activity);
         }
@@ -65,6 +73,10 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
+
+            ViewBag.Module = db.Modules;
+            ViewBag.ActivityType = db.ActivityTypes;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,7 +95,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ActivityType,Description,StartDate,DurationDays,EndDate,CreationTime,ActivityInfo")] Activity activity)
+        public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +103,9 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Module = db.Modules;
+            ViewBag.ActivityType = db.ActivityTypes;
+
             return View(activity);
         }
 

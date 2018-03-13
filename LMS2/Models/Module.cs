@@ -46,7 +46,8 @@ namespace LMS2.Models
         [StringLength(5000, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Display(Name = "Module Info")]
         public string ModuleInfo { get; set; }
-        
+
+        public int CourseId { get; set; }
         //navigational property
         public virtual Course Course { get; set; }
         public virtual ICollection<Activity> Activities {get; set;}
