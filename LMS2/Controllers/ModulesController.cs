@@ -39,7 +39,11 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            return View();
+            //ViewBag.Course = db.Courses.ToList();
+            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
+            var ViewModel = new Module { Courses = db.Courses.ToList() };
+
+            return View(ViewModel);
         }
 
         // POST: Modules/Create
@@ -48,14 +52,16 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,EndDate,CreationTime,ModuleInfo")] Module module)
+        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
         {
+
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            module.Courses = db.Courses.ToList();
 
             return View(module);
         }
@@ -64,11 +70,14 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            module.Courses = db.Courses.ToList();
+
             if (module == null)
             {
                 return HttpNotFound();
@@ -82,14 +91,19 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,EndDate,CreationTime,ModuleInfo")] Module module)
+        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
+            module.Courses = db.Courses.ToList();
+
             return View(module);
         }
 

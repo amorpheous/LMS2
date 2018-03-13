@@ -10,6 +10,7 @@ namespace LMS2.Models
     public class Activity
     {
         public int Id { get; set; }
+
         [StringLength(50, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Display(Name = "Activity name")]
         [Required]
@@ -27,25 +28,35 @@ namespace LMS2.Models
         [StringLength(200, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Required]
         public string Description { get; set; }
+
         [Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime StartDate { get; set; }
+
         [Display(Name = "Duration (days)")]
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Only positive values are valid")]
         public double DurationDays { get; set; }
+
         [Display(Name = "End date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
+
         [StringLength(5000, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Display(Name = "Module Info")]
         public string ActivityInfo { get; set; }
+        
         //navigational property
-       public virtual Module Module { get; set; }
-       //   Appendices
-        public ActivityType ActivityType { get; set; }
-       
+        public int ModuleId { get; set; }
+        public virtual Module Module { get; set; }
+        public IEnumerable<Module> Modules { get; set; }
+
+        //   Appendices
+        public int ActivityTypeId { get; set; }
+        public virtual ActivityType ActivityType { get; set; }
+        public IEnumerable<ActivityType> ActivityTypes { get; set; }
+
 
         public string InitialCapital(string value)
     {

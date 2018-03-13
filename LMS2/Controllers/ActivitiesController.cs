@@ -40,7 +40,8 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            return View();
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
+            return View(ViewModel);
         }
 
         // POST: Activities/Create
@@ -49,7 +50,7 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ActivityType,Description,StartDate,DurationDays,EndDate,CreationTime,ActivityInfo")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +58,8 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }
@@ -65,11 +68,15 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Activity activity = db.Activities.Find(id);
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
+
             if (activity == null)
             {
                 return HttpNotFound();
@@ -83,7 +90,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ActivityType,Description,StartDate,DurationDays,EndDate,CreationTime,ActivityInfo")] Activity activity)
+        public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +98,10 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            activity.Modules = db.Modules.ToList();
+            activity.ActivityTypes = db.ActivityTypes.ToList();
+
             return View(activity);
         }
 
