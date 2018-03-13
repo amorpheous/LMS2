@@ -58,7 +58,18 @@ namespace LMS2.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            //if (User.IsInRole("Teacher"))
+            //{
+
+            //    return View("TeacherLogin");
+            //}
+
+            //else if (User.IsInRole("Student"))
+            //{
+            //    return View("StudentLogin");
+            //}
+            //else
+                return View();
         }
 
         //
@@ -152,7 +163,7 @@ namespace LMS2.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
-                    FirstName = model.FirstName, LastName = model.LastName
+                    FirstName = model.FirstName, LastName = model.LastName, IsActive = true
                      };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

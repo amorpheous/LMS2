@@ -13,11 +13,27 @@ namespace LMS2
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+           // routes.MapRoute(
+           //     "TeacherLogin",                           // Route name
+           //     "Home/{Index}",                            // URL with parameters
+           //     new { controller = "Courses", action = "Index" }  // Parameter defaults
+           // );
+
+           // routes.MapRoute(
+           //    "StudentLogin",                           // Route name
+           //    "Home/{Index}",                            // URL with parameters
+           //    new { controller = "Courses", action = "StudentCourse" }  // Parameter defaults
+           //);
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "account", action = "login", id = UrlParameter.Optional }
             );
         }
+
+
     }
 }
