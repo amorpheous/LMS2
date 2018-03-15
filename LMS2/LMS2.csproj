@@ -206,33 +206,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803141409503_Namibia.cs" />
-    <Compile Include="Migrations\201803141409503_Namibia.Designer.cs">
-      <DependentUpon>201803141409503_Namibia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803141446296_Swaziland.cs" />
-    <Compile Include="Migrations\201803141446296_Swaziland.Designer.cs">
-      <DependentUpon>201803141446296_Swaziland.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803150838405_Rhodesia.cs" />
-    <Compile Include="Migrations\201803150838405_Rhodesia.Designer.cs">
-      <DependentUpon>201803150838405_Rhodesia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803150846175_Rhodesia2.cs" />
-    <Compile Include="Migrations\201803150846175_Rhodesia2.Designer.cs">
-      <DependentUpon>201803150846175_Rhodesia2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151047211_Rhodesia3.cs" />
-    <Compile Include="Migrations\201803151047211_Rhodesia3.Designer.cs">
-      <DependentUpon>201803151047211_Rhodesia3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151113220_Rhodesia4.cs" />
-    <Compile Include="Migrations\201803151113220_Rhodesia4.Designer.cs">
-      <DependentUpon>201803151113220_Rhodesia4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151132169_Rhodesia5.cs" />
-    <Compile Include="Migrations\201803151132169_Rhodesia5.Designer.cs">
-      <DependentUpon>201803151132169_Rhodesia5.cs</DependentUpon>
+    <Compile Include="Migrations\201803151307225_Namibia.cs" />
+    <Compile Include="Migrations\201803151307225_Namibia.Designer.cs">
+      <DependentUpon>201803151307225_Namibia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -463,26 +439,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803141409503_Namibia.resx">
-      <DependentUpon>201803141409503_Namibia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803141446296_Swaziland.resx">
-      <DependentUpon>201803141446296_Swaziland.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803150838405_Rhodesia.resx">
-      <DependentUpon>201803150838405_Rhodesia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803150846175_Rhodesia2.resx">
-      <DependentUpon>201803150846175_Rhodesia2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151047211_Rhodesia3.resx">
-      <DependentUpon>201803151047211_Rhodesia3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151113220_Rhodesia4.resx">
-      <DependentUpon>201803151113220_Rhodesia4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151132169_Rhodesia5.resx">
-      <DependentUpon>201803151132169_Rhodesia5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803151307225_Namibia.resx">
+      <DependentUpon>201803151307225_Namibia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

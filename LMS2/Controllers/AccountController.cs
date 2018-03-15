@@ -173,7 +173,7 @@ namespace LMS2.Controllers
             if (ModelState.IsValid)
             {
                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
-                    FirstName = model.FirstName, LastName = model.LastName, IsActive = true
+                    FirstName = model.FirstName, LastName = model.LastName, CourseId=model.CourseId, IsActive = true
                      };
 
                 var result = await UserManager.CreateAsync(user, "Samarkand1945%");
