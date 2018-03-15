@@ -112,14 +112,10 @@ namespace LMS2.Controllers
         public ActionResult UserSpecificLogin()
         {
             //Vilken sida som är rätt beror på vem användaren är.
-            if (User.IsInRole("Teacher"))
-            {
+            if (User.IsInRole(Roles.Teacher))
                 return RedirectToAction("Index", "Courses");
-            }
-                        
             else
                 return RedirectToAction("StudentCourse", "Courses");
-          
         }
 
         
