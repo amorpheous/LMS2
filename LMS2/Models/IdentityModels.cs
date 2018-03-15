@@ -49,8 +49,11 @@ namespace LMS2.Models
         public string SpecialInfo { get; set; }
 
         public virtual Course Course { get; set; }
-
+        public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
+          
+
+
 
         //fundera på det här
         // public virtual Roles Role_ { get; set; }

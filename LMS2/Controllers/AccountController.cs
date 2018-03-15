@@ -9,12 +9,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS2.Controllers
 {
+
+   
+
     [Authorize]
     public class AccountController : Controller
-    {
+    { private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -149,8 +153,11 @@ namespace LMS2.Controllers
         // GET: /Account/Register
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Register()
-        {
+        {           ViewBag.Courses = db.Courses.ToList();
+
             return View();
+
+
         }
 
         //
@@ -160,13 +167,57 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+            ViewBag.Courses = db.Courses.ToList();
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
+               var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
                     FirstName = model.FirstName, LastName = model.LastName, IsActive = true
                      };
 
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, "Samarkand1945%");
+
+                db.SaveChanges();
+
+
+                var roleStore = new RoleStore<IdentityRole>(db);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var roleNames = new[] { Roles.Teacher, Roles.Student };
+                foreach (var roleName in roleNames)
+                {
+                    if (db.Roles.Any(r => r.Name == roleName)) continue;
+
+                    // Create role
+                    var role = new IdentityRole { Name = roleName };
+                    var result2 = roleManager.Create(role);
+                    if (!result2.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+                }
+
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var User2giveRole = userManager.FindByName(model.Email);
+
+
+                if (model.CourseId!=null)
+                {
+                    userManager.AddToRole(User2giveRole.Id, Roles.Student);
+
+                }
+                else
+                {
+                    userManager.AddToRole(User2giveRole.Id, Roles.Teacher);
+                }
+
+                db.SaveChanges();
+
+/*
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -179,6 +230,7 @@ namespace LMS2.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                */
                 AddErrors(result);
             }
 
