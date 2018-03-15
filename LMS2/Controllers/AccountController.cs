@@ -169,12 +169,16 @@ namespace LMS2.Controllers
         //
         // GET: /Account/Register
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Register()
-        {           ViewBag.Courses = db.Courses.ToList();
-
-            return View();
-
-
+        public ActionResult Register(string CourseId)
+        {
+            var ViewModel = new RegisterViewModel { Courses = db.Courses.ToList() };
+            if (CourseId == null)
+                return View(ViewModel);
+            else
+            {
+                ViewModel = new RegisterViewModel { CourseId = Int32.Parse(CourseId), Courses = db.Courses.ToList() };
+                return View(ViewModel);
+            }
         }
 
         //
@@ -189,11 +193,19 @@ namespace LMS2.Controllers
 
             if (ModelState.IsValid)
             {
-               var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
-                    FirstName = model.FirstName, LastName = model.LastName, IsActive = true
-                     };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    CourseId = model.CourseId,
+                    IsActive = true
+                };
 
                 var result = await UserManager.CreateAsync(user, "Samarkand1945%");
+                if (result.Succeeded==false)
+                    return RedirectToAction("Register", "Account");
 
                 db.SaveChanges();
 
@@ -211,7 +223,7 @@ namespace LMS2.Controllers
                     var result2 = roleManager.Create(role);
                     if (!result2.Succeeded)
                     {
-                        throw new Exception(string.Join("\n", result.Errors));
+                        return RedirectToAction("Register", "Account");
                     }
                 }
 
@@ -221,7 +233,7 @@ namespace LMS2.Controllers
                 var User2giveRole = userManager.FindByName(model.Email);
 
 
-                if (model.CourseId!=null)
+                if (model.CourseId != null)
                 {
                     userManager.AddToRole(User2giveRole.Id, Roles.Student);
 
@@ -233,27 +245,33 @@ namespace LMS2.Controllers
 
                 db.SaveChanges();
 
-/*
-
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                */
-                AddErrors(result);
+                return RedirectToAction("Index", "Courses");
             }
+            return RedirectToAction("Register", "Account");
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
         }
+
+
+        /*
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                            return RedirectToAction("Index", "Home");
+                        }
+        AddErrors(result);
+
+    }*/
+
+        // If we got this far, something failed, redisplay form
+
 
         //
         // GET: /Account/ConfirmEmail
