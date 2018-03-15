@@ -62,6 +62,7 @@ namespace LMS2.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            
             //if (User.IsInRole("Teacher"))
             //{
 
