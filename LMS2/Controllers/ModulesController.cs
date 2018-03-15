@@ -119,14 +119,10 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create(string CourseId)
         {
-            //ViewBag.Course = db.Courses.ToList();
-            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             var ViewModel = new Module { Courses = db.Courses.ToList() };
-            bool r2c = false;
             if (CourseId == null)
             {
                 CourseId = "0";
-                r2c = true;
             }
             ViewBag.CourseId = CourseId;
             ViewModel.CourseId = int.Parse(CourseId);
