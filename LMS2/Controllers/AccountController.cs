@@ -94,7 +94,9 @@ namespace LMS2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //anropa metod där användaren skickas till rätt sida. 
+                    return UserSpecificLogin();
+                
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -105,6 +107,21 @@ namespace LMS2.Controllers
                     return View(model);
             }
         }
+
+        public ActionResult UserSpecificLogin()
+        {
+            //Vilken sida som är rätt beror på vem användaren är.
+            if (User.IsInRole("Teacher"))
+            {
+                return RedirectToAction("Index", "Courses");
+            }
+                        
+            else
+                return RedirectToAction("StudentCourse", "Courses");
+          
+        }
+
+        
 
         //
         // GET: /Account/VerifyCode
@@ -492,6 +509,7 @@ namespace LMS2.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private readonly string returnUrl;
 
         private IAuthenticationManager AuthenticationManager
         {
