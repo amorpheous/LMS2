@@ -16,6 +16,7 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
+        [Authorize(Roles = Roles.Teacher)]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             if (id==null|id==0)
