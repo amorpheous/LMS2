@@ -206,9 +206,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803131418196_merge.cs" />
-    <Compile Include="Migrations\201803131418196_merge.Designer.cs">
-      <DependentUpon>201803131418196_merge.cs</DependentUpon>
+    <Compile Include="Migrations\201803151307225_Namibia.cs" />
+    <Compile Include="Migrations\201803151307225_Namibia.Designer.cs">
+      <DependentUpon>201803151307225_Namibia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -440,8 +440,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803131418196_merge.resx">
-      <DependentUpon>201803131418196_merge.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803151307225_Namibia.resx">
+      <DependentUpon>201803151307225_Namibia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

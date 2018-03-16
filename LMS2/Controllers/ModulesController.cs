@@ -38,17 +38,17 @@ namespace LMS2.Controllers
             else if (searchBy == "StartYear")
             {
                 return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else if (searchBy == "Duration")
             {
                 return View(modules.OrderBy(v => v.DurationDays).Where(v => v.DurationDays.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else if (searchBy == "CourseName")
             {
                 return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 10));
+                || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
             else
             {
@@ -96,7 +96,7 @@ namespace LMS2.Controllers
                         break;
                 }
 
-                return View(modules.ToList().ToPagedList(page ?? 1, 10));
+                return View(modules.ToList().ToPagedList(page ?? 1, 25));
             }
 }
 
@@ -117,12 +117,15 @@ namespace LMS2.Controllers
 
         // GET: Modules/Create
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create()
+        public ActionResult Create(string CourseId)
         {
-            //ViewBag.Course = db.Courses.ToList();
-            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             var ViewModel = new Module { Courses = db.Courses.ToList() };
-
+            if (CourseId == null)
+            {
+                CourseId = "0";
+            }
+            ViewBag.CourseId = CourseId;
+            ViewModel.CourseId = int.Parse(CourseId);
             return View(ViewModel);
         }
 
@@ -139,7 +142,8 @@ namespace LMS2.Controllers
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("Index","Courses");
             }
             module.Courses = db.Courses.ToList();
 
@@ -179,7 +183,7 @@ namespace LMS2.Controllers
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
            
             module.Courses = db.Courses.ToList();
@@ -212,7 +216,7 @@ namespace LMS2.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Courses");
         }
 
         protected override void Dispose(bool disposing)

@@ -4,9 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LMS2.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS2.Controllers
 {
@@ -20,7 +23,7 @@ namespace LMS2.Controllers
 
             //            return View(db.Users.OrderBy(x => x.Course_.StartDate).ThenBy(x => x.Course_.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FullName).ThenBy(x => x.FirstName).ToList());
 
-            return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x=>x.Email).ToList());
+            return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList());
         }
 
         // GET: ApplicationUsers/Details/5
@@ -42,7 +45,10 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            return View();
+            var ViewModel = new ApplicationUser { Courses = db.Courses.ToList() };
+            
+
+            return View(ViewModel);
         }
 
         // POST: ApplicationUsers/Create
@@ -51,20 +57,68 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
+        public async Task<ActionResult> Create([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email, CourseId, Password")] ApplicationUser applicationUser)
         {
+            //var ViewModel = new ApplicationUser { Courses = db.Courses.ToList() };
 
-           
             if (ModelState.IsValid)
             {
                 applicationUser.UserName = applicationUser.Email;
+
                 db.Users.Add(applicationUser);
                 db.SaveChanges();
+
+                var roleStore = new RoleStore<IdentityRole>(db);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var roleNames = new[] { Roles.Teacher, Roles.Student };
+                foreach (var roleName in roleNames)
+                {
+                    if (db.Roles.Any(r => r.Name == roleName)) continue;
+
+                    // Create role
+                    var role = new IdentityRole { Name = roleName };
+                    var result = roleManager.Create(role);
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+                }
+
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var User2giveRole = userManager.FindByName(applicationUser.Email);
+
+
+                if (applicationUser.CourseId != null)
+                {
+                    var result = await userManager.CreateAsync(applicationUser, "Samarkand1945%");
+                    userManager.AddToRole(User2giveRole.Id, Roles.Student);
+
+                }
+                else
+                {
+                    var result = await userManager.CreateAsync(applicationUser, "Samarkand1945%");
+                    userManager.AddToRole(User2giveRole.Id, Roles.Teacher);
+                }
+
+                db.SaveChanges();
+
+
+
+
+
+
+
+
                 return RedirectToAction("Index");
             }
 
             return View(applicationUser);
         }
+
+
 
         // GET: ApplicationUsers/Edit/5
         public ActionResult Edit(string id)

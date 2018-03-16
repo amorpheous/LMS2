@@ -38,9 +38,16 @@ namespace LMS2.Controllers
         // GET: Activities/Create
 
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create()
+        public ActionResult Create(string ModuleId)
         {
-            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
+            ViewBag.ModuleId = ModuleId;
+            if (ModuleId == null)
+            {
+                return View(ViewModel);
+            }
+            ViewModel.ModuleId = int.Parse(ModuleId);
+
             return View(ViewModel);
         }
 
@@ -52,16 +59,16 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
 
-            return View(activity);
+            return View(ViewModel);
         }
 
         // GET: Activities/Edit/5
@@ -96,7 +103,7 @@ namespace LMS2.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Courses");
             }
 
             activity.Modules = db.Modules.ToList();
@@ -130,7 +137,7 @@ namespace LMS2.Controllers
             Activity activity = db.Activities.Find(id);
             db.Activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Courses");
         }
 
         protected override void Dispose(bool disposing)

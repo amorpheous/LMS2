@@ -9,12 +9,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS2.Controllers
 {
+
+   
+
     [Authorize]
     public class AccountController : Controller
-    {
+    { private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -58,6 +62,7 @@ namespace LMS2.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            
             //if (User.IsInRole("Teacher"))
             //{
 
@@ -90,7 +95,9 @@ namespace LMS2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //anropa metod där användaren skickas till rätt sida. 
+                    return UserSpecificLogin();
+                
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -101,6 +108,17 @@ namespace LMS2.Controllers
                     return View(model);
             }
         }
+
+        public ActionResult UserSpecificLogin()
+        {
+            //Vilken sida som är rätt beror på vem användaren är.
+            if (User.IsInRole(Roles.Teacher))
+                return RedirectToAction("Index", "Courses");
+            else
+                return RedirectToAction("StudentCourse", "Courses");
+        }
+
+        
 
         //
         // GET: /Account/VerifyCode
@@ -148,9 +166,16 @@ namespace LMS2.Controllers
         //
         // GET: /Account/Register
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Register()
+        public ActionResult Register(string CourseId)
         {
-            return View();
+            var ViewModel = new RegisterViewModel { Courses = db.Courses.ToList() };
+            if (CourseId == null)
+                return View(ViewModel);
+            else
+            {
+                ViewModel = new RegisterViewModel { CourseId = Int32.Parse(CourseId), Courses = db.Courses.ToList() };
+                return View(ViewModel);
+            }
         }
 
         //
@@ -160,31 +185,90 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+            ViewBag.Courses = db.Courses.ToList();
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
-                    FirstName = model.FirstName, LastName = model.LastName, IsActive = true
-                     };
-
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var user = new ApplicationUser
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    CourseId = model.CourseId,
+                    IsActive = true
+                };
 
-                    return RedirectToAction("Index", "Home");
+                var result = await UserManager.CreateAsync(user, "Samarkand1945%");
+                if (result.Succeeded==false)
+                    return RedirectToAction("Register", "Account");
+
+                db.SaveChanges();
+
+
+                var roleStore = new RoleStore<IdentityRole>(db);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var roleNames = new[] { Roles.Teacher, Roles.Student };
+                foreach (var roleName in roleNames)
+                {
+                    if (db.Roles.Any(r => r.Name == roleName)) continue;
+
+                    // Create role
+                    var role = new IdentityRole { Name = roleName };
+                    var result2 = roleManager.Create(role);
+                    if (!result2.Succeeded)
+                    {
+                        return RedirectToAction("Register", "Account");
+                    }
                 }
-                AddErrors(result);
-            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                var userStore = new UserStore<ApplicationUser>(db);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var User2giveRole = userManager.FindByName(model.Email);
+
+
+                if (model.CourseId != null)
+                {
+                    userManager.AddToRole(User2giveRole.Id, Roles.Student);
+
+                }
+                else
+                {
+                    userManager.AddToRole(User2giveRole.Id, Roles.Teacher);
+                }
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Courses");
+            }
+            return RedirectToAction("Register", "Account");
+
         }
+
+
+        /*
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                            return RedirectToAction("Index", "Home");
+                        }
+        AddErrors(result);
+
+    }*/
+
+        // If we got this far, something failed, redisplay form
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -440,6 +524,7 @@ namespace LMS2.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private readonly string returnUrl;
 
         private IAuthenticationManager AuthenticationManager
         {
