@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS2.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Principal;
+using System.Collections.Generic;
 
 namespace LMS2.Controllers
 {
@@ -109,16 +111,25 @@ namespace LMS2.Controllers
             }
         }
 
+        //private static bool IsInAnyRole(this IPrincipal user, List<string> roles)
+        //{
+        //    var userRoles = Roles.GetRolesForUser(user.Identity.Name);
+        //    return userRoles.Any(u => Roles.Contains(u));
+        //}
+
         public ActionResult UserSpecificLogin()
         {
             //Vilken sida som är rätt beror på vem användaren är.
-            if (User.IsInRole(Roles.Teacher))
+            //var Roles = new List<string> { "Teacher", "Student" };
+            //var userRoles = Roles.GetRolesForUser(User.Identity.Name);
+
+
+            if (User.IsInRole("Teacher")) 
                 return RedirectToAction("Index", "Courses");
+            
             else
                 return RedirectToAction("StudentCourse", "Courses");
         }
-
-        
 
         //
         // GET: /Account/VerifyCode
