@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using LMS2.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+
 namespace LMS2.Controllers
 {
 
@@ -62,18 +63,7 @@ namespace LMS2.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            
-            //if (User.IsInRole("Teacher"))
-            //{
-
-            //    return View("TeacherLogin");
-            //}
-
-            //else if (User.IsInRole("Student"))
-            //{
-            //    return View("StudentLogin");
-            //}
-            //else
+           
                 return View();
         }
 
@@ -95,8 +85,9 @@ namespace LMS2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //anropa metod där användaren skickas till rätt sida. 
-                    return UserSpecificLogin();
+                    //anropa metod där användaren skickas till rätt sida.
+                    return RedirectToAction("Redirect", "Courses");
+                   
                 
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -109,21 +100,34 @@ namespace LMS2.Controllers
             }
         }
 
+        
+
         public ActionResult UserSpecificLogin()
         {
-            //Vilken sida som är rätt beror på vem användaren är.
-
-
-
-
+            //  Vilken sida som är rätt beror på vem användaren är.
+           
             if (User.IsInRole(Roles.Teacher))
                 return RedirectToAction("Index", "Courses");
             else if (User.IsInRole(Roles.Student))
                 return RedirectToAction("StudentCourse", "Courses");
             else return RedirectToAction("Index", "Home");
+
+           
         }
 
-        
+        public ActionResult UserHomePage(string id)
+        {
+            var user = db.Users.Single(u => u.UserName == User.Identity.Name);
+
+            return View(user);
+        }
+
+        //public ActionResult StudentHomePage()
+        //{
+        //    var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+        //    return View(user);
+        //}
+
 
         //
         // GET: /Account/VerifyCode

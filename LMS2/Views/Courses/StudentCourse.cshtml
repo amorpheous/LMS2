@@ -66,7 +66,7 @@
                 </tr>
 
                 @foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-                {
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.FullName)
@@ -78,7 +78,7 @@
                         @Html.ActionLink("Details", "Details", new { id = item.Id })
                     </td>*@
                 </tr>
-                }
+        }
 
             </table>
         </div>
@@ -107,22 +107,25 @@
                 </tr>
 
                 @foreach (var item in Model.Modules)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ModuleName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
-                        </td>
-                    </tr>
-                }
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModuleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    </td>
+                </tr>
+        }
 
             </table>
         </div>
-    </div>
+        
+               
+            </div>
+        
 </div>
 

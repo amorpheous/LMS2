@@ -41,6 +41,8 @@ namespace LMS2.Controllers
             return View(applicationUser);
         }
 
+
+       
         // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()

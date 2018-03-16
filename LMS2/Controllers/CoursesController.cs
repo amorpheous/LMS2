@@ -36,6 +36,15 @@ namespace LMS2.Controllers
             return View(course);
         }
 
+        public ActionResult Redirect()
+        {
+            //Det enda den här metoden gör att routa om tillbaks till UserSpecificLogin i Accountcontroller.
+            //Men därmed har nu en 'identitytoken' hunnits sättas.
+            return RedirectToAction("UserSpecificLogin", "Account");
+                
+        }
+
+        
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
