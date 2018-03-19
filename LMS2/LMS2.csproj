@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201803161559293_jQuery2.Designer.cs">
       <DependentUpon>201803161559293_jQuery2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803191458227_monday2.cs" />
+    <Compile Include="Migrations\201803191458227_monday2.Designer.cs">
+      <DependentUpon>201803191458227_monday2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -475,6 +479,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803161559293_jQuery2.resx">
       <DependentUpon>201803161559293_jQuery2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191458227_monday2.resx">
+      <DependentUpon>201803191458227_monday2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

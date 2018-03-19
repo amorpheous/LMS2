@@ -10,8 +10,12 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @using Microsoft.AspNet.Identity
+    @using LMS2.Models
 
-</head>
+
+
+    </head>
 <body>
     @*// @if (User.IsInRole("teacher"))*@
     @if (User.Identity.IsAuthenticated)
@@ -36,9 +40,16 @@ else
 
 
                     <div class="navbar-collapse collapse">
+                        @{string currentUserId = User.Identity.GetUserId();
+
+        ApplicationDbContext context = new ApplicationDbContext();
+
+        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+        string ID = currentUser.Id;
+                        }
 
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("My page", "Index", "ApplicationUsers")</li>
+                            <li>@Html.ActionLink("My profile", "Details", "ApplicationUsers", new { id = currentUser.Id },null)</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     Admin
@@ -47,9 +58,9 @@ else
                                 <ul class="dropdown-menu">
 
                                     <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
-                                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                    <li>@Html.ActionLink("Add new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                                     <li class="divider"></li>
-                                    <li>@Html.ActionLink("Teachers", "Index", "ApplicationUsers")</li>
+                                    <li>@Html.ActionLink("Teacher list", "Index", "ApplicationUsers")</li>
 
                                 </ul>
                             </li>

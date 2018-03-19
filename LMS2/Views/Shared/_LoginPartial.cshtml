@@ -25,7 +25,7 @@
                 if (User.IsInRole("Teacher"))
                 {
                     userRole = LMS2.Models.Roles.Teacher; }
-                else if (User.IsInRole("Student")) { userRole = LMS2.Models.Roles.Student; }
+                if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
             }
 
             @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })

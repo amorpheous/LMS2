@@ -77,10 +77,10 @@
             </td>
             <td>
                 @if (item.Modules.Count == 0) { }
-        else
-        {@Html.DisplayFor(modelItem => item.Modules.Count) {
-    if (item.Modules.Count == 1)
-    { <text> module</text>}
+                else
+                {@Html.DisplayFor(modelItem => item.Modules.Count) {
+                        if (item.Modules.Count == 1)
+                        { <text> module</text>}
 else
 {<text> modules </text>}
 }
@@ -88,10 +88,10 @@ else
             </td>
             <td>
                 @if (item.AttendingStudents.Count == 0) { }
-        else
-        {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
-    if (item.AttendingStudents.Count == 1)
-    { <text> student</text>}
+                else
+                {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
+                        if (item.AttendingStudents.Count == 1)
+                        { <text> student</text>}
 else
 {<text> students </text>}
 }
@@ -99,8 +99,9 @@ else
             </td>
 
             <td>
-<pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)</pre>
+                <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Register new user", "Register", "Account", new { CourseName = item.CourseName }, null) FUNKAR INTE ÄNNU
+</pre>
             </td>
         </tr>
 
