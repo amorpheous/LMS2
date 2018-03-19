@@ -36,7 +36,7 @@ $(document).ready(function () {
 */
 
 $(document).ready(function () {
-var message = $('<span class="highlight">THIS IS JUST A TEST LINE</span>');
+    var message = $('<span class="highlight">Choose an item to admin or create a new one. To return to the course list, just re-press the hightlighted course</span>');
 $('.usa').append(message);
 });
 

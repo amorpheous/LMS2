@@ -18,22 +18,30 @@
 
 
     @{
-        ViewBag.Title = "Index";
+        ViewBag.Title = "Course list";
     }
 </head>
 <body>
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Filters/Add new course
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
 
-    <h2>Index</h2>
+                <li>@Html.ActionLink("Present/Future", "Index", new { id = 0 })</li>
+                <li>@Html.ActionLink("Past", "Index", new { id = 2 })</li>
+                <li>@Html.ActionLink("All", "Index", new { id = 3 })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Add new course", "Create")</li>
 
-    <p class="usa highlight"></p>
+            </ul>
+    </ul>
 
-    @Html.ActionLink("Present/Future", "Index", new { id = 0 }) |
-    @Html.ActionLink("Past", "Index", new { id = 2 }) |
-    @Html.ActionLink("All", "Index", new { id = 3 })
-
+    <div class="usa"></div>
     <p>
 
-        @Html.ActionLink("Create New", "Create")
     </p>
     <table class="table">
         <tr>
@@ -47,9 +55,11 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
 
-            <th>Sub items</th>
             <th>
-                @Html.DisplayNameFor(model => model.AttendingStudents)
+                #@Html.DisplayNameFor(model => model.Modules)
+            </th>
+            <th>
+                #@Html.DisplayNameFor(model => model.AttendingStudents)
             </th>
         </tr>
 
@@ -66,10 +76,26 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Modules.Count) (M)
+                @if (item.Modules.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item.Modules.Count) {
+    if (item.Modules.Count == 1)
+    { <text> module</text>}
+else
+{<text> modules </text>}
+}
+}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AttendingStudents.Count)
+                @if (item.AttendingStudents.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
+    if (item.AttendingStudents.Count == 1)
+    { <text> student</text>}
+else
+{<text> students </text>}
+}
+}
             </td>
 
             <td>
@@ -90,9 +116,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item2.EndDate)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item2.Activities.Count) (A)
-                    </td>
+                @if (item2.Activities.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item2.Activities.Count) {
+    if (item2.Activities.Count == 1)
+    { <text> activity</text>}
+else
+{<text> activities </text>}
+}
+}
+            </td>
+            <td></td>
             <td>
 
 <pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
@@ -102,22 +138,22 @@
         </tr>
                 foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName))
                 {
-        <tr class="activity">
-            <td>
-                <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item3.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item3.EndDate)
-            </td>
-            <td>-</td>
-            <td>
-                <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
-            </td>
+                    <tr class="activity">
+                        <td>
+                            <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.EndDate)
+                        </td>
+                        <td>-</td>
+                        <td>
+                            <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
+                        </td>
 
-        </tr>
+                    </tr>
 
 
 
