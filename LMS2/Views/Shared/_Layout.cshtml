@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    @Html.ActionLink("Home Page", "StudentHomePage", "Account", new { id = User.Identity.Name })
+    @Html.ActionLink("Home Page", "UserHomePage", "Account")
     @if (User.Identity.IsAuthenticated)
     {
 
