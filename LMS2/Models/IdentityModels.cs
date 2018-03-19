@@ -51,8 +51,7 @@ namespace LMS2.Models
         public virtual Course Course { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
-          
-
+        public virtual ICollection<File> Files { get; set; }  
 
 
         //fundera på det här
@@ -102,15 +101,17 @@ namespace LMS2.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<LMS2.Models.Course> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
-        public System.Data.Entity.DbSet<LMS2.Models.Module> Modules { get; set; }
+        public DbSet<Module> Modules { get; set; }
 
-        public System.Data.Entity.DbSet<LMS2.Models.Activity> Activities { get; set; }
+        public DbSet<Activity> Activities { get; set; }
 
-        public System.Data.Entity.DbSet<LMS2.Models.ActivityType> ActivityTypes { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
 
-      
+        public DbSet<File> Files { get; set; }
+
+
 
         // public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

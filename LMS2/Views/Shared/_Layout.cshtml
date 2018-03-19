@@ -21,7 +21,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
                     </div>
 
 
@@ -34,6 +34,8 @@
                             <li>@Html.ActionLink("Activities", "Index", "Activities")</li>
                             <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
                             <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                            <li>@Html.ActionLink("Upload Files", "UploadFile", "Upload")</li>
+                            <li>@Html.ActionLink("File Upload", "FileUpload", "FileUpload")</li>
                         </ul>
                        
 

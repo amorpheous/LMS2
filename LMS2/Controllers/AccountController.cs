@@ -152,10 +152,12 @@ namespace LMS2.Controllers
         //
         // GET: /Account/Register
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Register()
-        {           ViewBag.Courses = db.Courses.ToList();
+        public ActionResult 
+            Register()
 
-            return View();
+        {           var ViewModel  = new RegisterViewModel { Courses = db.Courses.ToList() };
+
+            return View(ViewModel);
 
 
         }
@@ -168,7 +170,7 @@ namespace LMS2.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
 
-            ViewBag.Courses = db.Courses.ToList();
+            model.Courses = db.Courses.ToList();
 
             if (ModelState.IsValid)
             {
