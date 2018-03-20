@@ -11,20 +11,23 @@
     <div class="col-md-8">
         <h2>Course</h2>
     </div>
-    <div class="col-md-4">
-        @if (Model.UrgentInfo != null)
-        {
-        <dl class="dl-horizontal" style="color:red; text-align:right">
-            <dt>
-                @Html.DisplayNameFor(model => model.UrgentInfo)
-            </dt>
+    @if (Model != null)
+    {
+        <div class="col-md-4">
+            @if (Model.UrgentInfo != null)
+            {
+                <dl class="dl-horizontal" style="color:red; text-align:right">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UrgentInfo)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.UrgentInfo)
-            </dd>
-        </dl>
-        }
-    </div>
+                    <dd>
+                        @Html.DisplayFor(model => model.UrgentInfo)
+                    </dd>
+                </dl>
+            }
+        </div> }
+
 </div>
 
 <div>
@@ -85,27 +88,29 @@
                     </th>
                     <th></th>
                 </tr>
-
-                @foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+                @if (Model != null)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Homepage", "UserHomePage", new { id = item.Id }, null)
-                    </td>
 
-                    @*<td>
-       
+            foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Homepage", "UserHomePage", new { id = item.Id }, null)
+                </td>
+
+                @*<td>
+
         @Html.ActionLink("Details", "Details", new { id = item.Id })
         </td>*@
-                </tr>
+            </tr>
+            }
                 }
-
             </table>
             @*@Html.Partial("_AttendingStudentsPartialView")*@
         </div>
@@ -123,19 +128,22 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.Modules)
+                @if (Model != null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ModuleName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
-                        </td>
-                    </tr>
+                    foreach (var item in Model.Modules)
+                    {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModuleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                </td>
+            </tr>
+                    }
                 }
 
             </table>
@@ -143,6 +151,6 @@
 
 
     </div>
-
+   
 </div>
 
