@@ -96,7 +96,7 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.ActionLink("Homepage", "UserHomePage", new { id = item.Id }, null)
+                        @Html.ActionLink("Homepage", "UserHomePage", "Account", new { id = item.Email }, null)
                     </td>
 
                     @*<td>

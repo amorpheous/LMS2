@@ -63,7 +63,7 @@
 
             @Html.ActionLink("Edit info", "EditUserHomePage", new { id = User.Identity.GetUserId() }, null) |
         </dd>
-        @Html.ActionLink("Change password?", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         }
 
 
