@@ -26,6 +26,7 @@
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 Filters/Add new course
+
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
@@ -100,7 +101,7 @@ else
 
             <td>
                 <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Register new user", "Register", "Account", new { CourseName = item.CourseName }, null) FUNKAR INTE ÄNNU
+@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Register new user", "Register", "Account", new { CourseId = item.Id}, null)
 </pre>
             </td>
         </tr>
@@ -139,22 +140,23 @@ else
         </tr>
                 foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName))
                 {
-                    <tr class="activity">
-                        <td>
-                            <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.StartDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.EndDate)
-                        </td>
-                        <td>-</td>
-                        <td>
-                            <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
-                        </td>
+        <tr class="activity">
+            <td>
+                <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item3.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item3.EndDate)
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
+            </td>
 
-                    </tr>
+        </tr>
 
 
 
