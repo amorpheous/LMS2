@@ -8,36 +8,46 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
+        ApplicationDbContext context = new ApplicationDbContext();
 
-    <ul class="nav navbar-nav navbar-right">
+
+        if (context.Users.Count() == 0 | context.Users == null)
+        {
+
+        <ul class="nav navbar-nav navbar-right">
         <li>
 
             @{var userRole = "";
                 string currentUserId = User.Identity.GetUserId();
 
-                ApplicationDbContext context = new ApplicationDbContext();
 
                 ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-                string ID = currentUser.Id;
-                string Email = currentUser.Email;
-                string Username = currentUser.UserName;
-
-                if (User.IsInRole("Teacher"))
+                if (currentUser != null)
                 {
-                    userRole = LMS2.Models.Roles.Teacher; }
-                if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
-            }
+                    string ID = currentUser.Id;
+                    string Email = currentUser.Email;
+                    string Username = currentUser.UserName;
 
-            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id },  null)
+                    if (User.IsInRole("Teacher"))
+                    {
+                        userRole = LMS2.Models.Roles.Teacher;
+                    }
+                    if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
+                    if (currentUser != null)
+                    {
+
+            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)}
+                    }
+                }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
+                }
+                    }
+                }
 
-    }
-    }
-
-    else
-    {
+                else
+                {
     <ul class="nav navbar-nav navbar-right">
 
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>

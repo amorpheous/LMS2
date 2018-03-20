@@ -61,13 +61,6 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.DurationDays)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.DurationDays)
-                </dd>
-                <dt>
                     @Html.DisplayNameFor(model => model.EndDate)
                 </dt>
 
@@ -101,8 +94,8 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
-                    @Html.ActionLink("View profile", "Details", "ApplicationUsers", new { id = item.Id },null)<span> | </span>
+                    @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)<span> | </span>
+                    @Html.ActionLink("View profile", "Details", "ApplicationUsers", new { id = item.Id },null)
                 </td>
 
                 @*<td>

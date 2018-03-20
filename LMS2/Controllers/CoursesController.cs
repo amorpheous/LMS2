@@ -19,16 +19,30 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
-            if (id==null|id==0)
-            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
-            else if (id == 1)
-                return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+            ViewBag.Filter = "";
+            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId, AttentingStudentsId=x.Id});
+            if (id == null | id == 0 | id == 1)
+            {
+                ViewBag.Filter = "Present/Future";
+                return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            }
             else if (id == 2)
-            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+            {
+                ViewBag.Filter = "Past";
+                return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            }
             else
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
-            
-        }
+                ViewBag.Filter = "All";
+            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+
+            }
+
+        public class StudentList
+        {
+            public string FullName { get; set; }
+            public int? CourseId { get; set; }
+            public string AttentingStudentsId { get; set; }
+    }
 
         public ActionResult StudentCourse(string id)
         {
@@ -92,7 +106,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +140,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
         {
             if (ModelState.IsValid)
             {

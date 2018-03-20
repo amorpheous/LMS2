@@ -43,12 +43,14 @@
                 <div class="navbar-collapse collapse">
                     @{string currentUserId = User.Identity.GetUserId();
 
-                        ApplicationDbContext context = new ApplicationDbContext();
+        ApplicationDbContext context = new ApplicationDbContext();
 
-                        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-                        string ID = currentUser.Id;
+        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+        string ID = "";
+        if (currentUser != null) { ID = currentUser.Id; }
                     }
 
+                    @if (currentUser != null) {
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)</li>
                         <li class="dropdown">
@@ -65,7 +67,7 @@
 
                             </ul>
                         </li>
-                    </ul>
+                    </ul>}
 
                     @Html.Partial("_LoginPartial")
 
@@ -80,7 +82,7 @@
     <div class="container body-content">
         @if (User.Identity.IsAuthenticated)
         {
-            if (ViewContext.RouteData.Values["controller"].ToString().ToLower() != "home")
+@*            if (ViewContext.RouteData.Values["controller"].ToString().ToLower() != "home")
             {
                 <ol class="breadcrumb">
                     <li>
@@ -96,7 +98,7 @@
             }
             <!-- #region Breadcrumb -->
             @Html.Raw(Html.BuildBreadcrumbNavigation())
-            <!-- #endregion -->
+            <!-- #endregion -->*@
         }
         @RenderBody()
         <hr />
