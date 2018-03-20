@@ -208,9 +208,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803200957035_shanghai.cs" />
-    <Compile Include="Migrations\201803200957035_shanghai.Designer.cs">
-      <DependentUpon>201803200957035_shanghai.cs</DependentUpon>
+    <Compile Include="Migrations\201803201100583_Ho Chi Minh.cs" />
+    <Compile Include="Migrations\201803201100583_Ho Chi Minh.Designer.cs">
+      <DependentUpon>201803201100583_Ho Chi Minh.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -481,8 +481,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803200957035_shanghai.resx">
-      <DependentUpon>201803200957035_shanghai.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803201100583_Ho Chi Minh.resx">
+      <DependentUpon>201803201100583_Ho Chi Minh.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
