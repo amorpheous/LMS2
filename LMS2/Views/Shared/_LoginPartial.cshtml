@@ -11,8 +11,6 @@
         ApplicationDbContext context = new ApplicationDbContext();
 
 
-        if (context.Users.Count() == 0 | context.Users == null)
-        {
 
         <ul class="nav navbar-nav navbar-right">
         <li>
@@ -22,7 +20,6 @@
 
 
                 ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-                if (currentUser != null)
                 {
                     string ID = currentUser.Id;
                     string Email = currentUser.Email;
@@ -37,20 +34,20 @@
                     {
 
             @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)}
-                    }
+                }
                 }
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
-                }
                     }
+                }
                 }
 
                 else
                 {
-    <ul class="nav navbar-nav navbar-right">
-
+        <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+        </ul>
     }
 

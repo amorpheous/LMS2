@@ -20,7 +20,7 @@ namespace LMS2.Controllers
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             ViewBag.Filter = "";
-            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId, AttentingStudentsId=x.Id});
+            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId});
             if (id == null | id == 0 | id == 1)
             {
                 ViewBag.Filter = "Present/Future";
@@ -41,7 +41,6 @@ namespace LMS2.Controllers
         {
             public string FullName { get; set; }
             public int? CourseId { get; set; }
-            public string AttentingStudentsId { get; set; }
     }
 
         public ActionResult StudentCourse(string id)
