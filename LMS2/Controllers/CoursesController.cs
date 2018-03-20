@@ -27,7 +27,7 @@ namespace LMS2.Controllers
             return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
             else
             return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
-
+            
         }
 
         public ActionResult StudentCourse()
