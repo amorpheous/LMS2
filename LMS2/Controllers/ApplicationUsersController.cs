@@ -20,13 +20,17 @@ namespace LMS2.Controllers
         // GET: ApplicationUsers
         public ActionResult Index(int? id)
         {
-
+            ViewBag.Filter = "";
             if (id == null | id == 0)
-                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x=>x.CourseId==null).ToList());
-
+            {
+                ViewBag.Filter = "Teachers";
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+            }
             else
+            {
+                ViewBag.Filter = "Students";
                 return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
-
+            }
         }
 
         // GET: ApplicationUsers/Details/5

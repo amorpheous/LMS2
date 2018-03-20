@@ -30,11 +30,28 @@ namespace LMS2.Controllers
             
         }
 
-        public ActionResult StudentCourse()
+        public ActionResult StudentCourse(string id)
         {
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
-            var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
-            return View(course);
+            if (User.IsInRole(Roles.Student))
+            {
+                if (user.CourseId != null)
+                {
+                    var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
+                    return View(course);
+                }
+                else return View();
+            }
+            if (User.IsInRole(Roles.Teacher))
+            {
+                if(Int32.TryParse(id,out int idint))
+                { 
+                    var course2 = db.Courses.FirstOrDefault(c => c.Id == idint);
+                    return View(course2);
+                }
+                else return View();
+            }
+            else return View();
         }
 
         public ActionResult Redirect()

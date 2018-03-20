@@ -18,64 +18,64 @@
 
     </head>
 <body>
-    
+
     @if (User.Identity.IsAuthenticated)
     {
 
-            <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        @if (User.IsInRole(LMS2.Models.Roles.Teacher))
-        {
-                @Html.ActionLink("Courses", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })}
-else
-{
-                @Html.ActionLink("Course", "StudentCourse", "Courses", new { area = "" }, new { @class = "navbar-brand" })}
-                    </div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @if (User.IsInRole(LMS2.Models.Roles.Teacher))
+                    {
+                        @Html.ActionLink("Courses", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })}
+                    else
+                    {
+                        @Html.ActionLink("Course", "StudentCourse", "Courses", new { area = "" }, new { @class = "navbar-brand" })}
+                </div>
 
 
 
-                    <div class="navbar-collapse collapse">
-                        @{string currentUserId = User.Identity.GetUserId();
+                <div class="navbar-collapse collapse">
+                    @{string currentUserId = User.Identity.GetUserId();
 
-        ApplicationDbContext context = new ApplicationDbContext();
+                        ApplicationDbContext context = new ApplicationDbContext();
 
-        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-        string ID = currentUser.Id;
-                        }
+                        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+                        string ID = currentUser.Id;
+                    }
 
-                        <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id },null)</li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    Admin
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Admin
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
 
-                                    <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
-                                    <li>@Html.ActionLink("Add new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                                    <li class="divider"></li>
-                                    <li>@Html.ActionLink("Teacher list", "Index", "ApplicationUsers")</li>
+                                <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
+                                <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("User list", "Index", "ApplicationUsers")</li>
 
-                                </ul>
-                            </li>
-                        </ul>
+                            </ul>
+                        </li>
+                    </ul>
 
-                        @Html.Partial("_LoginPartial")
+                    @Html.Partial("_LoginPartial")
 
 
-
-                    </div>
 
                 </div>
-                
+
             </div>
+
+        </div>
     }
     <div class="container body-content">
         @if (User.Identity.IsAuthenticated)
@@ -101,13 +101,16 @@ else
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - LMS</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
 
 
 </body>
