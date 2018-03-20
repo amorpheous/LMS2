@@ -21,33 +21,35 @@ namespace LMS2.Models
         [Display(Name = "First Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "Name")]
         public string FullName
         {
             get
             {
 
                 if (NickName != null && NickName.Length > 0)
-                    return NickName + " " + LastName;
+                    return FirstName + " \"" +  NickName + "\" " + LastName;
                 else
                     return FirstName + " " + LastName;
             }
         }
 
-        [StringLength(20, ErrorMessage = "Not more than 20 characters long, please")]
+        [StringLength(20, ErrorMessage = "0-20 characters")]
         public string NickName { get; set; }
         //  public string Email { get; set; }
 
-        [Display(Name = "Is the user active?")]
+        [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
         [Display(Name = "About me")]
-        [StringLength(200, ErrorMessage = "Additional info can at most be 200 characters long")]
+        [StringLength(200, ErrorMessage = "0-200 characters")]
         public string AdditionalInfo { get; set; }
 
 
-        [StringLength(200, ErrorMessage = "Special info can at most be 200 characters long")]
+        [StringLength(200, ErrorMessage = "0-200 characters")]
         public string SpecialInfo { get; set; }
 
+        [Display(Name = "Registered on course")]
         public virtual Course Course { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
