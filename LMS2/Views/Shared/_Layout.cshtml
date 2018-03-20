@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    @Html.ActionLink("Home Page", "UserHomePage", "Account")
+    
     @if (User.Identity.IsAuthenticated)
     {
 
@@ -43,7 +43,7 @@
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
-            @Html.ActionLink("Home Page", "UserHomePage", "Account", new { id = User.Identity.Name }, null)
+           
         </div>
     }
     <div class="container body-content">

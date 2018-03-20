@@ -28,7 +28,7 @@
                 else if (User.IsInRole("Student")) { userRole = LMS2.Models.Roles.Student; }
             }
 
-            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id },  null)
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

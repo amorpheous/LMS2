@@ -34,6 +34,11 @@ namespace LMS2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser applicationUser = db.Users.Find(id);
+
+
+           
+
+
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -41,8 +46,81 @@ namespace LMS2.Controllers
             return View(applicationUser);
         }
 
+        //public ActionResult OtherUserHomePage()
+        //{
 
-       
+        //    return Red
+        //}
+
+
+
+
+
+        public ActionResult UserHomePage(string id)
+        {
+            string currentUserId = User.Identity.GetUserId();
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+           
+            
+            if (id != currentUserId)
+            {
+                ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
+                return View(otherUser);
+            }
+            return View(currentUser);
+        }
+
+        public ActionResult EditUserHomePage(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            string currentUserId = User.Identity.GetUserId();
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+            return View(currentUser);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUserHomePage([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
+        {
+            //string currentUserId = User.Identity.GetUserId();
+
+            //ApplicationDbContext context = new ApplicationDbContext();
+            //ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+           
+
+            if (ModelState.IsValid)
+            {
+                //applicationUser = currentUser;
+                applicationUser.UserName = applicationUser.Email;
+                db.Entry(applicationUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return View("UserHomePage", applicationUser); 
+                    //View(applicationUser); 
+            }
+            //return View(currentUser);
+            else
+            return View(applicationUser);
+
+
+        }
+
+
+
         // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()

@@ -1,7 +1,10 @@
 ﻿@model LMS2.Models.Course
+@using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "StudentCourse";
+                /**/
+
+                ViewBag.Title = "StudentCourse";
 }
 
 <h2>Course</h2>
@@ -66,7 +69,7 @@
                 </tr>
 
                 @foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-            {
+                {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.FullName)
@@ -74,12 +77,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    @*<td>
-                        @Html.ActionLink("Details", "Details", new { id = item.Id })
-                    </td>*@
-                </tr>
-        }
+                    <td>
+                        @Html.ActionLink("Homepage", "UserHomePage", new { id = item.Id }, null)
+                    </td>
 
+                    @*<td>
+       
+        @Html.ActionLink("Details", "Details", new { id = item.Id })
+        </td>*@
+                </tr>
+                }
+
+             
             </table>
         </div>
         <div class="col-md-6">
@@ -107,25 +116,25 @@
                 </tr>
 
                 @foreach (var item in Model.Modules)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModuleName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.Id })
-                    </td>
-                </tr>
-        }
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModuleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
 
             </table>
         </div>
-        
-               
-            </div>
-        
+
+
+    </div>
+
 </div>
 

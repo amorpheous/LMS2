@@ -115,22 +115,22 @@ namespace LMS2.Controllers
            
         }
 
-        public ActionResult UserHomePage()
-        {
-           // var user = db.Users.Single(u => u.UserName == User.Identity.Name);
+        //public ActionResult UserHomePage()
+        //{
+        //   // var user = db.Users.Single(u => u.UserName == User.Identity.Name);
 
-            string currentUserId = User.Identity.GetUserId();
+        //    string currentUserId = User.Identity.GetUserId();
 
-            ApplicationDbContext context = new ApplicationDbContext();
+        //    ApplicationDbContext context = new ApplicationDbContext();
 
-            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-            string ID = currentUser.Id;
-            string Email = currentUser.Email;
-            string Username = currentUser.UserName;
+        //    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+        //    string ID = currentUser.Id;
+        //    string Email = currentUser.Email;
+        //    string Username = currentUser.UserName;
 
 
-            return View(currentUser);
-        }
+        //    return View(currentUser);
+        //}
 
         //public ActionResult StudentHomePage()
         //{

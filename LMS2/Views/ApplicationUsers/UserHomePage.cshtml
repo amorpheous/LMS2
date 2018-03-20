@@ -1,0 +1,65 @@
+﻿@model LMS2.Models.ApplicationUser
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "UserHomePage";
+}
+
+<h2>This is me:</h2>
+
+<div class="row">
+
+    <dl class="dl-horizontal">
+
+        @if (User.IsInRole("Student"))
+    {
+
+        <dt>     @Html.DisplayNameFor(model => model.Course.CourseName)  </dt>
+        <dd>    @Html.DisplayFor(model => model.Course.CourseName)   </dd>
+}
+
+        <dt>     @Html.DisplayNameFor(model => model.FirstName)    </dt>
+        <dd>      @Html.DisplayFor(model => model.FirstName)      </dd>
+
+        <dt>     @Html.DisplayNameFor(model => model.LastName)     </dt>
+        <dd>       @Html.DisplayFor(model => model.LastName)     </dd>
+
+
+        <dt>     @Html.DisplayNameFor(model => model.NickName)     </dt>
+        <dd>       @Html.DisplayFor(model => model.NickName)    </dd>
+
+        <dt>     @Html.DisplayNameFor(model => model.IsActive)     </dt>
+        <dd>       @Html.DisplayFor(model => model.IsActive)     </dd>
+
+        <dt>     @Html.DisplayNameFor(model => model.AdditionalInfo) </dt>
+        <dd>      @Html.DisplayFor(model => model.AdditionalInfo)        </dd>
+
+        @if (User.IsInRole("Teacher"))
+    {
+        <dt>     @Html.DisplayNameFor(model => model.SpecialInfo)    </dt>
+        <dd>      @Html.DisplayFor(model => model.SpecialInfo)        </dd>
+}
+
+        <dt>     @Html.DisplayNameFor(model => model.Email)         </dt>
+        <dd>        @Html.DisplayFor(model => model.Email)      </dd>
+
+
+
+
+        <dt>     @Html.DisplayNameFor(model => model.UserName)      </dt>
+        <dd>     @Html.DisplayFor(model => model.UserName)    </dd>
+
+        <dd class="btn btn-danger">
+       
+
+            @Html.ActionLink("Edit info", "EditUserHomePage", new { id = User.Identity.GetUserId() }, null) |
+        </dd>
+        @Html.ActionLink("Change password?", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+       
+
+
+
+    </dl>
+</div>
+
+
