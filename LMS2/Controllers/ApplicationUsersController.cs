@@ -116,7 +116,9 @@ namespace LMS2.Controllers
                 applicationUser.UserName = applicationUser.Email;
                 db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
-                return View("UserHomePage", applicationUser); 
+                return RedirectToAction("UserHomePage"); 
+                    
+                   // View("UserHomePage", applicationUser.Id); 
                     //View(applicationUser); 
             }
             //return View(currentUser);
