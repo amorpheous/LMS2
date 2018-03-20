@@ -18,12 +18,15 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ApplicationUsers
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
 
-            //            return View(db.Users.OrderBy(x => x.Course_.StartDate).ThenBy(x => x.Course_.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FullName).ThenBy(x => x.FirstName).ToList());
+            if (id == null | id == 0)
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x=>x.CourseId==null).ToList());
 
-            return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList());
+            else
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+
         }
 
         // GET: ApplicationUsers/Details/5

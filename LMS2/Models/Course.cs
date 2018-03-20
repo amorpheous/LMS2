@@ -48,7 +48,9 @@ namespace LMS2.Models
 
         //Appendices/Documents
 
+        [Display(Name = "students")]
         public virtual ICollection<ApplicationUser> AttendingStudents { get; set; }
+        [Display(Name = "modules")]
         public virtual ICollection<Module> Modules { get; set; }
     }
 }
