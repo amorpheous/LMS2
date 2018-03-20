@@ -2,3 +2,11 @@
 .highlight{
     background-color: gainsboro;
 }
+
+#loginscreen {
+    background-color: darkblue;
+    color: white;
+    background-image: url('../Pictures/LMS_logo.jpg');
+    background-size: 100%;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
