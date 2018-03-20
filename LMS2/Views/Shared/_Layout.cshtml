@@ -59,9 +59,9 @@
                             <ul class="dropdown-menu">
 
                                 <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
-                                <li>@Html.ActionLink("Add new user", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                                 <li class="divider"></li>
-                                <li>@Html.ActionLink("Teacher list", "Index", "ApplicationUsers")</li>
+                                <li>@Html.ActionLink("User list", "Index", "ApplicationUsers")</li>
 
                             </ul>
                         </li>
@@ -101,7 +101,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - LMS</p>
         </footer>
     </div>
 

@@ -101,7 +101,8 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.ActionLink("Homepage", "UserHomePage", new { id = item.Id }, null)
+                    @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
+                    @Html.ActionLink("View profile", "Details", "ApplicationUsers", new { id = item.Id },null)<span> | </span>
                 </td>
 
                 @*<td>
