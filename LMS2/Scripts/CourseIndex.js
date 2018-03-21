@@ -1,13 +1,13 @@
-﻿$(document).ready(function init() {
+﻿/*$(document).ready(function () {
     $('.module').addClass('hidden');
     $('.activity').addClass('hidden');
     $('.course').removeClass('hidden');
     $('.module').removeClass('highlight');
     $('.course').removeClass('highlight');
-
-
+    $('.activity').addClass('hidden');
+    $('.studentlist').addClass('hidden');
     });
-
+*/
 /*$(document).ready(function () {
     $('.course').on('click', function () {
         $('.module').removeClass('highlight');
@@ -27,13 +27,13 @@ $(document).ready(function () {
 });
 */
 
-/*
+
 $(document).ready(function () {
-    $('.course').on('mouseleave', function () {
-        $(this).removeClass('highlight');
+    $('.studentbtn').on('click', function () {
+        $('.students').toggleClass('hidden');
     });
 });
-*/
+
 
 $(document).ready(function () {
     var message = $('<span class="highlight">Choose an item to admin or create a new one. To return to the course list, just re-press the hightlighted course</span>');

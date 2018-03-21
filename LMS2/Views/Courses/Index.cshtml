@@ -39,12 +39,12 @@
                 </ul>
         </ul>
         <pre>
-            current filter: @ViewBag.Filter
+current filter: @ViewBag.Filter
 </pre>
 
 
         <div class="usa"></div>
-        <p>
+                <p>
 
         </p>
         <table class="table">
@@ -63,123 +63,136 @@
                     #@Html.DisplayNameFor(model => model.Modules)
                 </th>
                 <th>
-                    #@Html.DisplayNameFor(model => model.AttendingStudents)
+                    Admin
+                </th>
+                <th class="btn btn-primary studentbtn">
+                    @Html.DisplayNameFor(model => model.AttendingStudents)
                 </th>
             </tr>
 
             @foreach (var item in Model)
-            {
-                <tr class="course">
-                    <td>
-                        <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
-                    <td>
-                        @if (item.Modules.Count == 0) { }
-                        else
-                        {@Html.DisplayFor(modelItem => item.Modules.Count) {
-                            if (item.Modules.Count == 1)
-                            { <text> module</text>}
-                        else
-                        {<text> modules </text>}
-                }
-            }
-                    </td>
-                    <td>
-                        @if (item.AttendingStudents.Count == 0) { }
-                        else
-                        {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
-                            if (item.AttendingStudents.Count == 1)
-                            { <text> student</text>}
-                        else
-                        {<text> students </text>}
-                }
-            }
-                    </td>
-
-                    <td>
-                        <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        {
+            <tr class="course">
+                <td>
+                    <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @if (item.Modules.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item.Modules.Count) {
+    if (item.Modules.Count == 1)
+    { <text> module</text>}
+else
+{<text> modules </text>}
+}
+}
+                </td>
+                <td>
+                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
 @Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id}, null)</pre>
 
-                    </td>
-                </tr>
+                </td>
+                <td class="students">
+                    @if (item.AttendingStudents.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
+    if (item.AttendingStudents.Count == 1)
+    { <text> student</text>}
+else
+{<text> students </text>}
+}
+}
+                </td>
+                <td class="students hidden">
+                    @{ int loop = 1; }
+                    @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+        {
 
-                foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
-                {
-                    <tr class="module">
-                        <td>
-                            <b class="btn-danger" , style="color: black">M</b> @Html.DisplayFor(modelItem => item2.ModuleName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item2.StartDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item2.EndDate)
-                        </td>
+            @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
+{ loop = loop + 1; }
 
-                        <td>
-                            @if (item2.Activities.Count == 0) { }
-                            else
-                            {@Html.DisplayFor(modelItem => item2.Activities.Count) {
-                                if (item2.Activities.Count == 1)
-                                { <text> activity</text>}
-                            else
-                            {<text> activities </text>}
-                    }
+}
+                </td>
+            </tr>
 
-                }
-                        </td>
-                        <td></td>
-                        <td>
+        foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
+        {
+            <tr class="module">
+                <td>
+                    <b class="btn-danger" , style="color: black">M</b> @Html.DisplayFor(modelItem => item2.ModuleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item2.EndDate)
+                </td>
+
+                <td>
+
+                    @if (item2.Activities.Count == 0) { }
+        else
+        {@Html.DisplayFor(modelItem => item2.Activities.Count) {
+    if (item2.Activities.Count == 1)
+    { <text> activity</text>}
+else
+{<text> activities </text>}
+}
+
+}
+                </td>
+                <td>
 
 <pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
 @Html.ActionLink("Add_activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
-                        </td>
-
-                    </tr>
-                    foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName))
-                    {
-                        <tr class="activity">
-                            <td>
-                                <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item3.StartDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item3.EndDate)
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
-                            </td>
-
-                        </tr>
+                </td>
+                <td></td>
 
 
+            </tr>
+        foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName))
+        {
+            <tr class="activity">
+                <td>
+                    <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityName) (@Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item3.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item3.EndDate)
+                </td>
+                <td></td>
+                <td>
+                    <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
+                </td>
+                <td></td>
+                <td></td>
 
-                    }
+            </tr>
 
-                }
+    }
 
-            }
+}
+
+}
 
         </table>
         @*
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
-            {
-                page
-                //searchBy = Request.QueryString["searchBy"]
-                //search = Request.QueryString["search"]
-                //Display = PagedListDisplayMode.IfNeeded,
-                //DisplayItemSliceAndTotal = true
-            }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new
+        {
+            page
+            //searchBy = Request.QueryString["searchBy"]
+            //search = Request.QueryString["search"]
+            //Display = PagedListDisplayMode.IfNeeded,
+            //DisplayItemSliceAndTotal = true
+        }))
         *@
 
         <script src="~/Scripts/jquery-3.3.1.min.js"></script>
