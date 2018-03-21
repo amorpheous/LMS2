@@ -65,12 +65,11 @@ namespace LMS2.Controllers
 
         public ActionResult UserHomePage(string id)
         {
-            string currentUserId = User.Identity.GetUserId();
-
             ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-           
-            
+
+
             if (id != currentUserId)
             {
                 ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
@@ -81,6 +80,8 @@ namespace LMS2.Controllers
 
         public ActionResult EditUserHomePage(string id)
         {
+            
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -90,12 +91,15 @@ namespace LMS2.Controllers
             {
                 return HttpNotFound();
             }
-            string currentUserId = User.Identity.GetUserId();
+            string UserId = "";
+            if (id == null | id.Length == 0)
+            { UserId = User.Identity.GetUserId(); }
+            else UserId = id;
 
             ApplicationDbContext context = new ApplicationDbContext();
-            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+            ApplicationUser user = context.Users.FirstOrDefault(x => x.Id == UserId);
 
-            return View(currentUser);
+            return View(user);
         }
 
 

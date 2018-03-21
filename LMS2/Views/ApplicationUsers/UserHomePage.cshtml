@@ -1,74 +1,86 @@
 ﻿@model LMS2.Models.ApplicationUser
 @using Microsoft.AspNet.Identity
 @using LMS2.Models
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+
 
 @{
     ViewBag.Title = "UserHomePage";
 }
 
-  @{string currentUserId = User.Identity.GetUserId();
+@{string currentUserId = User.Identity.GetUserId();
 
-        ApplicationDbContext context = new ApplicationDbContext();
+    ApplicationDbContext context = new ApplicationDbContext();
 
-        ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-        string ID = currentUser.Id;
-        }
+    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+    string ID = currentUser.Id;
+}
 
-<h2>This is me:</h2>
+<div class="container-fluid"></div>
 
 <div class="row">
-
-    <dl class="dl-horizontal">
-
-
+    <div col-sm-12">
+        <h2>     Welcome to the home page of <b>@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</b></h2>
         @if (User.IsInRole("Student"))
-        {
+        {<text><small><br /><b>student</b> of course</small></text> @Html.DisplayFor(model => model.Course.CourseName)}
+        @if (User.IsInRole("Teacher"))
+        {<text><small>(LMS<b> teacher)</b></small></text>}
 
-        <dt>     @Html.DisplayNameFor(model => model.Course.CourseName)  </dt>
-        <dd>    @Html.DisplayFor(model => model.Course.CourseName)   </dd>
-        }
+        @if (!Model.IsActive)
+        {<text><b>THE USER IS NOT CURRENTLY ACTIVE!!!!</b></text>}
 
-        <dt>     @Html.DisplayNameFor(model => model.FirstName)    </dt>
-        <dd>      @Html.DisplayFor(model => model.FirstName)      </dd>
-
-        <dt>     @Html.DisplayNameFor(model => model.LastName)     </dt>
-        <dd>       @Html.DisplayFor(model => model.LastName)     </dd>
-
-
-        <dt>     @Html.DisplayNameFor(model => model.NickName)     </dt>
-        <dd>       @Html.DisplayFor(model => model.NickName)    </dd>
-
-        <dt>     @Html.DisplayNameFor(model => model.IsActive)     </dt>
-        <dd>       @Html.DisplayFor(model => model.IsActive)     </dd>
-
-        <dt>     @Html.DisplayNameFor(model => model.AdditionalInfo) </dt>
-        <dd>      @Html.DisplayFor(model => model.AdditionalInfo)        </dd>
-
-        @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
-        {
-        <dt>     @Html.DisplayNameFor(model => model.SpecialInfo)    </dt>
-        <dd>      @Html.DisplayFor(model => model.SpecialInfo)        </dd>
-        }
-
-        <dt>     @Html.DisplayNameFor(model => model.Email)         </dt>
-        <dd>        @Html.DisplayFor(model => model.Email)      </dd>
-
-
-
-
-        @if(User.Identity.GetUserId() == currentUser.Id){
-
-        <dd class="btn btn-danger">
-
-
-            @Html.ActionLink("Edit info", "EditUserHomePage", new { id = User.Identity.GetUserId() }, null) |
-        </dd>
-        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        }
-
-
-
-    </dl>
+        @if (Model.NickName != null && Model.NickName.Length > 0)
+        {<text><br />I am an entity that is referred to as<b></text> @Html.DisplayFor(model => model.NickName)}</b><br />
+    </div>
 </div>
+<div class="row">
+    <div col-sm-12">
+
+        <text><a href="mailto:@Model.Email">Email me</a></text>
+    </div>
+
+    <div class="row">
+        <div col-sm-6">
+
+            <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
+
+        </div>
+        @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
+        {<div col-sm-6">
+                @Html.DisplayNameFor(model => model.SpecialInfo)<br />
+                @Html.TextAreaFor(model => model.SpecialInfo, 10, 50, new { @readonly = "readonly" })
+            </div>
+        }
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div col-sm-12">
+            @Html.DisplayNameFor(model => model.AdditionalInfo)<br />
+            @Html.TextAreaFor(model => model.AdditionalInfo, 10, 50, new { @readonly = "readonly" })
+        </div>
+    </div>
+
+</div>
+
+
+@if (User.Identity.GetUserId() == currentUser.Id)
+{
+
+<dd class="btn btn-success">
+
+    @Html.ActionLink("Edit info", "EditUserHomePage", new { id = User.Identity.GetUserId() }, null)
+</dd>
+}
+
+
+
+        </dl>
+    </div>
+
 
 

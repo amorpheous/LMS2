@@ -60,18 +60,18 @@ current filter: @ViewBag.Filter
                 </th>
 
                 <th>
-                    #@Html.DisplayNameFor(model => model.Modules)
-                </th>
-                <th>
                     Admin
                 </th>
-                <th class="btn btn-primary studentbtn">
-                    @Html.DisplayNameFor(model => model.AttendingStudents)
+                <th> <div class="btn btn-primary subitembtn">
+                    Subitems</div>
                 </th>
+                <th><div class="btn btn-primary studentbtn">
+                    @Html.DisplayNameFor(model => model.AttendingStudents)
+                </div></th>
             </tr>
 
             @foreach (var item in Model)
-        {
+            {
             <tr class="course">
                 <td>
                     <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
@@ -83,21 +83,39 @@ current filter: @ViewBag.Filter
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
                 <td>
+                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
+
+                </td>
+                <td class="subitem">
                     @if (item.Modules.Count == 0) { }
-        else
-        {@Html.DisplayFor(modelItem => item.Modules.Count) {
-    if (item.Modules.Count == 1)
-    { <text> module</text>}
+                    else
+                    {@Html.DisplayFor(modelItem => item.Modules.Count) {
+                            if (item.Modules.Count == 1)
+                            { <text> module</text>}
 else
 {<text> modules </text>}
 }
 }
                 </td>
-                <td>
-                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id}, null)</pre>
+                <td class="subitem hidden">
+                    @if (item.Modules.Count == 0) { }
+                    @if (item.Modules.Count == 1)
+    {<b>Module:</b><br/>}
+                    @if (item.Modules.Count> 1)
+    {<b>Modules:</b><br />}
 
+
+                    @{ int loopM = 1; }
+                    @foreach (var item5 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName).ToList())
+    {
+
+                <small>@loopM<text>.</text> @Html.DisplayFor(xx => item5.ModuleName) <br /><text>  (</text>@Html.DisplayFor(xx => item5.StartDate) <text>-</text>@Html.DisplayFor(xx => item5.EndDate) <text>)</text></small><br />
+{ loopM = loopM + 1; }
+
+}
                 </td>
+
                 <td class="students">
                     @if (item.AttendingStudents.Count == 0) { }
         else
@@ -111,10 +129,16 @@ else
                 </td>
                 <td class="students hidden">
                     @{ int loop = 1; }
-                    @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-        {
+                    @if (item.AttendingStudents.Count == 0) { }
+                    @if (item.AttendingStudents.Count == 1)
+    {<b>Student:</b><br />}
+                    @if (item.AttendingStudents.Count > 1)
+    {<b>Students:</b><br />}
 
-            @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
+                    @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+    {
+
+                     <small> @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)</small><br />
 { loop = loop + 1; }
 
 }
@@ -136,6 +160,11 @@ else
 
                 <td>
 
+<pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
+@Html.ActionLink("Add_activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
+                </td>
+                <td class="subitem">
+
                     @if (item2.Activities.Count == 0) { }
         else
         {@Html.DisplayFor(modelItem => item2.Activities.Count) {
@@ -147,11 +176,24 @@ else
 
 }
                 </td>
-                <td>
+                <td class="subitem hidden">
+                    @if (item2.Activities.Count == 0) { }
+                    @if (item2.Activities.Count == 1)
+        {<b>Activity:</b><br />}
+                    @if (item2.Activities.Count > 1)
+        {<b>Activities:</b><br />}
 
-<pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
-@Html.ActionLink("Add_activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
+
+                    @{ int loopA = 1; }
+                    @foreach (var item6 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList())
+        {
+
+            <small>@loopA<text>.</text> @Html.DisplayFor(xx => item6.ActivityName) <br /><text>  (</text>@Html.DisplayFor(xx => item6.StartDate) <text>-</text>@Html.DisplayFor(xx => item6.EndDate) <text>)</text></small><br />
+{ loopM = loopM + 1; }
+
+}
                 </td>
+
                 <td></td>
 
 
@@ -168,10 +210,10 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item3.EndDate)
                 </td>
-                <td></td>
                 <td>
                     <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
                 </td>
+                <td></td>
                 <td></td>
                 <td></td>
 
