@@ -21,19 +21,20 @@ namespace LMS2.Controllers
         {
             ViewBag.Filter = "";
             ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId});
+            var today = DateTime.Now.Date;
             if (id == null | id == 0 | id == 1)
             {
                 ViewBag.Filter = "Present/Future";
-                return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+                return View(db.Courses.Where(x => x.EndDate>=today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
             }
             else if (id == 2)
             {
                 ViewBag.Filter = "Past";
-                return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+                return View(db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
             }
             else
                 ViewBag.Filter = "All";
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList());
+            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
 
             }
 
