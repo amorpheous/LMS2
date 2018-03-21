@@ -219,17 +219,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803201418318_enddatechange4.cs" />
-    <Compile Include="Migrations\201803201418318_enddatechange4.Designer.cs">
-      <DependentUpon>201803201418318_enddatechange4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803201513250_changes4.cs" />
-    <Compile Include="Migrations\201803201513250_changes4.Designer.cs">
-      <DependentUpon>201803201513250_changes4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803201539081_changes5.cs" />
-    <Compile Include="Migrations\201803201539081_changes5.Designer.cs">
-      <DependentUpon>201803201539081_changes5.cs</DependentUpon>
+    <Compile Include="Migrations\201803210752236_init.cs" />
+    <Compile Include="Migrations\201803210752236_init.Designer.cs">
+      <DependentUpon>201803210752236_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -516,14 +508,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803201418318_enddatechange4.resx">
-      <DependentUpon>201803201418318_enddatechange4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803201513250_changes4.resx">
-      <DependentUpon>201803201513250_changes4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803201539081_changes5.resx">
-      <DependentUpon>201803201539081_changes5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803210752236_init.resx">
+      <DependentUpon>201803210752236_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
