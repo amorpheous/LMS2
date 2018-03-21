@@ -54,7 +54,7 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)</li>
 
-@if(User.IsInRole(LMS2.Models.Roles.Teacher))
+@if(User.IsInRole("Teacher"))
                     { 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
