@@ -70,6 +70,9 @@
 
             </dl>
             <hr />
+
+
+
             <h4>Participants</h4>
             <table class="table">
                 <tr>
@@ -82,32 +85,49 @@
                     <th></th>
                 </tr>
                 @if (Model != null)
-                {
-
-            foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
-                   
-                </td>
 
-                @*<td>
+                foreach (var item in Model.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
 
-        @Html.ActionLink("Details", "Details", new { id = item.Id })
-        </td>*@
-            </tr>
+                        </td>
+
+                        @*<td>
+
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        </td>*@
+                    </tr>
             }
-                }
+        }
             </table>
             @*@Html.Partial("_AttendingStudentsPartialView")*@
         </div>
+
+        <div class="col-md-6">
+            @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                @Html.TextBox("file", "", new { type = "file" })
+
+                Description: @Html.TextBoxFor(File => File.Description)
+
+                <input type="submit" value="Upload File" />
+
+            </div>
+
+    }
+            @ViewBag.Message
+        </div>
+
         <div class="col-md-6">
             <hr />
             <h4>Schedule</h4>
@@ -123,25 +143,26 @@
                 </tr>
 
                 @if (Model != null)
+            {
+                foreach (var item in Model.Modules)
                 {
-                    foreach (var item in Model.Modules)
-                    {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModuleName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-                </td>
-            </tr>
-                    }
-                }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModuleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        </td>
+                    </tr>
+            }
+        }
 
             </table>
         </div>
+
 
 
     </div>

@@ -34,7 +34,7 @@ namespace LMS2.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(Models.File fileModel, HttpPostedFileBase file)
+        public ActionResult UploadFile(string Id, Models.File fileModel, HttpPostedFileBase file)
         {
             //try
             //{
@@ -66,8 +66,24 @@ namespace LMS2.Controllers
                         ContentType = file.ContentType,
                         Description = fileModel.Description,
                         TimeStamp = DateTime.Now,
-                        UploaderId = User.Identity.GetUserId()
+                        ApplicationUserId = db.Users.Find(User.Identity.GetUserId())
                     };
+
+                    string[] entityId = Id.Split(' ');
+
+                    if (entityId[1] == "Course")
+                    {
+                        upload.CourseId = entityId[0];
+                    }
+                    else if (entityId[1] == "Module")
+                    {
+                        upload.ModuleId = entityId[0];
+                    }
+                    else
+                    {
+                        upload.ActivityId = entityId[0];
+                    }
+                    
 
                     using (var reader = new BinaryReader(file.InputStream))
                     {

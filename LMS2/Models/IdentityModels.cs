@@ -114,7 +114,9 @@ namespace LMS2.Models
 
         public System.Data.Entity.DbSet<LMS2.Models.ActivityType> ActivityTypes { get; set; }
 
-       
+        public DbSet<File> Files { get; set; }
+
+
 
 
 

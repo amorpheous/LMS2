@@ -35,6 +35,7 @@
                     <li>@Html.ActionLink("All", "Index", new { id = 3 })</li>
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Add new course", "Create")</li>
+                    
 
                 </ul>
         </ul>
@@ -83,32 +84,36 @@ current filter: @ViewBag.Filter
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
                 <td>
-                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
+                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|
+                        @Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|
+                        @Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id }, null)|
+                        @Html.ActionLink("Upload File", "UploadFile", "Upload", new { Id = item.Id.ToString() + " Course" }, null )</pre>
 
                 </td>
                 <td class="subitem">
                     @if (item.Modules.Count == 0) { }
                     else
-                    {@Html.DisplayFor(modelItem => item.Modules.Count) {
+                    {@Html.DisplayFor(modelItem => item.Files) {
                             if (item.Modules.Count == 1)
-                            { <text> module</text>}
+                            { <text> File</text>}
 else
-{<text> modules </text>}
+{<text> Files </text>}
 }
 }
                 </td>
                 <td class="subitem hidden">
                     @if (item.Modules.Count == 0) { }
                     @if (item.Modules.Count == 1)
-    {<b>Module:</b><br/>}
+                    {<b>Module:</b><br/>}
                     @if (item.Modules.Count> 1)
-    {<b>Modules:</b><br />}
+                    {<b>Modules:</b><br />}
 
 
                     @{ int loopM = 1; }
                     @foreach (var item5 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName).ToList())
-    {
+                    {
 
                 <small>@loopM<text>.</text> @Html.DisplayFor(xx => item5.ModuleName) <br /><text>  (</text>@Html.DisplayFor(xx => item5.StartDate) <text>-</text>@Html.DisplayFor(xx => item5.EndDate) <text>)</text></small><br />
 { loopM = loopM + 1; }
@@ -145,8 +150,8 @@ else
                 </td>
             </tr>
 
-        foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
-        {
+                        foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
+                        {
             <tr class="module">
                 <td>
                     <b class="btn-danger" , style="color: black">M</b> @Html.DisplayFor(modelItem => item2.ModuleName)
@@ -160,8 +165,11 @@ else
 
                 <td>
 
-<pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
-@Html.ActionLink("Add_activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
+                    <pre>@Html.ActionLink("Edit", "Edit", "Modules", new { id = item2.Id }, null)|
+                            @Html.ActionLink("Details", "Details", "Modules", new { id = item2.Id }, null)|
+                            @Html.ActionLink("Delete", "Delete", "Modules", new { id = item2.Id }, null)
+                            @Html.ActionLink("Add_activity", "Create", "Activities", new { ModuleId = item2.Id }, null)|
+                            @Html.ActionLink("Upload File", "UploadFile", "Upload", new { Id = item2.Id.ToString() + " Module" }, null)</pre>
                 </td>
                 <td class="subitem">
 
@@ -211,10 +219,13 @@ else
                     @Html.DisplayFor(modelItem => item3.EndDate)
                 </td>
                 <td>
-                    <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|@Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id }, null)</pre>
+                    <pre>@Html.ActionLink("Edit", "Edit", "Activities", new { id = item2.Id }, null)|
+                        @Html.ActionLink("Details", "Details", "Activities", new { id = item2.Id }, null)|
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item2.Id })|
+                        @Html.ActionLink("Upload File", "UploadFile", "Upload", new { Id = item3.Id.ToString() + " Activity" }, null )</pre>
                 </td>
                 <td></td>
-                <td></td>
+                <td></td> 
                 <td></td>
 
             </tr>

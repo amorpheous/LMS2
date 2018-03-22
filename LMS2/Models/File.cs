@@ -9,7 +9,7 @@ namespace LMS2.Models
 {
     public class File
     {
-        public int Id { get; set; }
+        public int FileId { get; set; }
         [StringLength(255)]
         public string FileName { get; set; }
         [StringLength(100)]
@@ -17,14 +17,13 @@ namespace LMS2.Models
         public byte[] Content { get; set; }
         public string Description { get; set; }
         public DateTime TimeStamp { get; set; }
-        public int CourseId { get; set; }
-        public int moduleId { get; set; }
-        public int ActivityId { get; set; }
-
+        public string CourseId { get; set; }
+        public string ModuleId { get; set; }
+        public string ActivityId { get; set; }
 
 
         //Navigational properties
-        public string UploaderId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        
+        public virtual ApplicationUser ApplicationUserId { get; set; }
     }
 }

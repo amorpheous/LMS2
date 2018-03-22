@@ -43,7 +43,7 @@ namespace LMS2.Models
 
 
         //Appendices/Documents
- 
+        public virtual ICollection<File> Files { get; set; }
 
         [Display(Name = "students")]
         public virtual ICollection<ApplicationUser> AttendingStudents { get; set; }
