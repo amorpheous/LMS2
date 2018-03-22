@@ -35,6 +35,7 @@ namespace LMS2.Models
         }
 
         [StringLength(20, ErrorMessage = "0-20 characters")]
+        [Display(Name = "Nick name")]
         public string NickName { get; set; }
         //  public string Email { get; set; }
 
@@ -46,6 +47,7 @@ namespace LMS2.Models
         public string AdditionalInfo { get; set; }
 
 
+        [Display(Name = "Hidden information")]
         [StringLength(200, ErrorMessage = "0-200 characters")]
         public string SpecialInfo { get; set; }
 

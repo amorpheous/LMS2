@@ -1,13 +1,12 @@
-﻿/*$(document).ready(function () {
+﻿$(document).ready(function () {
     $('.module').addClass('hidden');
     $('.activity').addClass('hidden');
     $('.course').removeClass('hidden');
     $('.module').removeClass('highlight');
     $('.course').removeClass('highlight');
     $('.activity').addClass('hidden');
-    $('.studentlist').addClass('hidden');
     });
-*/
+
 /*$(document).ready(function () {
     $('.course').on('click', function () {
         $('.module').removeClass('highlight');
@@ -28,9 +27,28 @@ $(document).ready(function () {
 */
 
 
+//gör så att det bara är kursnamn etc som är klickbart för val och att bara det markeras. så att det går att klicka på antal studenter/studentlista etc för att toggla just den)
+
+
 $(document).ready(function () {
     $('.studentbtn').on('click', function () {
         $('.students').toggleClass('hidden');
+        $('.module').addClass('hidden');
+        $('.activity').addClass('hidden');
+        $('.course').removeClass('hidden');
+        $('.module').removeClass('highlight');
+        $('.course').removeClass('highlight');
+    });
+});
+
+$(document).ready(function () {
+    $('.subitembtn').on('click', function () {
+        $('.subitem').toggleClass('hidden');
+        $('.module').addClass('hidden');
+        $('.activity').addClass('hidden');
+        $('.course').removeClass('hidden');
+        $('.module').removeClass('highlight');
+        $('.course').removeClass('highlight');
     });
 });
 

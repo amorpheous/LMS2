@@ -8,7 +8,7 @@
 <ul class="nav navbar-nav">
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            Filters/Add teacher
+            Filters / Add teacher
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
@@ -74,7 +74,7 @@
         <td>
             @if (User.IsInRole("Teacher"))
         {
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>}
+            @Html.ActionLink("Edit", "EditUserHomePage", "ApplicationUsers", new { id = item.Id },null) <span>|</span>}
             @Html.ActionLink("View profile", "Details", new { id = item.Id })<span> | </span>
             @if (User.IsInRole("Teacher"))
         {

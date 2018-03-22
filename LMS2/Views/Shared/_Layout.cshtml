@@ -64,7 +64,10 @@
                                 <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
                                 <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                                 <li class="divider"></li>
-                                <li>@Html.ActionLink("User list", "Index", "ApplicationUsers")</li>
+                                <li>@Html.ActionLink("Teacher/student list", "Index", "ApplicationUsers")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Edit your page", "EditUserHomePage", "ApplicationUsers", new { id = User.Identity.GetUserId() }, null)</li>
+
 
                             </ul>
                         </li>
