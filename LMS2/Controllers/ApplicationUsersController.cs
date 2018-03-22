@@ -34,6 +34,28 @@ namespace LMS2.Controllers
         }
 
         // GET: ApplicationUsers/Details/5
+
+        public ActionResult Test(int? id)
+        {
+            ViewBag.Filter = "";
+            if (id == null | id == 0)
+            {
+                ViewBag.Filter = "Teachers";
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+            }
+            else
+            {
+                ViewBag.Filter = "Students";
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+            }
+        }
+
+        // GET: ApplicationUsers/Details/5
+
+
+
+
+
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -73,8 +95,10 @@ namespace LMS2.Controllers
             if (id != currentUserId)
             {
                 ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
+                ViewBag.Id = otherUser.Id;
                 return View(otherUser);
             }
+            ViewBag.Id = currentUserId;
             return View(currentUser);
         }
 
@@ -99,6 +123,9 @@ namespace LMS2.Controllers
             ApplicationDbContext context = new ApplicationDbContext();
             ApplicationUser user = context.Users.FirstOrDefault(x => x.Id == UserId);
 
+
+
+            ViewBag.Id = id;
             return View(user);
         }
 

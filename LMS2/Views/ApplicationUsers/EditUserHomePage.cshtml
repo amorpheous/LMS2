@@ -8,10 +8,10 @@
 }
 
 
+
 @{var userRole = "";
     string currentUserId = User.Identity.GetUserId();
     ApplicationDbContext context = new ApplicationDbContext();
-
 
     ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
     {
@@ -19,17 +19,22 @@
         string Email = currentUser.Email;
         string Username = currentUser.UserName;
 
-        if (User.IsInRole("Teacher"))
+        if (User.IsInRole(LMS2.Models.Roles.Teacher))
         {
             userRole = LMS2.Models.Roles.Teacher;
         }
-        if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
+        if (User.IsInRole(LMS2.Models.Roles.Student)) { userRole += LMS2.Models.Roles.Student; }
         if (currentUser != null)
         {
-<h2>Update user details
+<h2>
+    Update user details
 
-            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)
-        </h2>
+    @Html.ActionLink(Model.FullName, "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)
+    @if (Model.CourseId.HasValue)
+    {<text><small> (Student) </small></text>}
+else
+{<text><small> (LMS teacher) </small></text>}
+</h2>
         }
     }
         } 
@@ -66,31 +71,41 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.IsActive)
-                                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.AdditionalInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
+                    @if (userRole == LMS2.Models.Roles.Student|currentUserId==ViewBag.Id)
+    {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+}
+                    @if (userRole == LMS2.Models.Roles.Teacher)
+    {
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                </div>
+}
+
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.AdditionalInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.SpecialInfo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -99,7 +114,7 @@
                             @Html.ValidationMessageFor(model => model.SpecialInfo, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                    }
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -118,11 +133,16 @@
 
                 </div>
                 <div class="col-sm-6">
-
-                    @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    @if (currentUserId == ViewBag.Id)
+    {
+                @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                     <br />
+                    <br />}
+                    @if (currentUserId == ViewBag.Id)
+    {
+                <a href="">Update user picture?</a>
                     <br />
-                    <a href="">Update user picture?</a>
+                    <br />}
                     <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
 
 
