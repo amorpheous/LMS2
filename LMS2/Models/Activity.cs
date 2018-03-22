@@ -31,11 +31,13 @@ namespace LMS2.Models
 
         [Display(Name = "Start date/time")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         [Required]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "End date/time")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         [Required]
         public DateTime EndDate { get; set; }
 
