@@ -30,9 +30,10 @@
                 </a>
                 <ul class="dropdown-menu">
 
-                    <li>@Html.ActionLink("Present/Future", "Index", new { id = 0 })</li>
-                    <li>@Html.ActionLink("Past", "Index", new { id = 2 })</li>
-                    <li>@Html.ActionLink("All", "Index", new { id = 3 })</li>
+                    <li>@Html.ActionLink("Current courses", "Index", new { id = 0 })</li>
+                    <li>@Html.ActionLink("Upcoming courses", "Index", new { id = 1 })</li>
+                    <li>@Html.ActionLink("Past courses", "Index", new { id = 2 })</li>
+                    <li>@Html.ActionLink("All courses", "Index", new { id = 3 })</li>
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Add new course", "Create")</li>
                     

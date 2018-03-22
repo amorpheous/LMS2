@@ -25,18 +25,23 @@ namespace LMS2.Controllers
             ViewBag.Filter = "";
             ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId});
             var today = DateTime.Now.Date;
-            if (id == null | id == 0 | id == 1)
+            if (id == null | id == 0 )
             {
-                ViewBag.Filter = "Present/Future";
-                return View(db.Courses.Where(x => x.EndDate>=today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+                ViewBag.Filter = "Current courses";
+                return View(db.Courses.Where(x => x.EndDate>=today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+            }
+            if (id == null |id == 1)
+            {
+                ViewBag.Filter = "Upcoming courses";
+                return View(db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
             }
             else if (id == 2)
             {
-                ViewBag.Filter = "Past";
+                ViewBag.Filter = "Past courses";
                 return View(db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
             }
             else
-                ViewBag.Filter = "All";
+                ViewBag.Filter = "All courses";
             return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
 
             }

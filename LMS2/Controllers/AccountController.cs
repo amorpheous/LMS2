@@ -16,6 +16,10 @@ namespace LMS2.Controllers
 {
 
    
+    
+
+
+
 
     [Authorize]
     public class AccountController : Controller
