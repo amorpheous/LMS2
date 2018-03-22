@@ -112,7 +112,6 @@ namespace LMS2.Models
         public DbSet<File> Files { get; set; }
 
 
-
         // public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+
 namespace LMS2.Migrations
 {
     using LMS2.Models;

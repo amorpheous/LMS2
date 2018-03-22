@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using LMS2.Models;
 using System.Configuration;
 using System.Data;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 
 
@@ -15,15 +17,24 @@ namespace LMS2.Controllers
     public class UploadController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         [HttpGet]
         public ActionResult UploadFile()
         {
-            return View();
+            var userStore = new UserStore<ApplicationUser>(db);
+            var UserManager = new UserManager<ApplicationUser>(userStore);
+
+            var ViewModel = new Models.File();
+            
+
+            ViewModel = new Models.File();
+
+            return View(ViewModel);
         }
 
         [HttpPost]
-        public ActionResult UploadFile(ApplicationUser applicationUser, HttpPostedFileBase file)
+        public ActionResult UploadFile(Models.File fileModel, HttpPostedFileBase file)
         {
             //try
             //{
@@ -42,27 +53,33 @@ namespace LMS2.Controllers
             //    return View();
             //}
 
+
+            var upload = new Models.File();
+
             try
             {
-              
-                    if (file != null && file.ContentLength > 0)
+                if (file != null && file.ContentLength > 0)
+                {
+                    upload = new Models.File
                     {
-                        var upload = new Models.File
-                        {
-                            FileName = Path.GetFileName(file.FileName),
-                            FileType = FileType.File,
-                            ContentType = file.ContentType
-                        };
-                        using (var reader = new BinaryReader(file.InputStream))
-                        {
-                            upload.Content = reader.ReadBytes(file.ContentLength);
-                        }
-                        applicationUser.Files = new List<Models.File> { upload };
+                        FileName = Path.GetFileName(file.FileName),
+                        ContentType = file.ContentType,
+                        Description = fileModel.Description,
+                        TimeStamp = DateTime.Now,
+                        UploaderId = User.Identity.GetUserId()
+                    };
+
+                    using (var reader = new BinaryReader(file.InputStream))
+                    {
+                        upload.Content = reader.ReadBytes(file.ContentLength);
                     }
-                    db.Users.Add(applicationUser);
-                    db.SaveChanges();
-                    ViewBag.Message = "File Upload Successfully!";
-                    return View();
+                    
+
+                }
+                db.Files.Add(upload);
+                db.SaveChanges();
+                ViewBag.Message = "File Uploaded Successfully!";
+                return View();
             }
             catch
             {

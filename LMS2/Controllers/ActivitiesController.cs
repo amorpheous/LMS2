@@ -40,7 +40,12 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create()
         {
-            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
+            var ViewModel = new Activity
+            {
+                Modules = db.Modules.ToList(),
+                ActivityTypes = db.ActivityTypes.ToList()
+            };
+
             return View(ViewModel);
         }
 

@@ -122,7 +122,9 @@ namespace LMS2.Controllers
             //ViewBag.Course = db.Courses.ToList();
             // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             var ViewModel = new Module { Courses = db.Courses.ToList() };
+
             bool r2c = false;
+
             if (CourseId == null)
             {
                 CourseId = "0";

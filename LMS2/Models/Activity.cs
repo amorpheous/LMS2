@@ -55,6 +55,8 @@ namespace LMS2.Models
         //   Appendices
         public int ActivityTypeId { get; set; }
         public virtual ActivityType ActivityType { get; set; }
+        
+        //for drop down list
         public IEnumerable<ActivityType> ActivityTypes { get; set; }
 
 
