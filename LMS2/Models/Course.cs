@@ -18,12 +18,16 @@ namespace LMS2.Models
         [StringLength(200, ErrorMessage = "The description can at most be 200 characters long")]
         public string Description { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime StartDate { get; set; }
+
+
         [Display(Name = "End date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         [Required]
         public DateTime EndDate { get; set; }
         [Display(Name = "Urgent information")]
