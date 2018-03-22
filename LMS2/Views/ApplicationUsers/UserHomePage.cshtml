@@ -14,11 +14,11 @@
     ApplicationDbContext context = new ApplicationDbContext();
 
     ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-    if (currentUser != null) {
+    if (currentUser != null)
+    {
         string ID = currentUser.Id;
     }
 }
-
 
 
 <div class="container">
@@ -51,10 +51,10 @@
                     else
                     {@Model.FirstName @Model.LastName}
                     </b>
-                    @if (User.IsInRole("Student"))
-                    {<text><small><br /><b>student</b> of course</small></text> @Model.Course.CourseName}
-                    @if (User.IsInRole("Teacher"))
-                    {<text><small>(LMS<b> teacher)</b></small></text>}
+                    @if (Model.CourseId.HasValue)
+                    {<text><small><br /><b>Student</b> (@Model.Course.CourseName)</small></text>}
+                else
+                {<text ><small><b>LMS teacher</b></small></text>}
 
             </h2>
         </div>
@@ -72,7 +72,7 @@
             <div class="col-sm-12">
 
                 @if (!Model.IsActive)
-                {<text><b>THE USER IS NOT CURRENTLY ACTIVE!!!!</b></text>}
+                {<text><b><big>THE USER IS NOT CURRENTLY ACTIVE!!!!</big></b></text>}
 
             </div>
         </div>
@@ -106,6 +106,8 @@
 </div>
 
 </div>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
 
 
 

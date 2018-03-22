@@ -35,25 +35,6 @@ namespace LMS2.Controllers
 
         // GET: ApplicationUsers/Details/5
 
-        public ActionResult Test(int? id)
-        {
-            ViewBag.Filter = "";
-            if (id == null | id == 0)
-            {
-                ViewBag.Filter = "Teachers";
-                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
-            }
-            else
-            {
-                ViewBag.Filter = "Students";
-                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
-            }
-        }
-
-        // GET: ApplicationUsers/Details/5
-
-
-
 
 
         public ActionResult Details(string id)
@@ -133,26 +114,26 @@ namespace LMS2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUserHomePage([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
+        public ActionResult EditUserHomePage([Bind(Include = "FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
         {
-            //string currentUserId = User.Identity.GetUserId();
 
-            //ApplicationDbContext context = new ApplicationDbContext();
-            //ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-           
 
             if (ModelState.IsValid)
             {
-                //applicationUser = currentUser;
-                applicationUser.UserName = applicationUser.Email;
-                db.Entry(applicationUser).State = EntityState.Modified;
+                ApplicationDbContext context = new ApplicationDbContext();
+                ApplicationUser user = context.Users.AsNoTracking().FirstOrDefault(x => x.Email == applicationUser.Email);
+
+                user.FirstName = applicationUser.FirstName;
+                user.LastName = applicationUser.LastName;
+                user.NickName = applicationUser.NickName;
+                user.IsActive= applicationUser.IsActive;
+                user.AdditionalInfo = applicationUser.AdditionalInfo;
+                user.SpecialInfo = applicationUser.SpecialInfo;
+                user.Email = applicationUser.Email;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("UserHomePage"); 
-                    
-                   // View("UserHomePage", applicationUser.Id); 
-                    //View(applicationUser); 
+                return RedirectToAction("UserHomePage","ApplicationUsers",new { id = user.Id }); 
             }
-            //return View(currentUser);
             else
             return View(applicationUser);
 

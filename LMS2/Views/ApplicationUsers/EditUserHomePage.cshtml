@@ -14,36 +14,29 @@
     ApplicationDbContext context = new ApplicationDbContext();
 
     ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+    string ID = currentUser.Id;
+    string Email = currentUser.Email;
+    string Username = currentUser.UserName;
+
+    if (User.IsInRole(LMS2.Models.Roles.Teacher))
     {
-        string ID = currentUser.Id;
-        string Email = currentUser.Email;
-        string Username = currentUser.UserName;
-
-        if (User.IsInRole(LMS2.Models.Roles.Teacher))
-        {
-            userRole = LMS2.Models.Roles.Teacher;
-        }
-        if (User.IsInRole(LMS2.Models.Roles.Student)) { userRole += LMS2.Models.Roles.Student; }
-        if (currentUser != null)
-        {
-<h2>
-    Update user details
-
-    @Html.ActionLink(Model.FullName, "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)
-    @if (Model.CourseId.HasValue)
-    {<text><small> (Student) </small></text>}
-else
-{<text><small> (LMS teacher) </small></text>}
-</h2>
-        }
+        userRole = LMS2.Models.Roles.Teacher;
     }
-        } 
+    if (User.IsInRole(LMS2.Models.Roles.Student)) { userRole += LMS2.Models.Roles.Student; }
+    if (currentUser != null)
+    {
+            <h2>
+                Update user details
 
-
-
-
-
-@using (Html.BeginForm())
+                @Html.ActionLink(Model.FullName, "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)
+                @if (Model.CourseId.HasValue)
+                {<text><small><br /><b> Student</b> (@Model.Course.CourseName)</small></text>}
+                else
+                {<text ><small><b>LMS teacher</b></small></text>}
+            </h2>
+            }
+        }
+        @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -73,47 +66,47 @@ else
 
 
 
-                    @if (userRole == LMS2.Models.Roles.Student|currentUserId==ViewBag.Id)
-    {
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-}
-                    @if (userRole == LMS2.Models.Roles.Teacher)
-    {
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsActive)
-                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                </div>
-}
+                    }
+                    @if (userRole == LMS2.Models.Roles.Teacher)
+                    {
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsActive)
+                                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                     @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
                     {
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.AdditionalInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.SpecialInfo, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.SpecialInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.SpecialInfo, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.AdditionalInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SpecialInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.SpecialInfo, 5, 80, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.SpecialInfo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     }
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -134,15 +127,15 @@ else
                 </div>
                 <div class="col-sm-6">
                     @if (currentUserId == ViewBag.Id)
-    {
-                @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                    <br />
-                    <br />}
+                    {
+                        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        <br />
+                        <br />}
                     @if (currentUserId == ViewBag.Id)
-    {
-                <a href="">Update user picture?</a>
-                    <br />
-                    <br />}
+                    {
+                        <a href="">Update user picture?</a>
+                        <br />
+                        <br />}
                     <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
 
 
@@ -164,7 +157,7 @@ else
         </div>
 
 
-        </div>
+    </div>
 }
 
 <div>
