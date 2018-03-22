@@ -144,32 +144,34 @@ else
 </details>
 </td>
                     <td class="students">
-                        @if (item.AttendingStudents.Count == 0) { }
-                        else
-                        {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
-                            if (item.AttendingStudents.Count == 1)
-                            { <text> student</text>}
-                        else
-                        {<text> students</text>}
-                }
-            }
-                    </td>
-                    <td class="students hidden">
-                        @{ int loop = 1; }
-                        @if (item.AttendingStudents.Count == 0) { }
-                        @if (item.AttendingStudents.Count == 1)
-                        {<b> Student:</b><br />}
-                        @if (item.AttendingStudents.Count > 1)
-                        {<b> Students:</b><br />}
+                        <details><summary>
+    @if (item.AttendingStudents.Count == 0) { }
+    else
+    {@Html.DisplayFor(modelItem => item.AttendingStudents.Count) {
+        if (item.AttendingStudents.Count == 1)
+        { <text> student</text>}
+    else
+    {<text> students</text>}
+}
+}</summary>
+                                 <small>
+                                     @{ int loop = 1; }
+                                     @if (item.AttendingStudents.Count == 0) { }
+                                     @if (item.AttendingStudents.Count == 1)
+    {<b> Student:</b><br />}
+                                     @if (item.AttendingStudents.Count > 1)
+    {<b> Students:</b><br />}
 
-                        @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-                        {
+                                     @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+    {
 
-                            <small> @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)</small><br />
-                            { loop = loop + 1; }
+                                 <small> @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)</small><br />
+{ loop = loop + 1; }
 
-                        }
-                    </td>
+}
+                                 </small>
+</details>
+                     </td>
      </tr>
 
                 foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
