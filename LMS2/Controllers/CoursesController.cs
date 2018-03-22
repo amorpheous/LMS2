@@ -19,24 +19,64 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
-            if (id==null|id==0)
-            return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
-            else if (id == 1)
-                return View(db.Courses.Where(x => x.Historic == false).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+            ViewBag.Filter = "";
+            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId});
+            var today = DateTime.Now.Date;
+            if (id == null | id == 0 | id == 1)
+            {
+                ViewBag.Filter = "Present/Future";
+                return View(db.Courses.Where(x => x.EndDate>=today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+            }
             else if (id == 2)
-            return View(db.Courses.Where(x => x.Historic == true).OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+            {
+                ViewBag.Filter = "Past";
+                return View(db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+            }
             else
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.CourseName).ToList().ToPagedList(page ?? 1, 10));
+                ViewBag.Filter = "All";
+            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
 
-        }
+            }
 
-        public ActionResult StudentCourse()
+        public class StudentList
+        {
+            public string FullName { get; set; }
+            public int? CourseId { get; set; }
+    }
+
+        public ActionResult StudentCourse(string id)
         {
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
-            var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
-            return View(course);
+            if (User.IsInRole(Roles.Student))
+            {
+                if (user.CourseId != null)
+                {
+                    var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
+                    return View(course);
+                }
+                else return View();
+            }
+            if (User.IsInRole(Roles.Teacher))
+            {
+                if(Int32.TryParse(id,out int idint))
+                { 
+                    var course2 = db.Courses.FirstOrDefault(c => c.Id == idint);
+                    return View(course2);
+                }
+                else return View();
+            }
+            else return View();
         }
 
+        public ActionResult Redirect()
+        {
+            //Det enda den här metoden gör att routa om tillbaks till UserSpecificLogin i Accountcontroller.
+            //Men därmed har nu en 'identitytoken' hunnits sättas.
+            return RedirectToAction("UserSpecificLogin", "Account");
+                
+        }
+
+        
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
@@ -66,7 +106,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +140,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,DurationDays,UrgentInfo")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
         {
             if (ModelState.IsValid)
             {

@@ -1,11 +1,10 @@
-﻿$(document).ready(function init() {
+﻿$(document).ready(function () {
     $('.module').addClass('hidden');
     $('.activity').addClass('hidden');
     $('.course').removeClass('hidden');
     $('.module').removeClass('highlight');
     $('.course').removeClass('highlight');
-
-
+    $('.activity').addClass('hidden');
     });
 
 /*$(document).ready(function () {
@@ -27,16 +26,35 @@ $(document).ready(function () {
 });
 */
 
-/*
-$(document).ready(function () {
-    $('.course').on('mouseleave', function () {
-        $(this).removeClass('highlight');
-    });
-});
-*/
+
+//gör så att det bara är kursnamn etc som är klickbart för val och att bara det markeras. så att det går att klicka på antal studenter/studentlista etc för att toggla just den)
+
 
 $(document).ready(function () {
-var message = $('<span class="highlight">THIS IS JUST A TEST LINE</span>');
+    $('.studentbtn').on('click', function () {
+        $('.students').toggleClass('hidden');
+        $('.module').addClass('hidden');
+        $('.activity').addClass('hidden');
+        $('.course').removeClass('hidden');
+        $('.module').removeClass('highlight');
+        $('.course').removeClass('highlight');
+    });
+});
+
+$(document).ready(function () {
+    $('.subitembtn').on('click', function () {
+        $('.subitem').toggleClass('hidden');
+        $('.module').addClass('hidden');
+        $('.activity').addClass('hidden');
+        $('.course').removeClass('hidden');
+        $('.module').removeClass('highlight');
+        $('.course').removeClass('highlight');
+    });
+});
+
+
+$(document).ready(function () {
+    var message = $('<span class="highlight">Choose an item to admin or create a new one. To return to the course list, just re-press the hightlighted course</span>');
 $('.usa').append(message);
 });
 

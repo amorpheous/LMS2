@@ -18,12 +18,19 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ApplicationUsers
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-
-            //            return View(db.Users.OrderBy(x => x.Course_.StartDate).ThenBy(x => x.Course_.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FullName).ThenBy(x => x.FirstName).ToList());
-
-            return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList());
+            ViewBag.Filter = "";
+            if (id == null | id == 0)
+            {
+                ViewBag.Filter = "Teachers";
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+            }
+            else
+            {
+                ViewBag.Filter = "Students";
+                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+            }
         }
 
         // GET: ApplicationUsers/Details/5
@@ -34,12 +41,98 @@ namespace LMS2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser applicationUser = db.Users.Find(id);
+
+
+           
+
+
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
             return View(applicationUser);
         }
+
+        //public ActionResult OtherUserHomePage()
+        //{
+
+        //    return Red
+        //}
+
+
+
+
+
+        public ActionResult UserHomePage(string id)
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+
+            if (id != currentUserId)
+            {
+                ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
+                return View(otherUser);
+            }
+            return View(currentUser);
+        }
+
+        public ActionResult EditUserHomePage(string id)
+        {
+            
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            string UserId = "";
+            if (id == null | id.Length == 0)
+            { UserId = User.Identity.GetUserId(); }
+            else UserId = id;
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = context.Users.FirstOrDefault(x => x.Id == UserId);
+
+            return View(user);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUserHomePage([Bind(Include = "Id,FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
+        {
+            //string currentUserId = User.Identity.GetUserId();
+
+            //ApplicationDbContext context = new ApplicationDbContext();
+            //ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+           
+
+            if (ModelState.IsValid)
+            {
+                //applicationUser = currentUser;
+                applicationUser.UserName = applicationUser.Email;
+                db.Entry(applicationUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("UserHomePage"); 
+                    
+                   // View("UserHomePage", applicationUser.Id); 
+                    //View(applicationUser); 
+            }
+            //return View(currentUser);
+            else
+            return View(applicationUser);
+
+
+        }
+
+
 
         // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
