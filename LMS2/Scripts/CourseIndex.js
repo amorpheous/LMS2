@@ -1,46 +1,4 @@
-﻿$(document).ready(function () {
-    $('.module').addClass('hidden');
-    $('.activity').addClass('hidden');
-    $('.course').removeClass('hidden');
-    $('.module').removeClass('highlight');
-    $('.course').removeClass('highlight');
-    $('.activity').addClass('hidden');
-    });
-
-/*$(document).ready(function () {
-    $('.course').on('click', function () {
-        $('.module').removeClass('highlight');
-        $('.course').removeClass('highlight');
-        $('.activity').addClass('hidden');
-        $(this).addClass('highlight');
-//        $(this).find('.photos').show();
-    });
-});*/
-/*
-$(document).ready(function () {
-    $('.module').on('click', function () {
-        $('.module').removeClass('highlight');
-        $(this).addClass('highlight');
-        //        $(this).find('.photos').show();
-    });
-});
-*/
-
-
-//gör så att det bara är kursnamn etc som är klickbart för val och att bara det markeras. så att det går att klicka på antal studenter/studentlista etc för att toggla just den)
-
-
-$(document).ready(function () {
-    $('.studentbtn').on('click', function () {
-        $('.students').toggleClass('hidden');
-        $('.module').addClass('hidden');
-        $('.activity').addClass('hidden');
-        $('.course').removeClass('hidden');
-        $('.module').removeClass('highlight');
-        $('.course').removeClass('highlight');
-    });
-});
-
+﻿
 $(document).ready(function () {
     $('.subitembtn').on('click', function () {
         $('.subitem').toggleClass('hidden');
@@ -52,41 +10,97 @@ $(document).ready(function () {
     });
 });
 
-
 $(document).ready(function () {
-    var message = $('<span class="highlight">Choose an item to admin or create a new one. To return to the course list, just re-press the hightlighted course</span>');
+    var message = $('<span class="highlight">Click a course/module name to see its children. To return to the course list, just re-press the current coursename</span>');
 $('.usa').append(message);
 });
 
 $(document).ready(function () {
-    $('.course').click(function () {
-        if ($(this).hasClass("highlight"))
+    $('.coursename').click(function () {
+        if ($(this).parent().find('input').prop("checked") == true)
         {
-            $(this).removeClass("highlight");
             $('.module').addClass('hidden');
             $('.activity').addClass('hidden');
             $('.course').removeClass('hidden');
-            $('.module').removeClass('highlight');
-            $('.course').removeClass('highlight');
+            $('input').prop("checked",false);
         }
         else
         {
             $('.module').addClass('hidden');
             $('.activity').addClass('hidden');
             $('.course').addClass('hidden');
-            $(this).removeClass("hidden");
-            $(this).addClass("highlight");
-            $(this).nextUntil('.course', '.module').removeClass("hidden");
+            $(this).parent().removeClass("hidden");
+            $(this).parent().find('input').prop("checked",true);
+            $(this).parent().nextUntil('.course', '.module').removeClass("hidden");
         }
     });
 });
 
 $(document).ready(function () {
-    $('.module').click(function () {
-        $('.activity').addClass('hidden');
-        $('.module').removeClass('highlight');
-        $(this).addClass('highlight');
+    $('.coursenamebox').click(function () {
+        if ($(this).prop("checked") == true) {
+            $('input').prop("checked", false);
+        }
+        else {
+            $('input').prop("checked", false);
+            $(this).prop("checked", true);
+        }
+    });
+});
 
-        $(this).nextUntil('.module', '.activity').removeClass("hidden");
+
+
+$(document).ready(function () {
+    $('.modulename').click(function () {
+        if ($(this).parent().find('input').prop("checked") == true) {
+            $('.activity').addClass('hidden');
+            $(this).parent().find('input').prop("checked", false);
+        }
+        else {
+            $('.activity').addClass('hidden');
+            $('.modulenamebox').prop("checked", false);
+            $('.activitynamebox').prop("checked", false);
+            $(this).parent().find('input').prop("checked", true);
+            $(this).parent().nextUntil('.module', '.activity').removeClass("hidden");
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('.modulenamebox').click(function () {
+        if ($(this).prop("checked") == true) {
+            $('.modulenamebox').prop("checked", false);
+        }
+        else {
+            $('.modulenamebox').prop("checked", false);
+            $('.activitynamebox').prop("checked", false);
+            $(this).prop("checked", true);
+        }
+    });
+});
+
+
+$(document).ready(function () {
+    $('.activityname').click(function () {
+        if ($(this).parent().find('input').prop("checked") == true) {
+            $(this).parent().find('input').prop("checked", false);
+        }
+        else {
+            $('.activitynamebox').prop("checked", false);
+            $(this).parent().find('input').prop("checked", true);
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('.activitynamebox').click(function () {
+        if ($(this).prop("checked") == true) {
+            $('.activitynamebox').prop("checked", false);
+        }
+        else {
+            $('.activitynamebox').prop("checked", false);
+            $('.activitynamebox').prop("checked", false);
+            $(this).prop("checked", true);
+        }
     });
 });
