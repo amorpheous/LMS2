@@ -70,7 +70,7 @@
 
             </dl>
             <hr />
-            <h4>Participants</h4>
+            <h4>Student list</h4>
             <table class="table">
                 <tr>
                     <th>
@@ -88,26 +88,18 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
+                    @Html.ActionLink(item.FullName, "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Homepage", "UserHomePage", "ApplicationUsers", new { id = item.Id }, null)
-                   
-                </td>
+                <td >
+                    <a href="mailto:@item.Email">@item.Email</a>
+                </td >
 
-                @*<td>
-
-        @Html.ActionLink("Details", "Details", new { id = item.Id })
-        </td>*@
             </tr>
             }
-                }
-            </table>
-            @*@Html.Partial("_AttendingStudentsPartialView")*@
-        </div>
+}
+</table >
+                @*@Html.Partial("_AttendingStudentsPartialView")*@
+</div>
         <div class="col-md-6">
             <hr />
             <h4>Schedule</h4>

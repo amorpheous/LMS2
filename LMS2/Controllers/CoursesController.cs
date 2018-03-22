@@ -16,12 +16,28 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        [Authorize(Roles = Roles.Teacher)]
+//        [Authorize(Roles = Roles.Teacher)]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             ViewBag.Filter = "";
-            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId});
+
+            var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+            if (User.IsInRole(LMS2.Models.Roles.Student))
+            {
+                if (user.CourseId != null)
+                {
+                    ViewBag.Filter = "";
+                    return View(db.Courses.Where(c => c.Id == user.CourseId).ToList());
+                }
+                else
+                {
+                    ViewBag.Filter = "Something went wrong, talk to your teacher";
+                    return View();
+                }
+            }
+
             var today = DateTime.Now.Date;
+            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId });
             if (id == null | id == 0 )
             {
                 ViewBag.Filter = "Current courses";
