@@ -29,19 +29,15 @@ namespace LMS2.Models
         [Required]
         public string Description { get; set; }
 
-        [Display(Name = "Start Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Start date/time")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "Duration (days)")]
+        [Display(Name = "End date/time")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Only positive values are valid")]
-        public double DurationDays { get; set; }
-
-        [Display(Name = "End date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime EndDate { get { return StartDate.AddDays(DurationDays - 1); } }
+        public DateTime EndDate { get; set; }
 
         [StringLength(5000, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Display(Name = "Module Info")]

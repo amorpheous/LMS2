@@ -21,37 +21,42 @@ namespace LMS2.Models
         [Display(Name = "First Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "Name")]
         public string FullName
         {
             get
             {
 
                 if (NickName != null && NickName.Length > 0)
-                    return NickName + " " + LastName;
+                    return FirstName + " \"" +  NickName + "\" " + LastName;
                 else
                     return FirstName + " " + LastName;
             }
         }
 
-        [StringLength(20, ErrorMessage = "Not more than 20 characters long, please")]
+        [StringLength(20, ErrorMessage = "0-20 characters")]
+        [Display(Name = "Nick name")]
         public string NickName { get; set; }
         //  public string Email { get; set; }
 
-        [Display(Name = "Is the user active?")]
+        [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
         [Display(Name = "About me")]
-        [StringLength(200, ErrorMessage = "Additional info can at most be 200 characters long")]
+        [StringLength(200, ErrorMessage = "0-200 characters")]
         public string AdditionalInfo { get; set; }
 
 
-        [StringLength(200, ErrorMessage = "Special info can at most be 200 characters long")]
+        [Display(Name = "Hidden information")]
+        [StringLength(200, ErrorMessage = "0-200 characters")]
         public string SpecialInfo { get; set; }
 
+        [Display(Name = "Registered on course")]
         public virtual Course Course { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
-        public virtual ICollection<File> Files { get; set; }  
+          
+
 
 
         //fundera på det här
@@ -101,15 +106,19 @@ namespace LMS2.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<Course> Courses { get; set; }
+        public System.Data.Entity.DbSet<LMS2.Models.Course> Courses { get; set; }
 
-        public DbSet<Module> Modules { get; set; }
+        public System.Data.Entity.DbSet<LMS2.Models.Module> Modules { get; set; }
 
-        public DbSet<Activity> Activities { get; set; }
+        public System.Data.Entity.DbSet<LMS2.Models.Activity> Activities { get; set; }
 
-        public DbSet<ActivityType> ActivityTypes { get; set; }
+        public System.Data.Entity.DbSet<LMS2.Models.ActivityType> ActivityTypes { get; set; }
 
-        public DbSet<File> Files { get; set; }
+       
+
+
+
+        //   public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }
 
 
         // public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }

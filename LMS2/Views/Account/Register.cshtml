@@ -5,17 +5,20 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+<h2>
+    @if (Model.CourseId != null)
+    {<text>Add a new student to course</text> @Html.DropDownListFor(model => model.CourseId, new SelectList(Model.Courses, "Id", "CourseName"), "Choose a course", new { @disabled = "disabled" })}
+    else
+    {<text>Add a new teacher</text>}
+</h2>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
 
-    <div class="form-group">
+  <div class="form-group hidden">
         @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
 
@@ -24,10 +27,6 @@
 
         </div>
     </div>
-
-
-
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })

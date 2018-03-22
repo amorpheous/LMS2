@@ -40,11 +40,6 @@ namespace LMS2.Controllers
                 return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
                 || search == null).ToList().ToPagedList(page ?? 1, 25));
             }
-            else if (searchBy == "Duration")
-            {
-                return View(modules.OrderBy(v => v.DurationDays).Where(v => v.DurationDays.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 25));
-            }
             else if (searchBy == "CourseName")
             {
                 return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
@@ -67,12 +62,6 @@ namespace LMS2.Controllers
                         modules = modules.OrderBy(s => s.ModuleName);
                         break;
 
-                    case "Duration_desc":
-                        modules = modules.OrderByDescending(s => s.DurationDays);
-                        break;
-                    case "Duration":
-                        modules = modules.OrderBy(s => s.DurationDays);
-                        break;
                     case "Description_desc":
                         modules = modules.OrderByDescending(s => s.Description);
                         break;
@@ -119,16 +108,10 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create(string CourseId)
         {
-            //ViewBag.Course = db.Courses.ToList();
-            // ViewBag.Course = new SelectList(db.Courses.ToList(), "Id", "CourseName");
             var ViewModel = new Module { Courses = db.Courses.ToList() };
-
-            bool r2c = false;
-
             if (CourseId == null)
             {
                 CourseId = "0";
-                r2c = true;
             }
             ViewBag.CourseId = CourseId;
             ViewModel.CourseId = int.Parse(CourseId);
@@ -141,7 +124,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
+        public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,Course,CourseId")] Module module)
         {
 
             if (ModelState.IsValid)
@@ -181,7 +164,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,DurationDays,ModuleInfo,Course,CourseId")] Module module)
+        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,Course,CourseId")] Module module)
         {
 
 

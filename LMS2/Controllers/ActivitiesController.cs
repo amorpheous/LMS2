@@ -38,13 +38,15 @@ namespace LMS2.Controllers
         // GET: Activities/Create
 
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Create()
+        public ActionResult Create(string ModuleId)
         {
-            var ViewModel = new Activity
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
+            ViewBag.ModuleId = ModuleId;
+            if (ModuleId == null)
             {
-                Modules = db.Modules.ToList(),
-                ActivityTypes = db.ActivityTypes.ToList()
-            };
+                return View(ViewModel);
+            }
+            ViewModel.ModuleId = int.Parse(ModuleId);
 
             return View(ViewModel);
         }
@@ -57,16 +59,16 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
                 return RedirectToAction("Index","Courses");
             }
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
 
-            return View(activity);
+            return View(ViewModel);
         }
 
         // GET: Activities/Edit/5

@@ -22,14 +22,10 @@ namespace LMS2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime StartDate { get; set; }
-        [Display(Name = "Duration (days)")]
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Only positive integers are valid")]
-        public int DurationDays { get; set; }
         [Display(Name = "End date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime EndDate
-        { get { return StartDate.AddDays(DurationDays - 1); } }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required]
+        public DateTime EndDate { get; set; }
         [Display(Name = "Urgent information")]
         public string UrgentInfo { get; set; }
         protected bool historic;
@@ -49,7 +45,9 @@ namespace LMS2.Models
         //Appendices/Documents
  
 
+        [Display(Name = "students")]
         public virtual ICollection<ApplicationUser> AttendingStudents { get; set; }
+        [Display(Name = "modules")]
         public virtual ICollection<Module> Modules { get; set; }
 
         
