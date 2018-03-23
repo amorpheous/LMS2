@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS2.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 
 namespace LMS2.Controllers
@@ -208,5 +211,8 @@ namespace LMS2.Controllers
             }
             base.Dispose(disposing);
         }
+
+       
+
     }
 }

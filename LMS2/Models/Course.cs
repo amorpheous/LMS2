@@ -47,10 +47,14 @@ namespace LMS2.Models
 
 
         //Appendices/Documents
+        public int FileId { get; set; }
+        public virtual ICollection<File> Files { get; set; }
 
         [Display(Name = "students")]
         public virtual ICollection<ApplicationUser> AttendingStudents { get; set; }
         [Display(Name = "modules")]
         public virtual ICollection<Module> Modules { get; set; }
+
+        
     }
 }
