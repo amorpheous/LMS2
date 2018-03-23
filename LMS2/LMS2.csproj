@@ -219,6 +219,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803231250234_better seed.cs" />
+    <Compile Include="Migrations\201803231250234_better seed.Designer.cs">
+      <DependentUpon>201803231250234_better seed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -489,6 +493,8 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\ApplicationUsers\UserHomePage.cshtml" />
     <Content Include="Views\ApplicationUsers\EditUserHomePage.cshtml" />
+    <Content Include="Views\EditUserMessageView.cshtml" />
+    <Content Include="Views\ApplicationUsers\ErrorEditUserView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -504,6 +510,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803231250234_better seed.resx">
+      <DependentUpon>201803231250234_better seed.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -464,14 +464,14 @@ ActivityInfo = " ",
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             var originalUsers = new[] {
-                new ApplicationUser {  FirstName = "Georgios", LastName = "Rastapopulous" , Email = "badguy@tintin.com", NickName = "Archvillain", UserName = "badguy@tintin.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
-                new ApplicationUser {  FirstName = "Francois", LastName = "Haddock" , Email = "kapten@tintin.com", NickName = "Kapten", UserName = "kapten@tintin.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
-                new ApplicationUser {  FirstName = "Karl", LastName = "Kalkyl", Email = "kalkyl@tintin.com", NickName = "Professorn", UserName = "kalkyl@tintin.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
-                new ApplicationUser {  FirstName = "Johannes", LastName = "Gabrielsson", Email = "johannes@gmail.com", NickName = "The Worm", UserName = "johannes@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
-                new ApplicationUser {  FirstName = "Rikard", LastName = "Nyström", Email = "LittleBunny@uu.se", NickName = "Dog with rabies", UserName = "LittleBunny@uu.se", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
-                new ApplicationUser {  FirstName = "William", LastName = "Smith", Email = "VilleViking@live.se", NickName = "Tjommen", UserName = "VilleViking@live.se", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
-                new ApplicationUser {  FirstName = "Anna", LastName = "Holmström", Email = "Anna_Virrpanna@gmail.com", NickName = "Please help me", UserName = "Anna_Virrpanna@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
-                new ApplicationUser {  FirstName = "Fredrik", LastName = "Nyqvist", Email = "lapinkultaMums@gmail.com", NickName = "Mamas Boy", UserName = "lapinkultaMums@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Georgios", LastName = "Rastapopulous" , Email = "badguy@tintin.com", NickName = "Archvillain", UserName = "badguy@tintin.com", AdditionalInfo = "A lot of experience in running guns. Likes big cigars.", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
+                new ApplicationUser {  FirstName = "Francois", LastName = "Haddock" , Email = "kapten@tintin.com", NickName = "Kapten", UserName = "kapten@tintin.com", AdditionalInfo = "Stranded seabear with a fondness for whisky - on or off sea. Especially on sea." , IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
+                new ApplicationUser {  FirstName = "Karl", LastName = "Kalkyl", Email = "kalkyl@tintin.com", NickName = "Professorn", UserName = "kalkyl@tintin.com", AdditionalInfo = "A bit whimsical, but brialliant at times.", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "Johannes", LastName = "Gabrielsson", Email = "johannes@gmail.com", NickName = "The Worm", UserName = "johannes@gmail.com", AdditionalInfo = "Have mostly done javadevelopment. Likes dogs.",IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "Rikard", LastName = "Nyström", Email = "LittleBunny@uu.se", NickName = "Dog with rabies", UserName = "LittleBunny@uu.se", AdditionalInfo = "New at IT. Dont mention the war.",IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
+                new ApplicationUser {  FirstName = "William", LastName = "Smith", Email = "VilleViking@live.se", NickName = "Tjommen", UserName = "VilleViking@live.se", IsActive = true, AdditionalInfo = "Hardcore coder. On my way way on becoming a fullstackdeveloper.", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Anna", LastName = "Holmström", Email = "Anna_Virrpanna@gmail.com", NickName = "Please help me", UserName = "Anna_Virrpanna@gmail.com", IsActive = true, AdditionalInfo = "I am not stupid. I just have bad luck when I am thinking.", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Fredrik", LastName = "Nyqvist", Email = "lapinkultaMums@gmail.com", NickName = "Mamas Boy", UserName = "lapinkultaMums@gmail.com", IsActive = true, AdditionalInfo = "Interested in frontend. Have done some PHP, and javascript. Lives in mamas basement.", CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
             };
 
 
@@ -491,8 +491,8 @@ ActivityInfo = " ",
 
 
             var originalTeachers = new[] {
-                new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe", UserName = "zano@lexicon.se", IsActive = true},
-                 new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se", IsActive = true}
+                new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe Beard", UserName = "zano@lexicon.se", IsActive = true, AdditionalInfo = "A practioner, and a doer with people skills. Successful entrepreneur. ...Dont talk about the beard. Dont look at the beard."},
+                 new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se", IsActive = true, AdditionalInfo = "I teach lessons. Sometimes I teach people lessons."}
                             };
 
 

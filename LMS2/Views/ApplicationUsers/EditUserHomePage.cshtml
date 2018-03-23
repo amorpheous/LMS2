@@ -34,6 +34,9 @@
                 else
                 {<text ><small><b>LMS teacher</b></small></text>}
             </h2>
+            
+                        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            
             }
         }
         @using (Html.BeginForm())
@@ -66,7 +69,7 @@
 
 
 
-                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == Model.Id)
                     {
                         <div class="form-group">
                             @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -90,7 +93,7 @@
                         </div>
                     }
 
-                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == Model.Id)
                     {
                         <div class="form-group">
                             @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -126,18 +129,14 @@
 
                 </div>
                 <div class="col-sm-6">
-                    @if (currentUserId == ViewBag.Id)
-                    {
-                        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                        <br />
-                        <br />}
-                    @if (currentUserId == ViewBag.Id)
-                    {
-                        <a href="">Update user picture?</a>
-                        <br />
-                        <br />}
-                    <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
 
+
+                    <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
+                    @if (currentUserId == Model.Id)
+    {
+                <a href="">Update user picture?</a>
+                <br />
+                <br />}
 
                     <br />
                     <br />
