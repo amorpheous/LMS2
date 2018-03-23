@@ -1,49 +1,70 @@
 ﻿@using Microsoft.AspNet.Identity
 @using LMS2.Models
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/popper.min.js"></script>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+
+
+
+
+
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
         ApplicationDbContext context = new ApplicationDbContext();
 
 
 
         <ul class="nav navbar-nav navbar-right">
-        <li>
+            <li>
 
-            @{var userRole = "";
-                string currentUserId = User.Identity.GetUserId();
+                @{var userRole = "";
+                    string currentUserId = User.Identity.GetUserId();
 
 
-                ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-                {
-                    string ID = currentUser.Id;
-                    string Email = currentUser.Email;
-                    string Username = currentUser.UserName;
-
-                    if (User.IsInRole("Teacher"))
+                    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
                     {
-                        userRole = LMS2.Models.Roles.Teacher;
-                    }
-                    if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
-                    if (currentUser != null)
-                    {
-            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)}
+                        string ID = currentUser.Id;
+                        string Email = currentUser.Email;
+                        string Username = currentUser.UserName;
+
+                        if (User.IsInRole("Teacher"))
+                        {
+                            userRole = LMS2.Models.Roles.Teacher;
+                        }
+                        if (User.IsInRole("Student")) { userRole += LMS2.Models.Roles.Student; }
+                        if (currentUser != null)
+                        {
+                            @Html.ActionLink(currentUser.FullName + " (" + userRole + ")", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)}
                     }
                 }
-        </li>
-        <li>
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
- }
-        <ul class="nav navbar-nav navbar-right">
-            @{string currentUserId2 = User.Identity.GetUserId(); }
-            @{if (currentUserId2.Length > 0) { }
-                else
-                {
-            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>}
-                }
+            </li>
+            <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
         </ul>
+    }
+}
+<ul class="nav navbar-nav navbar-right">
+    @{string currentUserId2 = User.Identity.GetUserId(); }
+    @{if (currentUserId2.Length > 0) { }
+        else
+        {
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>}
+    }
+</ul>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/popper.min.js"></script>

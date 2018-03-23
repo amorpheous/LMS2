@@ -129,6 +129,14 @@
 
                 </div>
                 <div class="col-sm-6">
+                    @if (currentUserId == ViewBag.Id)
+    {
+                @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <br />
+                <br />}
+                    @if (currentUserId == ViewBag.Id)
+    {
+                @Html.ActionLink("Update user picture?", "UploadFile", "Upload", new { id = currentUserId.ToString() + " avatar" }, null)
 
                     <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
                     @if (currentUserId == Model.Id)

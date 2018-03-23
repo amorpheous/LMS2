@@ -21,17 +21,15 @@ namespace LMS2.Models
         [Display(Name = "First Name")]
         public string LastName { get; set; }
 
+        protected string fullName;
         [Display(Name = "Name")]
         public string FullName
         {
             get
             {
-
-                if (NickName != null && NickName.Length > 0)
-                    return FirstName + " \"" +  NickName + "\" " + LastName;
-                else
-                    return FirstName + " " + LastName;
+    return fullName;
             }
+            set { fullName = FirstName + " " + LastName; }
         }
 
         [StringLength(20, ErrorMessage = "0-20 characters")]
@@ -55,8 +53,8 @@ namespace LMS2.Models
         public virtual Course Course { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
-          
 
+        public ICollection<File> Files { get; set; }
 
 
         //fundera på det här
@@ -114,12 +112,13 @@ namespace LMS2.Models
 
         public System.Data.Entity.DbSet<LMS2.Models.ActivityType> ActivityTypes { get; set; }
 
-       
+        public DbSet<File> Files { get; set; }
+
+
 
 
 
         //   public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }
-
 
 
         // public System.Data.Entity.DbSet<LMS2.Models.ApplicationUser> ApplicationUsers { get; set; }
