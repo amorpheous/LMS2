@@ -280,8 +280,12 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
+
             ApplicationUser applicationUser = db.Users.Find(id);
             db.Users.Remove(applicationUser);
+            if(applicationUser.Id!=currentUserId)
             db.SaveChanges();
             return RedirectToAction("Index");
         }
