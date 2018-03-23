@@ -472,6 +472,7 @@ ActivityInfo = " ",
                 new ApplicationUser {  FirstName = "William", LastName = "Smith", Email = "VilleViking@live.se", NickName = "Tjommen", UserName = "VilleViking@live.se", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
                 new ApplicationUser {  FirstName = "Anna", LastName = "Holmström", Email = "Anna_Virrpanna@gmail.com", NickName = "Please help me", UserName = "Anna_Virrpanna@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
                 new ApplicationUser {  FirstName = "Fredrik", LastName = "Nyqvist", Email = "lapinkultaMums@gmail.com", NickName = "Mamas Boy", UserName = "lapinkultaMums@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
+                new ApplicationUser {  FirstName = "Erik", LastName = "Jon-And", Email = "erikjonand@gmail.com", UserName = "erikjonand@gmail.com", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "BerryProduction").Id},
             };
 
 

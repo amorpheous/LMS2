@@ -11,7 +11,6 @@ using Microsoft.Owin.Security;
 using LMS2.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-
 namespace LMS2.Controllers
 {
 
@@ -320,7 +319,7 @@ namespace LMS2.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -328,10 +327,22 @@ namespace LMS2.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                string To = model.Email, UserID, Password, SMTPPort, Host;
+                EmailManager.AppSettings(out UserID, out Password, out SMTPPort, out Host);
+
+                string subject = "Your changed password";
+
+                string body = "<b>Please find the Password Reset Link below. </b><br/><br/>" + "<a href=\"" + callbackUrl + "\">Click here</a>";
+
+                EmailManager.SendEmail(UserID, subject, body, To, UserID, Password, SMTPPort, Host);
+
+
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
