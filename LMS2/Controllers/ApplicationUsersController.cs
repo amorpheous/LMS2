@@ -125,11 +125,16 @@ namespace LMS2.Controllers
 
                 user.FirstName = applicationUser.FirstName;
                 user.LastName = applicationUser.LastName;
-                user.NickName = applicationUser.NickName;
-                user.IsActive= applicationUser.IsActive;
-                user.AdditionalInfo = applicationUser.AdditionalInfo;
-                user.SpecialInfo = applicationUser.SpecialInfo;
-                user.Email = applicationUser.Email;
+                if (User.IsInRole(LMS2.Models.Roles.Teacher))
+                {
+                    user.IsActive = applicationUser.IsActive;
+                }
+                if (User.IsInRole(LMS2.Models.Roles.Student)| User.Identity.GetUserId()==user.Id)
+                {
+                    user.NickName = applicationUser.NickName;
+                    user.AdditionalInfo = applicationUser.AdditionalInfo;
+                    user.SpecialInfo = applicationUser.SpecialInfo;
+                }
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("UserHomePage","ApplicationUsers",new { id = user.Id }); 
