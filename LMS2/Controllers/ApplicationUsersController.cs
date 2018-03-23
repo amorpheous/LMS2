@@ -91,8 +91,11 @@ namespace LMS2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
+            applicationUser = db.Users.Include(s => s.Files).SingleOrDefault(s => s.Id == id);
+
+                if (applicationUser == null)
             {
                 return HttpNotFound();
             }

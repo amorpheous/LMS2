@@ -47,6 +47,7 @@ namespace LMS2.Models
 
 
         //Appendices/Documents
+        public int FileId { get; set; }
         public virtual ICollection<File> Files { get; set; }
 
         [Display(Name = "students")]

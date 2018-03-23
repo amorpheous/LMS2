@@ -8,14 +8,17 @@
 {
 
 
-    <div>
-        @Html.TextBox("file", "", new { type = "file" })
+<div>
+    @Html.TextBox("file", "", new { type = "file" })
 
-        Description: @Html.TextBoxFor(File => File.Description)
+    @*<div>@Html.TextBoxFor(x => x.CourseId)</div>
+    <div>@Html.TextBoxFor(x => x.ModuleId)</div>
+    <div>@Html.TextBoxFor(x =>x.ActivityId)</div>*@
 
-        <input type="submit" value="Ladda Upp Fil" />
+    Description: @Html.TextBoxFor(File => File.Description)
+    <input type="submit" value="Ladda Upp Fil" />
 
-    </div>
+</div>
 
 
 

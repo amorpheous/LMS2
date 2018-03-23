@@ -55,8 +55,8 @@ namespace LMS2.Models
         public virtual Course Course { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public int? CourseId { get; set; }
-          
 
+        public ICollection<File> Files { get; set; }
 
 
         //fundera på det här

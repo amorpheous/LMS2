@@ -25,10 +25,7 @@ namespace LMS2.Controllers
             var userStore = new UserStore<ApplicationUser>(db);
             var UserManager = new UserManager<ApplicationUser>(userStore);
 
-            var ViewModel = new Models.File();
-            
-
-            ViewModel = new Models.File();
+            var ViewModel = new Models.File {};
 
             return View(ViewModel);
         }
@@ -69,21 +66,24 @@ namespace LMS2.Controllers
                         ApplicationUserId = db.Users.Find(User.Identity.GetUserId())
                     };
 
-                    string[] entityId = Id.Split(' ');
+                    string[] Type = Id.Split(' ');
 
-                    if (entityId[1] == "Course")
+                    switch(Type[1]) 
                     {
-                        upload.CourseId = entityId[0];
+                        case "course":
+                            upload.CourseId = int.Parse(Type[0]);
+                            break;
+                        case "module":
+                            upload.ModuleId = int.Parse(Type[0]);
+                            break;
+                        case "activity":
+                            upload.ActivityId = int.Parse(Type[0]);
+                            break;
+                        case "avatar":
+                            upload.FileType = Type[1];
+                            break;
+
                     }
-                    else if (entityId[1] == "Module")
-                    {
-                        upload.ModuleId = entityId[0];
-                    }
-                    else
-                    {
-                        upload.ActivityId = entityId[0];
-                    }
-                    
 
                     using (var reader = new BinaryReader(file.InputStream))
                     {
