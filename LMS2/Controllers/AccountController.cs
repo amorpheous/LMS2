@@ -113,7 +113,7 @@ namespace LMS2.Controllers
             if (User.IsInRole(Roles.Teacher))
                 return RedirectToAction("Index", "Courses");
             else if (User.IsInRole(Roles.Student))
-                return RedirectToAction("StudentCourse", "Courses");
+                return RedirectToAction("Index", "Courses");
             else return RedirectToAction("Index", "Home");
 
            

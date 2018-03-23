@@ -1,35 +1,41 @@
 ﻿
 
 @model IEnumerable<LMS2.Models.ActivityType>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/LMS2.css" rel="stylesheet" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Activity types";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ActivityTypeName)
-        </th>
+        <td>
+            <pre>@Html.ActionLink("Add new", "Create")
+</pre>
+
+        </td>
     </tr>
+</table>
+
+<table class="table">
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityTypeName)
+            <td style="width:90%">
+                <p></p>
+                    @Html.DisplayFor(modelItem => item.ActivityTypeName)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            <td style="width:5%">
+                <pre>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</pre>
             </td>
         </tr>
     }
 
 </table>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/CourseIndex.js"></script>
