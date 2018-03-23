@@ -8,24 +8,7 @@
     ViewBag.Title = "Delete profile";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <h2>@ViewBag.Title?</h2>
-        </div>
-        <div class="col-sm-3">
 
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                <div class="form-actions">
-                    <br />
-                    <input type="submit" value="Yes" class="btn btn-danger" />
-                </div>
-            }
-        </div>
-    </div>
-</div>
 
 @{string currentUserId = User.Identity.GetUserId();
 
@@ -37,6 +20,51 @@
         string ID = currentUser.Id;
     }
 }
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>@ViewBag.Title?</h2>
+        </div>
+        <div class="col-sm-3">
+
+            @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+if (currentUserId != Model.Id)
+{
+        <div class="form-actions">
+            <br />
+            <input type="submit" value="Yes" class="btn btn-danger" />
+        </div>
+}
+else
+{
+        <div class="form-actions">
+            <br />
+            <input type="submit" value="You cannot delete yourself" class="btn btn-primary" />
+        </div>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+}
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -63,23 +91,33 @@
         <div class="row">
             <div class="col-sm-10">
                 <h2>
-                    Welcome to the home page of <b>
+                    <b>
                         @if (Model.NickName != null && Model.NickName.Length > 0)
                         {<text><b>
                         </text>@Model.NickName}
                     else
                     {@Model.FirstName @Model.LastName}
-                    </b>
-                    @if (User.IsInRole("Student"))
-                    {<text><small><br /><b>student</b> of course</small></text> @Model.Course.CourseName}
-                    @if (User.IsInRole("Teacher"))
-                    {<text><small>(LMS<b> teacher)</b></small></text>}
+                    </b><br />
+                    @if (Model.CourseId.HasValue)
+                    {<text><small><br /><b>Student</b> (@Model.Course.CourseName)</small></text>}
+                else
+                {<text ><small><b>LMS teacher</b></small></text>}
 
             </h2>
         </div>
         @if (User.Identity.GetUserId() == currentUser.Id)
         {
             <div class="col-sm-2">
+                <br />
+                <table>
+                    <tr>
+                        <td>
+                            <pre>@Html.ActionLink("Edit profile", "EditUserHomePage", new { id = ViewBag.Id }, null)</pre>
+                        </td>
+                    </tr>
+                </table>
+
+
             </div>
         }
         <div class="row">
@@ -94,27 +132,27 @@
     </div>
 
 
-    <div class="col-sm-12">
+    <div class="col-sm-12 table-bordered">
         @if (Model.AdditionalInfo != null && Model.AdditionalInfo.Length > 0)
-        {<b>
-                <b>About me:</b><br />
-                @Model.AdditionalInfo
-            </b>}
+        {
+            <big>About me</big><br />
+            @Model.AdditionalInfo
+        }
     </div>
 
 </div>
 
 <div class="row">
 
-    <div class="col-sm-12">
+    <div class="col-sm-12 badge">
         @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
         {
 
             if (Model.SpecialInfo != null && Model.SpecialInfo.Length > 0)
-            {<b>
-                    <b>Special information:</b><br />
-                    @Model.SpecialInfo
-                </b>}
+            {
+                <big>Special information</big><br />
+                @Model.SpecialInfo
+            }
         }
     </div>
 </div>
@@ -122,6 +160,8 @@
 </div>
 
 <script src="~/Scripts/bootstrap.min.js"></script>
+
+
 
 
 

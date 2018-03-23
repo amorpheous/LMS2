@@ -34,6 +34,9 @@
                 else
                 {<text ><small><b>LMS teacher</b></small></text>}
             </h2>
+            
+                        @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            
             }
         }
         @using (Html.BeginForm())
@@ -66,7 +69,7 @@
 
 
 
-                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == Model.Id)
                     {
                         <div class="form-group">
                             @Html.LabelFor(model => model.NickName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -90,7 +93,7 @@
                         </div>
                     }
 
-                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == ViewBag.Id)
+                    @if (userRole == LMS2.Models.Roles.Student | currentUserId == Model.Id)
                     {
                         <div class="form-group">
                             @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -111,7 +114,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -119,7 +122,7 @@
                     <div class="form-group hidden">
                         @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly"} })
                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                         </div>
                     </div>

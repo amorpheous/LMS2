@@ -128,11 +128,16 @@ namespace LMS2.Controllers
 
                 user.FirstName = applicationUser.FirstName;
                 user.LastName = applicationUser.LastName;
-                user.NickName = applicationUser.NickName;
-                user.IsActive= applicationUser.IsActive;
-                user.AdditionalInfo = applicationUser.AdditionalInfo;
-                user.SpecialInfo = applicationUser.SpecialInfo;
-                user.Email = applicationUser.Email;
+                if (User.IsInRole(LMS2.Models.Roles.Teacher))
+                {
+                    user.IsActive = applicationUser.IsActive;
+                }
+                if (User.Identity.GetUserId()==user.Id)
+                {
+                    user.NickName = applicationUser.NickName;
+                    user.AdditionalInfo = applicationUser.AdditionalInfo;
+                    user.SpecialInfo = applicationUser.SpecialInfo;
+                }
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("UserHomePage","ApplicationUsers",new { id = user.Id }); 
@@ -278,8 +283,12 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
+
             ApplicationUser applicationUser = db.Users.Find(id);
             db.Users.Remove(applicationUser);
+            if(applicationUser.Id!=currentUserId)
             db.SaveChanges();
             return RedirectToAction("Index");
         }
