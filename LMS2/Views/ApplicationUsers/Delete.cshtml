@@ -1,82 +1,127 @@
 ﻿@model LMS2.Models.ApplicationUser
+@using Microsoft.AspNet.Identity
+@using LMS2.Models
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete profile";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ApplicationUser</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NickName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NickName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AdditionalInfo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AdditionalInfo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SpecialInfo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SpecialInfo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-               
-      
-        
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>@ViewBag.Title?</h2>
         </div>
-    }
+        <div class="col-sm-3">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions">
+                    <br />
+                    <input type="submit" value="Yes" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
 </div>
+
+@{string currentUserId = User.Identity.GetUserId();
+
+    ApplicationDbContext context = new ApplicationDbContext();
+
+    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+    if (currentUser != null)
+    {
+        string ID = currentUser.Id;
+    }
+}
+
+
+
+<div class="container">
+
+    <div class="container col-sm-4">
+        <div class="row">
+            <div class="col-sm-12">
+                <br />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="200" width="300">
+            </div>
+            <div class="col-sm-12">
+                @Model.FirstName @Model.LastName<br /><text><a href="mailto:@Model.Email">@Model.Email</a></text>
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-sm-8">
+        <div class="row">
+            <div class="col-sm-10">
+                <h2>
+                    Welcome to the home page of <b>
+                        @if (Model.NickName != null && Model.NickName.Length > 0)
+                        {<text><b>
+                        </text>@Model.NickName}
+                    else
+                    {@Model.FirstName @Model.LastName}
+                    </b>
+                    @if (User.IsInRole("Student"))
+                    {<text><small><br /><b>student</b> of course</small></text> @Model.Course.CourseName}
+                    @if (User.IsInRole("Teacher"))
+                    {<text><small>(LMS<b> teacher)</b></small></text>}
+
+            </h2>
+        </div>
+        @if (User.Identity.GetUserId() == currentUser.Id)
+        {
+            <div class="col-sm-2">
+            </div>
+        }
+        <div class="row">
+            <div class="col-sm-12">
+
+                @if (!Model.IsActive)
+                {<text><b><big>THE USER IS NOT CURRENTLY ACTIVE!!!!</big></b></text>}
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-sm-12">
+        @if (Model.AdditionalInfo != null && Model.AdditionalInfo.Length > 0)
+        {<b>
+                <b>About me:</b><br />
+                @Model.AdditionalInfo
+            </b>}
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-sm-12">
+        @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
+        {
+
+            if (Model.SpecialInfo != null && Model.SpecialInfo.Length > 0)
+            {<b>
+                    <b>Special information:</b><br />
+                    @Model.SpecialInfo
+                </b>}
+        }
+    </div>
+</div>
+
+</div>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
