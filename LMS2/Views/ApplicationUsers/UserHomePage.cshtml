@@ -3,6 +3,7 @@
 @using LMS2.Models
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/LMS2.css" rel="stylesheet" />
 
 
 @{
@@ -23,18 +24,43 @@
 
 <div class="container">
 
-    <div class="container col-sm-4">
-        <div class="row">
-            <div class="col-sm-12">
-                <br />
-            </div>
-        </div>
+    <div class="container col-sm-4 editProfileKey">
+        <div class="row editProfileKey">
 
-        <div class="row">
-           
+            <br />
+
+
+            <div class="row">
+
                 <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="200" width="300">
-           
+
+
+                @if (Model.Id == currentUser.Id || User.IsInRole("Teacher"))
+
+    {
+            <br />
+            <br />
+
+            <br />
             
+            <div class="col-sm-2 editProfileKey">
+                <div class="editProfileKey">
+                    <table>
+                        <tr>
+
+                            <td>
+                                <pre>@Html.ActionLink("Edit profile", "EditUserHomePage", new { id = ViewBag.Id }, null)</pre>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+}
+
+
+            </div>
         </div>
     </div>
 
@@ -42,79 +68,76 @@
         <div class="row">
             <div class="col-sm-10">
                 <h2>
-                    <b>
-                        @if (Model.NickName != null && Model.NickName.Length > 0)
-    {<text><b>
+
+                    @if (Model.NickName != null && Model.NickName.Length > 0)
+                    {<text><b>
                     </text>@Model.NickName}
 
-else
-{@Model.FirstName @Model.LastName}
-                    </b><br />
-                    </h2>
-                <h3>
-                    @Model.FirstName @Model.LastName<br /><text><a href="mailto:@Model.Email">@Model.Email</a></text>
-                </h3>
-                    <h2>
-                       @if (Model.CourseId.HasValue)
-{<text><small><b>Student</b> (@Model.Course.CourseName)</small></text>}
-else
-{<text ><small><b>LMS teacher</b></small></text>}
+                else
+                {@Model.FirstName @Model.LastName}
+                </b><br />
+            </h2>
+            <h3>
+                @Model.FirstName @Model.LastName<br /><text><a href="mailto:@Model.Email">@Model.Email</a></text>
+            </h3>
+            <h2>
+                @if (Model.CourseId.HasValue)
+                {<text><small><b>Student</b> (@Model.Course.CourseName)</small></text>}
+            else
+            {<text ><small><b>LMS teacher</b></small></text>}
 
-</h2>
+            </h2>
+
         </div>
-            @if(Model.Id == currentUser.Id)
-       
-        {
-            <div class="col-sm-2">
-                <br />
-                <table>
-                    <tr>
-                        <td>
-                            <pre>@Html.ActionLink("Edit profile", "EditUserHomePage", new { id = ViewBag.Id }, null)</pre>
-                        </td>
-                    </tr>
-                </table>
-
-
-            </div>
-        }
-        <div class="row">
-            <div class="col-sm-12">
-
-                @if (!Model.IsActive)
-                {<text><b><big>THE USER IS NOT CURRENTLY ACTIVE!!!!</big></b></text>}
-
-            </div>
-        </div>
-
     </div>
 
 
-    <div class="col-sm-12 table">
-        @if (Model.AdditionalInfo != null && Model.AdditionalInfo.Length > 0)
-        {
+    <div class="col-sm-12 aboutMe">
+
+        <div class="aboutMe">
+            @if (Model.AdditionalInfo != null && Model.AdditionalInfo.Length > 0)
+            {
                 <big>About me</big><br />
                 @Model.AdditionalInfo
             }
+        </div>
+
     </div>
 
-</div>
+    <br />
 
-<div class="row">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
 
-    <div class="col-sm-12 badge">
-        @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
-        {
+            @if (!Model.IsActive)
+            {<text><b><big>THE USER IS NOT CURRENTLY ACTIVE!!!!</big></b></text>}
 
-            if (Model.SpecialInfo != null && Model.SpecialInfo.Length > 0)
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            @if (User.IsInRole("Teacher") || User.Identity.GetUserId() == currentUser.Id)
             {
-                    <big>Special information</big><br />
-                    @Model.SpecialInfo
-               }
-        }
+
+                if (Model.SpecialInfo != null && Model.SpecialInfo.Length > 0)
+                {
+                    <br />
+                    <big>Special information - @Model.SpecialInfo</big>
+
+
+                }
+            }
+        </div>
     </div>
 </div>
-
 </div>
 
 <script src="~/Scripts/bootstrap.min.js"></script>

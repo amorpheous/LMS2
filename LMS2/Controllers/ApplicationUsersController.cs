@@ -65,7 +65,7 @@ namespace LMS2.Controllers
 
 
 
-
+       
         public ActionResult UserHomePage(string id)
         {
             ApplicationDbContext context = new ApplicationDbContext();
@@ -83,6 +83,7 @@ namespace LMS2.Controllers
             return View(currentUser);
         }
 
+        
         public ActionResult EditUserHomePage(string id)
         {
             

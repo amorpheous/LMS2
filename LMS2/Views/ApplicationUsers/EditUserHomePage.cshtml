@@ -34,10 +34,10 @@
                 else
                 {<text ><small><b>LMS teacher</b></small></text>}
             </h2>
-            
+            if (Model.Id == currentUser.Id) { 
                         @Html.ActionLink("Change password?", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            
             }
+    }
         }
         @using (Html.BeginForm())
 {
@@ -130,21 +130,20 @@
                 </div>
                 <div class="col-sm-6">
 
-
                     <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
                     @if (currentUserId == Model.Id)
     {
                 <a href="">Update user picture?</a>
                 <br />
-                <br />}
+                <br />
 
-                    <br />
-                    <br />
-                    <br />
+                <br />
+
+}
                     <br />
 
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="col-md-offset-0 col-md-10">
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </div>
@@ -157,7 +156,7 @@
 
 
     </div>
-}
+        }
 
 <div>
 </div>
