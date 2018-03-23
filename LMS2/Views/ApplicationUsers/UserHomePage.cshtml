@@ -31,12 +31,10 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12">
+           
                 <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="200" width="300">
-            </div>
-            <div class="col-sm-12">
-                @Model.FirstName @Model.LastName<br /><text><a href="mailto:@Model.Email">@Model.Email</a></text>
-            </div>
+           
+            
         </div>
     </div>
 
@@ -51,14 +49,20 @@
                     else
                     {@Model.FirstName @Model.LastName}
                     </b><br />
-                    @if (Model.CourseId.HasValue)
-                    {<text><small><br /><b>Student</b> (@Model.Course.CourseName)</small></text>}
-                else
-                {<text ><small><b>LMS teacher</b></small></text>}
+                    </h2>
+                <h3>
+                    @Model.FirstName @Model.LastName<br /><text><a href="mailto:@Model.Email">@Model.Email</a></text>
+                </h3>
+                    <h2>
+                       @if (Model.CourseId.HasValue)
+{<text><small><b>Student</b> (@Model.Course.CourseName)</small></text>}
+else
+{<text ><small><b>LMS teacher</b></small></text>}
 
-            </h2>
+</h2>
         </div>
-        @if (User.Identity.GetUserId() == currentUser.Id)
+            @if(Model.Id == currentUser.Id)
+       
         {
             <div class="col-sm-2">
                 <br />
@@ -85,7 +89,7 @@
     </div>
 
 
-    <div class="col-sm-12 table-bordered">
+    <div class="col-sm-12 table">
         @if (Model.AdditionalInfo != null && Model.AdditionalInfo.Length > 0)
         {
                 <big>About me</big><br />

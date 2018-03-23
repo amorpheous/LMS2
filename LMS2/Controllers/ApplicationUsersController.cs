@@ -160,7 +160,7 @@ namespace LMS2.Controllers
                 {
                     user.IsActive = applicationUser.IsActive;
                 }
-                if (User.IsInRole(LMS2.Models.Roles.Student)| User.Identity.GetUserId()==user.Id)
+                if (User.Identity.GetUserId()==user.Id)
                 {
                     user.NickName = applicationUser.NickName;
                     user.AdditionalInfo = applicationUser.AdditionalInfo;
