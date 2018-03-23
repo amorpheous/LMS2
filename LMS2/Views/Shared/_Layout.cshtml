@@ -43,37 +43,56 @@
         if (currentUser != null) { ID = currentUser.Id; }
                     }
 
-                    @if (currentUser != null) {
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)</li>
+                    @if (currentUser != null)
+    {
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("My profile", "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)</li>
 
-@if(User.IsInRole("Teacher"))
-                    { 
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                Admin
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
+                    @if (User.IsInRole(LMS2.Models.Roles.Teacher))
+    {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Admin
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
 
-                                <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
-                                <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Teacher/student list", "Index", "ApplicationUsers")</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Edit your page", "EditUserHomePage", "ApplicationUsers", new { id = User.Identity.GetUserId() }, null)</li>
-
-
-                            </ul>
-                        </li>
-            
-    }
+                        <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
+                        <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("Teacher/student list", "Index", "ApplicationUsers")</li>
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("Update homepage", "EditUserHomePage", "ApplicationUsers", new { id = User.Identity.GetUserId() }, null)</li>
 
 
+                    </ul>
+                </li>
 
-                    </ul>}
+}
 
-    @Html.Partial("_LoginPartial")
+
+
+
+                    @if (User.IsInRole(LMS2.Models.Roles.Student))
+    {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Other
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                        <li>@Html.ActionLink("Teachers", "Index", "ApplicationUsers")</li>
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("Update homepage", "EditUserHomePage", "ApplicationUsers", new { id = User.Identity.GetUserId() }, null)</li>
+
+
+                    </ul>
+                </li>
+
+}
+                </ul>}
+                    @Html.Partial("_LoginPartial")
 
 
 
@@ -83,6 +102,7 @@
 
         </div>
     }
+
     <div class="container body-content">
         @if (User.Identity.IsAuthenticated)
     {

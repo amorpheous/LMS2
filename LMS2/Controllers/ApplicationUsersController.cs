@@ -21,15 +21,46 @@ namespace LMS2.Controllers
         public ActionResult Index(int? id)
         {
             ViewBag.Filter = "";
-            if (id == null | id == 0)
+
+            if (User.IsInRole(LMS2.Models.Roles.Teacher))
             {
-                ViewBag.Filter = "Teachers";
-                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+
+                if (id == null | id == 0)
+                {
+                    ViewBag.Filter = "Teachers (active)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList());
+                }
+                if (id == null | id == 1)
+                {
+                    ViewBag.Filter = "Teachers (inactive)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == false).ToList());
+                }
+                if (id == null | id == 2)
+                {
+                    ViewBag.Filter = "Teachers (all)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+                }
+                if (id == null | id == 3)
+                {
+                    ViewBag.Filter = "Students (active)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList());
+                }
+                if (id == null | id == 4)
+                {
+                    ViewBag.Filter = "Students (inactive)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == false).ToList());
+                }
+                else
+                {
+                    ViewBag.Filter = "Students (all)";
+                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.NickName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+                }
             }
+
             else
             {
-                ViewBag.Filter = "Students";
-                return View(db.Users.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+                ViewBag.Filter = "Teachers";
+                return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList());
             }
         }
 
