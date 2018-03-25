@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace LMS2.Models
@@ -29,12 +30,14 @@ namespace LMS2.Models
         [Required]
         public string Description { get; set; }
 
+        [DefaultDateTimeValue("Now")]
         [Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Required]
         public DateTime StartDate { get; set; }
 
+        [DefaultDateTimeValue("Now")]
         [Display(Name = "End date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
@@ -47,26 +50,48 @@ namespace LMS2.Models
 
         public int CourseId { get; set; }
         public IEnumerable<Course> Courses { get; set; }
-       
+
 
         //navigational property
         public virtual Course Course { get; set; }
         [Display(Name = "activities")]
-        public virtual ICollection<Activity> Activities {get; set;}
+        public virtual ICollection<Activity> Activities { get; set; }
 
         /*        Appendices*/
 
 
         public string InitialCapital(string value)
-    {
-        if (value == null | value.Trim().Length == 0) value = "";
-        if (value.Trim().Length > 1)
-        value = value.Trim().Substring(0, 1).ToUpper() + value.Trim().Substring(1, value.Length - 1).ToLower();
-                else
+        {
+            if (value == null | value.Trim().Length == 0) value = "";
+            if (value.Trim().Length > 1)
+                value = value.Trim().Substring(0, 1).ToUpper() + value.Trim().Substring(1, value.Length - 1).ToLower();
+            else
                 value = value.Trim().ToUpper();
-        return value;
-    }
+            return value;
+        }
+        [AttributeUsage(AttributeTargets.Property)]
+        public sealed class DefaultDateTimeValueAttribute : ValidationAttribute
+        {
+            public string DefaultValue { get; set; }
 
-    }
+            public DefaultDateTimeValueAttribute(string defaultValue)
+            {
+                DefaultValue = defaultValue;
+            }
 
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                PropertyInfo property = validationContext.ObjectType.GetProperty(validationContext.MemberName);
+
+                // Set default value only if no value is already specified 
+                if (value == null)
+                {
+                    DateTime defaultValue = DateTime.Now.Date;
+                    property.SetValue(validationContext.ObjectInstance, defaultValue);
+                }
+
+                return ValidationResult.Success;
+            }
+        }
+    }
 }

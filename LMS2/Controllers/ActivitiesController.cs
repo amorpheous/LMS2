@@ -17,7 +17,7 @@ namespace LMS2.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.ActivityName).ToList());
+            return View(db.Activities.OrderBy(x => x.Date).ThenBy(x => x.StartTime).ThenBy(x => x.StopTime).ThenBy(x => x.ActivityName).ToList());
         }
 
         // GET: Activities/Details/5
@@ -40,13 +40,18 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create(string ModuleId)
         {
-            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
-            ViewBag.ModuleId = ModuleId;
+
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList()};
+
             if (ModuleId == null)
             {
                 return View(ViewModel);
             }
-            ViewModel.ModuleId = int.Parse(ModuleId);
+            var mId = Int32.Parse(ModuleId);
+            ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList(), Module=db.Modules.Where(x=>x.Id==mId).FirstOrDefault() };
+            ViewModel.ModuleId = mId;
+            ViewModel.Date = db.Modules.Where(x => x.Id == mId).FirstOrDefault().StartDate;
+
 
             return View(ViewModel);
         }
@@ -57,9 +62,12 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,Date,StartTime,StopTime,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
-            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList() };
+           var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList(), Module = db.Modules.Where(x => x.Id == activity.ModuleId).FirstOrDefault() };
+
+            if (activity.Date < ViewModel.Module.StartDate | activity.Date > ViewModel.Module.EndDate)
+                ModelState.AddModelError("Date", "Activity date must be within the module");
 
             if (ModelState.IsValid)
             {
@@ -75,19 +83,20 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
+            Activity activity = db.Activities.Find(id);
+            if (activity == null)
+            {
+                return HttpNotFound();
+            }
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
             activity.Modules = db.Modules.ToList();
             activity.ActivityTypes = db.ActivityTypes.ToList();
 
-            if (activity == null)
-            {
-                return HttpNotFound();
-            }
+            
             return View(activity);
         }
 

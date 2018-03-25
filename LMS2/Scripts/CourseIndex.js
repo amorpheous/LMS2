@@ -12,7 +12,8 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     var message = $('<span class="highlight">Click a course/module name to see its children. To return to the course list, just re-press the current coursename</span>');
-$('.usa').append(message);
+    $('.usa').append(message);
+    $('input').prop("checked", false);
 });
 
 $(document).ready(function () {
