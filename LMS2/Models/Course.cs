@@ -35,20 +35,6 @@ namespace LMS2.Models
 
         [Display(Name = "Urgent information")]
         public string UrgentInfo { get; set; }
-        protected bool historic;
-        public bool Historic
-        {
-            get
-            {
-                return historic;
-            }
-            set
-            {
-                if (EndDate < DateTime.Now.Date)
-                    historic = true;
-                else historic = false;
-            }
-        }
 
 
         //Appendices/Documents

@@ -9,17 +9,17 @@ namespace LMS2.Migrations
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<LMS2.Models.ApplicationDbContext>
+{
+
+    public Configuration()
     {
+        AutomaticMigrationsEnabled = true;
+        AutomaticMigrationDataLossAllowed = true;
+    }
 
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
-        }
-
-        protected override void Seed(ApplicationDbContext context)
-        {
-            var courses = new[] {
+    protected override void Seed(ApplicationDbContext context)
+    {
+        var courses = new[] {
                 new Course {  CourseName = ".NET Höst 2015", Description = ".NET", StartDate = DateTime.Parse("2015-10-01"), EndDate = DateTime.Parse("2015-11-30") },
                                 new Course {  CourseName = ".NET Vår 2016", Description = ".NET", StartDate = DateTime.Parse("2016-04-01"),  EndDate = DateTime.Parse("2016-11-25") },
                 new Course {  CourseName = ".NET Höst 2016", Description = ".NET", StartDate = DateTime.Parse("2016-10-01"),  EndDate = DateTime.Parse("2016-12-31") },
@@ -33,15 +33,15 @@ namespace LMS2.Migrations
                 new Course {  CourseName = "BerryProduction", Description = "Basically, you pick them", StartDate = DateTime.Parse("2018-01-29"),  EndDate = DateTime.Parse("2018-03-31") },
 
             };
-            context.Courses.AddOrUpdate(
-                c => new { c.CourseName, c.Description, c.StartDate, c.EndDate },
-                courses
-            );
+        context.Courses.AddOrUpdate(
+            c => new { c.CourseName, c.Description, c.StartDate, c.EndDate },
+            courses
+        );
 
-            context.SaveChanges();
+        context.SaveChanges();
 
 
-            var modules = new[] {
+        var modules = new[] {
                 new Module { ModuleName = "Communism1", Description = "Planned economy", StartDate = new DateTime(2017, 12, 4, 0, 0, 0), EndDate = new DateTime(2017, 12, 31, 0, 0, 0),
                     ModuleInfo = "Studies of Eastern European planned economies in the 1950s and 1960s by both American and Eastern European economists showing greater fluctuations in output than market economies during the same period",
                     CourseId = courses[8].Id},
@@ -80,425 +80,390 @@ namespace LMS2.Migrations
                     CourseId = courses[10].Id}
             };
 
-            context.Modules.AddOrUpdate(
-                m => new { m.ModuleName, m.Description, m.StartDate, m.EndDate, m.ModuleInfo },
-                modules
-            );
-
-            context.SaveChanges();
-
-            /*         var activityTypes = new[] {
-                         new ActivityType { ActivityTypeName = "E-learning"},
-                         new ActivityType { ActivityTypeName = "Lecture"},
-                         new ActivityType { ActivityTypeName = "Exercise"},
-                         new ActivityType { ActivityTypeName = "Work-shop"},
-                         new ActivityType { ActivityTypeName = "Project"},
-                         new ActivityType { ActivityTypeName = "Other"},
-                     };
-
-                     context.ActivityTypes.AddOrUpdate(
-                         t => new { t.ActivityTypeName },
-                         activityTypes
-                     );
-
-                     context.SaveChanges();
-
-
-                     var activities = new[] {
-                         new Activity {
-         ActivityName = "Communism1:1",
-         Description = "Lecture: top-down administrative model",
-         Date = new DateTime(2017, 12, 4, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "Leon Trotsky believed that those at the top of the chain of command, regardless of their intellectual capacity, operated without the input and participation of the millions of people who participate in the economy and understand/respond to local conditions and changes in the economy, and therefore would be unable to effectively coordinate all economic activity.",
-                             ModuleId = modules[0].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "Communism1:2",
-         Description = "Work-shop: Advantages of economic planning",
-         Date = new DateTime(2017, 12, 14, 9, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "Consumer demand can be restrained in favor of greater capital investment for economic development in a desired pattern.",
-                             ModuleId = modules[0].Id,
-                             ActivityTypeId = activityTypes[3].Id},
-
-         new Activity {
-         ActivityName = "Communism1:3",
-         Description = "Implementation: Real life trial",
-         Date = new DateTime(2017, 12, 21, 10, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "Choose a country and...",
-                             ModuleId = modules[0].Id,
-                             ActivityTypeId = activityTypes[4].Id},
-
-
-
-
-
-         new Activity {
-         ActivityName = "Communism2:1",
-         Description = "Lecture: MBS introduction",
-         Date = new DateTime(2018, 1, 3, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "General information about MBS",
-                             ModuleId = modules[1].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "Communism2:2",
-         Description = "Project: The database of information",
-         Date = new DateTime(2018, 1, 12, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "Create a database containing information about MBS",
-                             ModuleId = modules[1].Id,
-                             ActivityTypeId = activityTypes[4].Id},
-
-         new Activity {
-         ActivityName = "Communism2:3",
-         Description = "Lecture: Dismantling",
-         Date = new DateTime(2018, 2, 4, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = "The act of causing a system to stop functioning by gradually reducing its power or purpose",
-                             ModuleId = modules[1].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-
-         new Activity {
-         ActivityName = "Communism3:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 3, 2, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[2].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "Communism3:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 4, 2, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[2].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "Communism3:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 5, 14, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[2].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-
-
-
-
-         new Activity {
-         ActivityName = "SheepFarming1:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 1, 28, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[3].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming1:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 1, 29, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[3].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming1:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 3, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[3].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-
-
-         new Activity {
-         ActivityName = "SheepFarming2:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 5, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[4].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming2:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 6, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[4].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming2:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 7, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[4].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-
-
-
-         new Activity {
-         ActivityName = "SheepFarming3:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 9, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[5].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-         new Activity {
-         ActivityName = "SheepFarming4:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 11, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[6].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming4:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 12, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[6].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming4:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 14, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[6].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming5:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 15, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[7].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming5:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 18, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[7].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming5:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 21, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[7].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming6:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 23, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[8].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming6:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 25, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[8].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "SheepFarming6:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 27, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[8].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction1:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 1, 29, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[9].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction1:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 1, 30, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[9].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction1:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 4, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[9].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction2:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 20, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[10].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction2:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 25, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[10].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction2:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 2, 28, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[10].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-
-         new Activity {
-         ActivityName = "BerryProduction3:1",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 3, 11, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[11].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction3:2",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 3, 17, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[11].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-         new Activity {
-         ActivityName = "BerryProduction3:3",
-         Description = "Lecture: ",
-         Date = new DateTime(2018, 3, 21, 8, 0, 0),
-         StartTime = new TimeSpan(9, 0, 0),
-         StopTime = new TimeSpan(16, 0, 0),
-         ActivityInfo = " ",
-                             ModuleId = modules[11].Id,
-                             ActivityTypeId = activityTypes[1].Id},
-
-                     };
-
-                     context.Activities.AddOrUpdate(
-                         a => new { a.ActivityName, a.Description, a.Date, a.StartTime, a.StopTime, a.ActivityInfo },
-                         activities
-                     );*/
-            context.SaveChanges();
-
-
-            //Systemet skall hantera två, och endast två, roller - teacher och student
-            //Först skapas en Rolestore för att förvara de två rollerna
-            var roleStore = new RoleStore<IdentityRole>(context);
-
-            //Sedan skapas en rolemanager för att kunna tilldela Teacher respektive Student behörigheter
-            var roleManager = new RoleManager<IdentityRole>(roleStore);
-
-            var roleNames = new[] { Roles.Teacher, Roles.Student };
-            foreach (var roleName in roleNames)
+        context.Modules.AddOrUpdate(
+            m => new { m.ModuleName, m.Description, m.StartDate, m.EndDate, m.ModuleInfo },
+            modules
+        );
+
+        context.SaveChanges();
+
+        var activityTypes = new[] {
+                new ActivityType { ActivityTypeName = "E-learning"},
+                new ActivityType { ActivityTypeName = "Lecture"},
+                new ActivityType { ActivityTypeName = "Exercise"},
+                new ActivityType { ActivityTypeName = "Work-shop"},
+                new ActivityType { ActivityTypeName = "Project"},
+                new ActivityType { ActivityTypeName = "Other"},
+            };
+
+        context.ActivityTypes.AddOrUpdate(
+            t => new { t.ActivityTypeName },
+            activityTypes
+        );
+
+        context.SaveChanges();
+
+
+        var activities = new[] {
+                new Activity {
+ActivityName = "Communism1:1",
+Description = "Lecture: top-down administrative model",
+StartDate = new DateTime(2017, 12, 4, 8, 0, 0),
+EndDate = new DateTime(2017, 12, 4, 12, 0, 0),
+ActivityInfo = "Leon Trotsky believed that those at the top of the chain of command, regardless of their intellectual capacity, operated without the input and participation of the millions of people who participate in the economy and understand/respond to local conditions and changes in the economy, and therefore would be unable to effectively coordinate all economic activity.",
+                    ModuleId = modules[0].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "Communism1:2",
+Description = "Work-shop: Advantages of economic planning",
+StartDate = new DateTime(2017, 12, 14, 9, 0, 0),
+EndDate = new DateTime(2017, 12, 17, 15, 0, 0),
+ActivityInfo = "Consumer demand can be restrained in favor of greater capital investment for economic development in a desired pattern.",
+                    ModuleId = modules[0].Id,
+                    ActivityTypeId = activityTypes[3].Id},
+
+new Activity {
+ActivityName = "Communism1:3",
+Description = "Implementation: Real life trial",
+StartDate = new DateTime(2017, 12, 21, 10, 0, 0),
+EndDate = new DateTime(2017, 12, 29, 16, 0, 0),
+ActivityInfo = "Choose a country and...",
+                    ModuleId = modules[0].Id,
+                    ActivityTypeId = activityTypes[4].Id},
+
+
+
+
+
+new Activity {
+ActivityName = "Communism2:1",
+Description = "Lecture: MBS introduction",
+StartDate = new DateTime(2018, 1, 3, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 3, 11, 0, 0),
+ActivityInfo = "General information about MBS",
+                    ModuleId = modules[1].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "Communism2:2",
+Description = "Project: The database of information",
+StartDate = new DateTime(2018, 1, 12, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 17, 11, 0, 0),
+ActivityInfo = "Create a database containing information about MBS",
+                    ModuleId = modules[1].Id,
+                    ActivityTypeId = activityTypes[4].Id},
+
+new Activity {
+ActivityName = "Communism2:3",
+Description = "Lecture: Dismantling",
+StartDate = new DateTime(2018, 2, 4, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 4, 16, 0, 0),
+ActivityInfo = "The act of causing a system to stop functioning by gradually reducing its power or purpose",
+                    ModuleId = modules[1].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+
+new Activity {
+ActivityName = "Communism3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 3, 2, 8, 0, 0),
+EndDate = new DateTime(2018, 3, 2, 13, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[2].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "Communism3:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 4, 2, 8, 0, 0),
+EndDate = new DateTime(2018, 4, 2, 13, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[2].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "Communism3:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 5, 14, 8, 0, 0),
+EndDate = new DateTime(2018, 5, 14, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[2].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+
+
+
+
+new Activity {
+ActivityName = "SheepFarming1:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 1, 28, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 28, 13, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[3].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming1:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 1, 29, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 29, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[3].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming1:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 3, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 3, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[3].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+
+
+new Activity {
+ActivityName = "SheepFarming2:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 5, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 5, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[4].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming2:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 6, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 6, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[4].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming2:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 7, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 7, 9, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[4].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+
+
+
+new Activity {
+ActivityName = "SheepFarming3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 9, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 9, 13, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[5].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+new Activity {
+ActivityName = "SheepFarming4:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 11, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 11, 11, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[6].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming4:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 12, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 12, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[6].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming4:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 14, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 14, 17, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[6].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming5:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 15, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 15, 17, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[7].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming5:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 18, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 18, 15, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[7].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming5:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 21, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 21, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[7].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming6:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 23, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 23, 15, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[8].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming6:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 25, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 25, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[8].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "SheepFarming6:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 27, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 27, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[8].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction1:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 1, 29, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 29, 10, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[9].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction1:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 1, 30, 8, 0, 0),
+EndDate = new DateTime(2018, 1, 30, 13, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[9].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction1:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 4, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 4, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[9].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction2:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 20, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 20, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[10].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction2:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 25, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 25, 14, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[10].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction2:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 2, 28, 8, 0, 0),
+EndDate = new DateTime(2018, 2, 28, 17, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[10].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+
+new Activity {
+ActivityName = "BerryProduction3:1",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 3, 11, 8, 0, 0),
+EndDate = new DateTime(2018, 3, 11, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[11].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction3:2",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 3, 17, 8, 0, 0),
+EndDate = new DateTime(2018, 3, 17, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[11].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+new Activity {
+ActivityName = "BerryProduction3:3",
+Description = "Lecture: ",
+StartDate = new DateTime(2018, 3, 21, 8, 0, 0),
+EndDate = new DateTime(2018, 3, 21, 16, 0, 0),
+ActivityInfo = " ",
+                    ModuleId = modules[11].Id,
+                    ActivityTypeId = activityTypes[1].Id},
+
+            };
+
+        context.Activities.AddOrUpdate(
+            a => new { a.ActivityName, a.Description, a.StartDate, a.EndDate, a.ActivityInfo },
+            activities
+        );
+
+
+        //Systemet skall hantera två, och endast två, roller - teacher och student
+        //Först skapas en Rolestore för att förvara de två rollerna
+        var roleStore = new RoleStore<IdentityRole>(context);
+
+        //Sedan skapas en rolemanager för att kunna tilldela Teacher respektive Student behörigheter
+        var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+        var roleNames = new[] { Roles.Teacher, Roles.Student };
+        foreach (var roleName in roleNames)
+        {
+            if (context.Roles.Any(r => r.Name == roleName)) continue;
+
+            // Create role
+            var role = new IdentityRole { Name = roleName };
+            var result = roleManager.Create(role);
+            if (!result.Succeeded)
             {
-                if (context.Roles.Any(r => r.Name == roleName)) continue;
-
-                // Create role
-                var role = new IdentityRole { Name = roleName };
-                var result = roleManager.Create(role);
-                if (!result.Succeeded)
-                {
-                    throw new Exception(string.Join("\n", result.Errors));
-                }
+                throw new Exception(string.Join("\n", result.Errors));
             }
+        }
 
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
+        var userStore = new UserStore<ApplicationUser>(context);
+        var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var originalUsers = new[] {
+        var originalUsers = new[] {
                 new ApplicationUser {  FirstName = "Georgios", LastName = "Rastapopulous" , Email = "badguy@tintin.com", NickName = "Archvillain", UserName = "badguy@tintin.com", AdditionalInfo = "A lot of experience in running guns. Likes big cigars.", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
                 new ApplicationUser {  FirstName = "Francois", LastName = "Haddock" , Email = "kapten@tintin.com", NickName = "Kapten", UserName = "kapten@tintin.com", AdditionalInfo = "Stranded seabear with a fondness for whisky - on or off sea. Especially on sea." , IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "SheepFarming").Id},
                 new ApplicationUser {  FirstName = "Karl", LastName = "Kalkyl", Email = "kalkyl@tintin.com", NickName = "Professorn", UserName = "kalkyl@tintin.com", AdditionalInfo = "A bit whimsical, but brialliant at times.", IsActive = true, CourseId = courses.SingleOrDefault(c => c.CourseName == "Communism").Id},
@@ -512,43 +477,43 @@ namespace LMS2.Migrations
 
 
 
-            for (int i = 0; i < originalUsers.Length; i++)
+        for (int i = 0; i < originalUsers.Length; i++)
+        {
+            var userName = originalUsers[i].UserName;
+            if (context.Users.Any(u => u.UserName == userName)) continue;
+            // Create user där alla har samma lösenord          
+            var result = userManager.Create(originalUsers[i], "student");
+            if (!result.Succeeded)
             {
-                var userName = originalUsers[i].UserName;
-                if (context.Users.Any(u => u.UserName == userName)) continue;
-                // Create user där alla har samma lösenord          
-                var result = userManager.Create(originalUsers[i], "student");
-                if (!result.Succeeded)
-                {
-                    throw new Exception(string.Join("\n", result.Errors));
-                }
-                userManager.AddToRole(originalUsers[i].Id, Roles.Student);
+                throw new Exception(string.Join("\n", result.Errors));
             }
+            userManager.AddToRole(originalUsers[i].Id, Roles.Student);
+        }
 
 
-            var originalTeachers = new[] {
+        var originalTeachers = new[] {
                 new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe Beard", UserName = "zano@lexicon.se", IsActive = true, AdditionalInfo = "A practioner, and a doer with people skills. Proud successful entrepreneur. Dont talk about the beard. Dont look at the beard."},
                  new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se", IsActive = true, AdditionalInfo = "I teach lessons. Sometimes I teach people lessons."}
                             };
 
 
-            for (int i = 0; i < originalTeachers.Length; i++)
+        for (int i = 0; i < originalTeachers.Length; i++)
+        {
+            var userName = originalTeachers[i].UserName;
+            if (context.Users.Any(u => u.UserName == userName)) continue;
+            // Create user där alla har samma lösenord          
+            var result = userManager.Create(originalTeachers[i], "teacher");
+            if (!result.Succeeded)
             {
-                var userName = originalTeachers[i].UserName;
-                if (context.Users.Any(u => u.UserName == userName)) continue;
-                // Create user där alla har samma lösenord          
-                var result = userManager.Create(originalTeachers[i], "teacher");
-                if (!result.Succeeded)
-                {
-                    throw new Exception(string.Join("\n", result.Errors));
-                }
-                userManager.AddToRole(originalTeachers[i].Id, Roles.Teacher);
+                throw new Exception(string.Join("\n", result.Errors));
             }
-
-
-
-
+            userManager.AddToRole(originalTeachers[i].Id, Roles.Teacher);
         }
+
+
+
+
     }
+}
 
 }

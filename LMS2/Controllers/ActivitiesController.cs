@@ -17,7 +17,7 @@ namespace LMS2.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            return View(db.Activities.OrderBy(x => x.Date).ThenBy(x => x.StartTime).ThenBy(x => x.StopTime).ThenBy(x => x.ActivityName).ToList());
+            return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList());
         }
 
         // GET: Activities/Details/5
@@ -50,7 +50,8 @@ namespace LMS2.Controllers
             var mId = Int32.Parse(ModuleId);
             ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList(), Module=db.Modules.Where(x=>x.Id==mId).FirstOrDefault() };
             ViewModel.ModuleId = mId;
-            ViewModel.Date = db.Modules.Where(x => x.Id == mId).FirstOrDefault().StartDate;
+            ViewModel.StartDate = db.Modules.Where(x => x.Id == mId).FirstOrDefault().StartDate;
+            ViewModel.EndDate = db.Modules.Where(x => x.Id == mId).FirstOrDefault().StartDate;
 
 
             return View(ViewModel);
@@ -62,12 +63,25 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,Date,StartTime,StopTime,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Description,ActivityName,StartDate,EndDate,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
         {
            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList(), Module = db.Modules.Where(x => x.Id == activity.ModuleId).FirstOrDefault() };
 
-            if (activity.Date < ViewModel.Module.StartDate | activity.Date > ViewModel.Module.EndDate)
-                ModelState.AddModelError("Date", "Activity date must be within the module");
+            if (activity.StartDate < ViewModel.Module.StartDate | activity.StartDate > ViewModel.Module.EndDate)
+                ModelState.AddModelError("StartDate", "Start date must be within the module");
+            if (activity.EndDate < ViewModel.Module.StartDate | activity.EndDate > ViewModel.Module.EndDate)
+                ModelState.AddModelError("EndDate", "End date must be within the module");
+            if (activity.EndDate < activity.StartDate)
+                ModelState.AddModelError("EndDate", "End date cannot occur before start date");
+
+
+            var conflictingActivitiesTest1 = db.Activities.Where(x => x.ModuleId== activity.ModuleId).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
+            if (conflictingActivitiesTest1 > 0)
+                ModelState.AddModelError("StartDate", "Conflicts with " + conflictingActivitiesTest1 + " other activit/y/ies");
+
+            var conflictingActivitiesTest2 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
+            if (conflictingActivitiesTest2 > 0)
+                ModelState.AddModelError("EndDate", "Conflicts with " + conflictingActivitiesTest2 + " other activit/y/ies");
 
             if (ModelState.IsValid)
             {
@@ -106,7 +120,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,DurationDays,ActivityInfo,Module,ModuleId,ActivityType,ActivityTypeId")] Activity activity)
+        public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,EndDate,ActivityInfo,ActivityType,ActivityTypeId,Module,ModuleId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
@@ -114,9 +128,6 @@ namespace LMS2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index","Courses");
             }
-
-            activity.Modules = db.Modules.ToList();
-            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }

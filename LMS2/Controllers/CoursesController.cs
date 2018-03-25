@@ -19,7 +19,7 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-//        [Authorize(Roles = Roles.Teacher)]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             ViewBag.Filter = "";
@@ -27,20 +27,22 @@ namespace LMS2.Controllers
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             if (User.IsInRole(LMS2.Models.Roles.Student))
             {
+
                 if (user.CourseId != null)
                 {
                     ViewBag.Filter = "";
+
                     return View(db.Courses.Where(c => c.Id == user.CourseId).ToList());
                 }
                 else
                 {
                     ViewBag.Filter = "Something went wrong, talk to your teacher";
-                    return View();
+                    View();
                 }
             }
 
             var today = DateTime.Now.Date;
-            ViewBag.Users = db.Users.Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId });
+            var Users = db.Users.Where(x=>x.IsActive==true).Where(x => x.CourseId.HasValue == true).Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId });
             if (id == null | id == 0 )
             {
                 ViewBag.Filter = "Current courses";
@@ -68,7 +70,7 @@ namespace LMS2.Controllers
             public int? CourseId { get; set; }
     }
 
-        public ActionResult StudentCourse(string id)
+ /*       public ActionResult StudentCourse(string id)
         {
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             if (User.IsInRole(Roles.Student))
@@ -91,6 +93,7 @@ namespace LMS2.Controllers
             }
             else return View();
         }
+        */
 
         public ActionResult Redirect()
         {
@@ -102,7 +105,7 @@ namespace LMS2.Controllers
 
         
         // GET: Courses/Details/5
-        public ActionResult Details(int? id)
+/*        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -115,7 +118,7 @@ namespace LMS2.Controllers
             }
             return View(course);
         }
-
+*/
         // GET: Courses/Create
 
         [Authorize(Roles = Roles.Teacher)]
@@ -132,6 +135,7 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
         {
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -203,6 +207,7 @@ namespace LMS2.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = Roles.Teacher)]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

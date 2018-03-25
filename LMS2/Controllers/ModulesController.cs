@@ -33,17 +33,17 @@ namespace LMS2.Controllers
             {
                 // listsearch
                 return View(modules.OrderBy(v => v.ModuleName).Where(v => v.ModuleName.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 25));
+                || search == null).ToList());
             }
             else if (searchBy == "StartYear")
             {
                 return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 25));
+                || search == null).ToList());
             }
             else if (searchBy == "CourseName")
             {
                 return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
-                || search == null).ToList().ToPagedList(page ?? 1, 25));
+                || search == null).ToList());
             }
             else
             {
@@ -110,16 +110,15 @@ namespace LMS2.Controllers
         {
 
 
-
-
-            var ViewModel = new Module { Courses = db.Courses.ToList() };
-            if (CourseId == null)
+            if (CourseId == null | Int32.TryParse(CourseId, out int intCourseId)==false)
             {
-                CourseId = "0";
+                return RedirectToAction("Index", "Courses");
             }
-            ViewBag.CourseId = CourseId;
-            ViewModel.CourseId = int.Parse(CourseId);
-            ViewBag.Course = db.Courses.Where(x => x.Id == Int32.Parse(CourseId));
+            var Course = db.Courses.Where(x => x.Id == intCourseId).FirstOrDefault();
+            var ViewModel = new Module { Course = db.Courses.Where(x=>x.Id==intCourseId).FirstOrDefault() };
+            ViewModel.CourseId = intCourseId;
+            ViewModel.StartDate = Course.StartDate;
+            ViewModel.EndDate = Course.EndDate;
             return View(ViewModel);
         }
 
@@ -132,6 +131,25 @@ namespace LMS2.Controllers
         public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,Course,CourseId")] Module module)
         {
 
+            var ViewModel = new Module { Course = db.Courses.Where(x => x.Id == module.CourseId).FirstOrDefault() };
+
+            if (module.StartDate < ViewModel.Course.StartDate | module.StartDate > ViewModel.Course.EndDate)
+                ModelState.AddModelError("StartDate", "Start date must be within the course");
+            if (module.EndDate < ViewModel.Course.StartDate | module.EndDate > ViewModel.Course.EndDate)
+                ModelState.AddModelError("EndDate", "End date must be within the course");
+            if (module.EndDate < module.StartDate)
+                ModelState.AddModelError("EndDate", "End date cannot occur before start date");
+
+
+ var conflictingModulesTest1 = db.Modules.Where(x => x.CourseId==module.CourseId).Where(x=>x.StartDate<=module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
+            if(conflictingModulesTest1>0)
+                ModelState.AddModelError("StartDate", "Conflicts with " +conflictingModulesTest1+ " other module/s");
+
+                var conflictingModulesTest2 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
+            if (conflictingModulesTest2 > 0)
+                ModelState.AddModelError("EndDate", "Conflicts with " + conflictingModulesTest2 + " other module/s");
+
+
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
@@ -139,27 +157,25 @@ namespace LMS2.Controllers
                 
                 return RedirectToAction("Index","Courses");
             }
-            module.Courses = db.Courses.ToList();
-
-            return View(module);
+  
+            return View(ViewModel);
         }
 
         // GET: Modules/Edit/5
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit(int? id)
         {
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
-            module.Courses = db.Courses.ToList();
 
+            Module module = db.Modules.Find(id);
             if (module == null)
             {
                 return HttpNotFound();
             }
+            module.Courses = db.Courses.Where(x=>x.Id==module.CourseId).ToList();
             return View(module);
         }
 
@@ -169,7 +185,7 @@ namespace LMS2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,Course,CourseId")] Module module)
+        public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,CourseId,Course")] Module module)
         {
 
 
@@ -180,7 +196,6 @@ namespace LMS2.Controllers
                 return RedirectToAction("Index","Courses");
             }
            
-            module.Courses = db.Courses.ToList();
 
             return View(module);
         }

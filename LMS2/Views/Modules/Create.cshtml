@@ -1,12 +1,15 @@
 ﻿@model LMS2.Models.Module
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add module";
 }
 
+<h4>
+    Course: @Model.Course.CourseName <small>(@Model.Course.StartDate.ToShortDateString()- @Model.Course.EndDate.ToShortDateString())</small><br />
+</h4>
 <h2>
-    <text>Add a new module to course</text> @Html.DropDownListFor(model => model.CourseId, new SelectList(Model.Courses, "Id", "CourseName"), "Choose a course", new { @disabled = "disabled" })</h2>
-
+    @ViewBag.Title
+</h2>
 
 @using (Html.BeginForm())
 {
@@ -15,16 +18,6 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group hidden">
-            @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                @Html.DropDownListFor(model => model.CourseId, new SelectList(Model.Courses, "Id", "CourseName"), "Choose a course", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ModuleName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -68,15 +61,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input class="btn btn-primary"   type="submit" value="Create" class="btn btn-default" />
+                <input class="btn btn-primary" type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-    <div>
-        @Html.ActionLink("Back to list", "Index", "Courses")
-    </div>
+<div>
+    @Html.ActionLink("Back to list", "Index", "Courses")
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

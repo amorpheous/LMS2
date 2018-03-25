@@ -32,12 +32,10 @@
 
             <div class="row">
 
-                @if (Model.Files == null)
-    {<text>0</text> }
-else
-{ <text>@Model.Files.Count</text>}
+@Model.Files.
 
-                <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="200" width="300">
+
+                <img src=@Model.Files.FirstOrDefault()    alt="Picture 300x500" height="200" width="300">
 
 
                 @if (Model.Id == currentUser.Id || User.IsInRole("Teacher"))

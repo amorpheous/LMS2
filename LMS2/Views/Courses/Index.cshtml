@@ -155,11 +155,6 @@ add: document|@Html.ActionLink("module", "Create", "Modules", new { CourseId = i
 
                             </small>
 
-
-
-
-
-
                         </details>
                     }
                     @if (item.AttendingStudents != null && item.AttendingStudents.Count > 0)
@@ -223,77 +218,42 @@ add: document|@Html.ActionLink("activity", "Create", "Activities", new { ModuleI
                             </details>}
                         @if (item2.Activities != null && item2.Activities.Count > 0)
                         {<details>
-                                <summary>
-                                    @item2.Activities.Count@if (item2.Activities.Count == 1)
-                                    {<text> activity</text>}
-                                else
-                                {<text> activities</text>}
-                                </summary>
-                                    @{int loopM = 1;}
+    <summary>
+        @item2.Activities.Count@if (item2.Activities.Count == 1)
+        {<text> activity</text>}
+        else
+        {<text> activities</text>}
+    </summary>
+    @{int loopM = 1;}
 
-                                    @foreach (var item9 in item2.Activities.OrderBy(x => x.Date).ThenBy(x => x.StartTime).ThenBy(x => x.StopTime).ThenBy(x => x.ActivityName).ToList())
+    @foreach (var item9 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList())
     {
-                                @loopM<text>.</text>@item9.ActivityType.ActivityTypeName<text>:</text> @item9.ActivityName<text><br /> </text><small>@Html.DisplayFor(modelItem => item9.Date)</small>
-                                                                                                                                              <small>
-                                                                                                                                                  (@if (@item9.StartTime.Hours < 10)
-    {<text>0</text>@item9.StartTime.Hours}
-else
-{@item9.StartTime.Hours}<text>:</text>@if (@item9.StartTime.Minutes < 10)
-    {<text>0</text>@item9.StartTime.Minutes}
-else
-{@item9.StartTime.Minutes}<text> - </text>
-                                                                                                                                              @if (@item9.StopTime.Hours < 10)
-{<text>0</text>@item9.StartTime.Hours}
-else
-{@item9.StopTime.Hours}<text>:</text>@if (@item9.StopTime.Minutes < 10)
-{<text>0</text>@item9.StartTime.Minutes}
-else
-{@item9.StopTime.Minutes})<br />
-                                                                                                                                              </small>    }
-
-                                                                                                                                
-
-
-
-
-
-
-                            </details>
-                        }
+        @loopM<text>.</text>@item9.ActivityType.ActivityTypeName<text>:</text> @item9.ActivityName<text><br /> </text>
+        <small>@item9.StartDate.ToShortDateString() (@item9.StartDate.ToShortTimeString()) - @item9.EndDate.ToShortDateString() (@item9.EndDate.ToShortTimeString())</small>
+        <br />}
+</details>
+    }
 
                         <details><summary>? documents</summary></details>
                     </td>
 
-
+        
 
                 </tr>
-                foreach (var item3 in item2.Activities.OrderBy(x => x.Date).OrderBy(x => x.StartTime).OrderBy(x => x.StopTime).ThenBy(x => x.ActivityName))
+                foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).OrderBy(x => x.EndDate).ThenBy(x => x.ActivityName))
                 {
                     <tr class="activity hidden">
                         <td class="activityname">
                             <text>&#160; &#160; &#160;</text><text>&#160; &#160; &#160;</text><input class="activitynamebox" type="checkbox" unchecked /> <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName): @Html.DisplayFor(modelItem => item3.ActivityName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item3.Date)
+                            @item3.StartDate.ToShortDateString()<br /> 
+                            @item3.StartDate.ToShortTimeString()
                         </td>
                         <td>
-                            <b>
-                                @if (@item3.StartTime.Hours < 10)
-    {<text>0</text>@item3.StartTime.Hours}
-else
-{@item3.StartTime.Hours}<text>:</text>@if (@item3.StartTime.Minutes < 10)
-    {<text>0</text>@item3.StartTime.Minutes}
-else
-{@item3.StartTime.Minutes}<text> - </text>
-                            @if (@item3.StopTime.Hours< 10)
-{<text>0</text>@item3.StartTime.Hours}
-else
-{@item3.StopTime.Hours}<text>:</text>@if (@item3.StopTime.Minutes < 10)
-{<text>0</text>@item3.StartTime.Minutes}
-else
-{@item3.StopTime.Minutes}
-                            </b>
-</td>
+                            @item3.EndDate.ToShortDateString()<br />
+                            @item3.EndDate.ToShortTimeString()
+                        </td>
                         @if (User.IsInRole("Teacher"))
                         {
                             <td>
