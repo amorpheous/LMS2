@@ -492,7 +492,7 @@ ActivityInfo = " ",
 
 
             var originalTeachers = new[] {
-                new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe Beard", UserName = "zano@lexicon.se", IsActive = true, AdditionalInfo = "A practioner, and a doer with people skills. Successful entrepreneur. ...Dont talk about the beard. Dont look at the beard."},
+                new ApplicationUser {  FirstName = "Adrian", LastName = "Lozano" , Email = "zano@lexicon.se", NickName = "Wannabe Beard", UserName = "zano@lexicon.se", IsActive = true, AdditionalInfo = "A practioner, and a doer with people skills. Proud successful entrepreneur. Dont talk about the beard. Dont look at the beard."},
                  new ApplicationUser {  FirstName = "Dmitris", LastName = "Björlingh", Email = "dimitris@lexicon.se", NickName = "The Beard", UserName = "dimitris@lexicon.se", IsActive = true, AdditionalInfo = "I teach lessons. Sometimes I teach people lessons."}
                             };
 

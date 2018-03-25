@@ -30,6 +30,13 @@
     background-color: darkred;
     color: white
 }
+
+.aboutMe{
+    padding-left: 0px; 
+}
+.editProfileKey{
+    padding-left: 0px
+}
 .whitelink > a, .whitelink > a:link, .whitelink > a:hover, .whitelink > a:active, .whitelink > a:any-link {
     color: white;
 }

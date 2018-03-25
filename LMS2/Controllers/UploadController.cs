@@ -9,8 +9,7 @@ using System.Configuration;
 using System.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-
-
+using System.Net;
 
 namespace LMS2.Controllers
 {
@@ -105,6 +104,43 @@ namespace LMS2.Controllers
 
         }
 
-       
+        //GET: Upload/Delete/Id
+        [Authorize(Roles = Roles.Teacher)]
+        public ActionResult Delete(int? Id)
+        {
+            if (Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Models.File File = db.Files.Find(Id);
+
+            if (File == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(File);
+        }
+
+        //POST: Upload/Delete/Id
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = Roles.Teacher)]
+        public ActionResult Delete(int Id)
+        {
+            Models.File File = db.Files.Find(Id);
+            db.Files.Remove(File);
+            db.SaveChanges();
+            return View("index", "Courses");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
