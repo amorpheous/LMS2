@@ -8,13 +8,15 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
+    <link href="~/Content/LMS2.css" rel="stylesheet" />
+
     <title>@ViewBag.Title - LMS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @using Microsoft.AspNet.Identity
     @using LMS2.Models
 
-    </head>
+</head>
 <body>
 
     @if (User.Identity.IsAuthenticated)

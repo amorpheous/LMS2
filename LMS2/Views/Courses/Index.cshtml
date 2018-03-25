@@ -38,7 +38,6 @@
                     <li>@Html.ActionLink("All courses", "Index", new { id = 3 })</li>
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Add new course", "Create")</li>
-                    
 
                 </ul>
         </ul>
@@ -120,9 +119,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
-                <td>
-                    <pre>@Html.ActionLink("Edit", "Edit", new { id = item.Id })|@Html.ActionLink("Course_page", "StudentCourse", new { id = item.Id })|@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-@Html.ActionLink("Add_module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("Add_student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
 
                 @if (User.IsInRole("Teacher"))
                 {
@@ -159,9 +155,6 @@ add: document|@Html.ActionLink("module", "Create", "Modules", new { CourseId = i
 
                             </small>
 
-                    @{ int loopM = 1; }
-                    @foreach (var item5 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName).ToList())
-    {
 
 
 
