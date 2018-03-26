@@ -197,10 +197,10 @@ else
             <small>
                 @{ int loop = 1; }
                 @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
-        {
+    {
 
-            @loop<text>.</text> @item10.Description<br />
-    { loop = loop + 1; }
+            @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
+{ loop = loop + 1; }
 }
 
             </small>
@@ -272,9 +272,9 @@ else
                             <small>
                                 @{ int loop = 1; }
                                 @foreach (var item11 in item2.Files.OrderBy(x => x.Description).ToList())
-        {
+    {
 
-                        @loop<text>.</text> @item11.Description<br />
+                            @loop<text>.</text> @Html.ActionLink(item11.Description, "View", "Upload", new { id = item11.Id }, null) <br />
 { loop = loop + 1; }
 }
 
@@ -330,9 +330,9 @@ else
                                 <small>
                                     @{ int loop = 1; }
                                     @foreach (var item12 in item3.Files.OrderBy(x => x.Description).ToList())
-        {
+    {
 
-                            @loop<text>.</text> @item12.Description<br />
+                                @loop<text>.</text> @Html.ActionLink(item12.Description, "View", "Upload", new { id = item12.Id }, null) <br />
 { loop = loop + 1; }
 }
 

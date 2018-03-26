@@ -16,9 +16,17 @@ namespace LMS2.Controllers
     public class UploadController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        
 
-        [HttpGet]
+
+        // GET: /File/
+        public ActionResult View(int id)
+        {
+            var fileToRetrieve = db.Files.Find(id);
+            return File(fileToRetrieve.Content, fileToRetrieve.ContentType);
+        }
+
+
+    [HttpGet]
         public ActionResult UploadFile()
         {
             var userStore = new UserStore<ApplicationUser>(db);
