@@ -3,10 +3,6 @@
 @using LMS2.Models
 
 
-@{
-    ViewBag.Title = "Edit user details";
-}
-
 
 
 @{var userRole = "";
@@ -25,7 +21,17 @@
     if (User.IsInRole(LMS2.Models.Roles.Student)) { userRole += LMS2.Models.Roles.Student; } }
 
 <h2>
-    Edit user details
+    @if (Model.Id == currentUser.Id)
+    {
+        ViewBag.Title = "Edit your details";
+    }
+    else
+    {
+        ViewBag.Title = "Edit user details";
+    }
+
+
+    @ViewBag.Title
 
     @Html.ActionLink(Model.FullName, "UserHomePage", "ApplicationUsers", new { id = currentUser.Id }, null)
     @if (Model.CourseId.HasValue)
@@ -148,11 +154,14 @@ else
                     </div>
 
                     <br />
+                    @if (Model.Files != null && Model.Files.Where(x => x.FileType == "avatar").Count() > 0)
+    {
+        var base64 = Convert.ToBase64String(Model.Files.Where(x => x.FileType == "avatar").LastOrDefault().Content);
+        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
 
 
-
-
-                    <img src="https://x.cdn-expressen.se/images/a6/f0/a6f05597071a4f6d95abfff55fc81341/16x9/680.jpg" alt="Picture 300x500" height="300" width="500">
+                <img src='@imgsrc' alt="Picture 300x500" style="max-height:200px ; max-width:300px">
+}
                     @if (currentUserId == Model.Id)
     {
                 <br />

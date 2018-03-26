@@ -104,91 +104,114 @@
 
         @foreach (var item in Model)
         {
-            <tr class="course">
-                <td class="coursename">
-                    <input type="checkbox" class="coursenamebox" unchecked /> <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
-                    @if (item.UrgentInfo != null && item.UrgentInfo.Length > 0)
-                    {
-                        <br />
-                        <div class="urgentinfo">@item.UrgentInfo</div>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
+        <tr class="course">
+            <td class="coursename">
+                <input type="checkbox" class="coursenamebox" unchecked /> <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
+                @if (item.UrgentInfo != null && item.UrgentInfo.Length > 0)
+        {
+            <br />
+            <div class="urgentinfo">@item.UrgentInfo</div>
+}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
 
-                @if (User.IsInRole("Teacher"))
-                {
-                    <td>
-                        <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })|@Html.ActionLink("delete", "Delete", new { id = item.Id })
-add: document|@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
-                    </td>
-                }
+            @if (User.IsInRole("Teacher"))
+    {
+        <td>
+            <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })|@Html.ActionLink("delete", "Delete", new { id = item.Id })
+add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + " course" }, null)|@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
+        </td>
+}
 
+        <td class="subitem">
+            @if (item.Description != null && item.Description.Length > 0)
+    {<details>
+            <summary>Information</summary>
+            <small>@item.Description</small>
+            <small></small>
+        </details>}
+            @if (item.Modules != null && item.Modules.Count > 0)
+    {<details>
+            <summary>
+                @item.Modules.Count@if (item.Modules.Count == 1)
+        {<text> module</text>}
+else
+{<text> modules</text>}
+            </summary>
+            <small>
+                @{int loopM = 1;}
 
-                <td class="subitem">
-                    @if (item.Description != null && item.Description.Length > 0)
-                    {<details>
-                            <summary>Information</summary>
-                            <small>@item.Description</small>
-                            <small></small>
-                        </details>}
-                    @if (item.Modules != null && item.Modules.Count > 0)
-                    {<details>
-                            <summary>
-                                @item.Modules.Count@if (item.Modules.Count == 1)
-                                {<text> module</text>}
-                            else
-                            {<text> modules</text>}
-                            </summary>
-                            <small>
-                                @{int loopM = 1;}
+                @foreach (var item8 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName).ToList())
+        {
+            @loopM<text>.</text>@item8.ModuleName<text> (</text>@Html.DisplayFor(modelItem => item8.StartDate)<text> - </text>@Html.DisplayFor(modelItem => item8.EndDate)<text>)</text><br />
+    loopM++;
+}
 
-                                @foreach (var item8 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName).ToList())
-                                {
-                                    @loopM<text>.</text>@item8.ModuleName<text> (</text>@Html.DisplayFor(modelItem => item8.StartDate)<text> - </text>@Html.DisplayFor(modelItem => item8.EndDate)<text>)</text><br />
-                                    loopM++;
-                                }
+            </small>
 
-                            </small>
-
-                        </details>
-                    }
-                    @if (item.AttendingStudents != null && item.AttendingStudents.Count > 0)
-                    {
-                        <details>
-                            <summary>
-                                @item.AttendingStudents.Count
-                                @if (item.AttendingStudents.Count == 1)
-                                {<text> student</text>}
-                            else
-                            {<text> students</text>}
-                            </summary>
-
-
-                            <small>
-                                @{ int loop = 1; }
-                                @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-                                {
-
-                                    @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
-                                    { loop = loop + 1; }
-                                }
-
-                            </small>
-                        </details>
-                    }
-
-                    <details><summary>? documents</summary></details>
+        </details>
+}
+            @if (item.AttendingStudents != null && item.AttendingStudents.Count > 0)
+    {
+        <details>
+            <summary>
+                @item.AttendingStudents.Count
+                @if (item.AttendingStudents.Count == 1)
+        {<text> student</text>}
+else
+{<text> students</text>}
+            </summary>
 
 
+            <small>
+                @{ int loop = 1; }
+                @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+    {
+
+            @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
+{ loop = loop + 1; }
+}
+
+            </small>
+        </details>
+}
+
+
+            @if (item.Files != null && item.Files.Count > 0)
+    {
+        <details>
+            <summary>
+                @item.Files.Count
+                @if (item.Files.Count == 1)
+        {<text> document</text>}
+else
+{<text> documents</text>}
+            </summary>
+
+
+            <small>
+                @{ int loop = 1; }
+                @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
+    {
+
+            @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
+{ loop = loop + 1; }
+}
+
+            </small>
+        </details>
+}
 
 
 
-            </tr>
+
+
+</tr>
 
             foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
             {
@@ -207,35 +230,58 @@ add: document|@Html.ActionLink("module", "Create", "Modules", new { CourseId = i
                         <td>
 
                             <pre>@Html.ActionLink("edit", "Edit", "Modules", new { id = item2.Id }, null)|@Html.ActionLink("delete", "Delete", "Modules", new { id = item2.Id }, null)
-add: document|@Html.ActionLink("activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
+add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item2.Id + " module" }, null)|@Html.ActionLink("activity", "Create", "Activities", new { ModuleId = item2.Id }, null)</pre>
                         </td>}
-                    <td class="subitem">
-                        @if (item2.Description != null | item2.ModuleInfo != null)
-                        {<details>
-                                <summary>Information</summary>
-                                <b><small>@item2.Description</small><br /></b>
-                                <small>@item2.ModuleInfo</small>
-                            </details>}
-                        @if (item2.Activities != null && item2.Activities.Count > 0)
-                        {<details>
-    <summary>
-        @item2.Activities.Count@if (item2.Activities.Count == 1)
+                        <td class="subitem">
+                            @if (item2.Description != null | item2.ModuleInfo != null)
+    {<details>
+                            <summary>Information</summary>
+                            <b><small>@item2.Description</small><br /></b>
+                            <small>@item2.ModuleInfo</small>
+                        </details>}
+                            @if (item2.Activities != null && item2.Activities.Count > 0)
+    {<details>
+                            <summary>
+                                @item2.Activities.Count@if (item2.Activities.Count == 1)
         {<text> activity</text>}
-        else
-        {<text> activities</text>}
-    </summary>
-    @{int loopM = 1;}
+else
+{<text> activities</text>}
+                            </summary>
+                            @{int loopM = 1;}
 
-    @foreach (var item9 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList())
+                            @foreach (var item9 in item2.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList())
     {
-        @loopM<text>.</text>@item9.ActivityType.ActivityTypeName<text>:</text> @item9.ActivityName<text><br /> </text>
-        <small>@item9.StartDate.ToShortDateString() (@item9.StartDate.ToShortTimeString()) - @item9.EndDate.ToShortDateString() (@item9.EndDate.ToShortTimeString())</small>
-        <br />}
-</details>
-    }
+                        @loopM<text>.</text>@item9.ActivityType.ActivityTypeName<text>:</text> @item9.ActivityName<text><br /> </text>
+                        <small>@item9.StartDate.ToShortDateString() (@item9.StartDate.ToShortTimeString()) - @item9.EndDate.ToShortDateString() (@item9.EndDate.ToShortTimeString())</small>
+                        <br />}
+                        </details>
+}
 
-                        <details><summary>? documents</summary></details>
-                    </td>
+                            @if (item2.Files != null && item2.Files.Count > 0)
+    {
+                        <details>
+                            <summary>
+                                @item2.Files.Count
+                                @if (item2.Files.Count == 1)
+        {<text> document</text>}
+else
+{<text> documents</text>}
+                            </summary>
+
+
+                            <small>
+                                @{ int loop = 1; }
+                                @foreach (var item11 in item2.Files.OrderBy(x => x.Description).ToList())
+    {
+
+                            @loop<text>.</text> @Html.ActionLink(item11.Description, "View", "Upload", new { id = item11.Id }, null) <br />
+{ loop = loop + 1; }
+}
+
+                            </small>
+                        </details>
+}
+                        </td>
 
         
 
@@ -257,21 +303,44 @@ add: document|@Html.ActionLink("activity", "Create", "Activities", new { ModuleI
                         @if (User.IsInRole("Teacher"))
                         {
                             <td>
-<pre>@Html.ActionLink("edit", "Edit", "Activities", new { id = item3.Id }, null)|@Html.ActionLink("delete", "Delete", "Activities", new { id = item3.Id }, null)
-add: document</pre>
+                                <pre>@Html.ActionLink("edit", "Edit", "Activities", new { id = item3.Id }, null)|@Html.ActionLink("delete", "Delete", "Activities", new { id = item3.Id }, null)
+add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item3.Id + " activity" }, null)</pre>
 
                             </td>}
-                        <td>
-                            @if (item3.Description != null && item3.ActivityInfo!= null && (item3.Description.Length > 0 | item3.ActivityInfo.Length > 0))
-                            {<details>
-                                    <summary>Information</summary>
-                                    <b><small>@item3.Description</small><br /></b>
-                                    <small>@item3.ActivityInfo</small>
-                                </details>}
+                            <td>
+                                @if (item3.Description != null && item3.ActivityInfo != null && (item3.Description.Length > 0 | item3.ActivityInfo.Length > 0))
+    {<details>
+                                <summary>Information</summary>
+                                <b><small>@item3.Description</small><br /></b>
+                                <small>@item3.ActivityInfo</small>
+                            </details>}
 
-                            <details><summary>? documents</summary></details>
+                                @if (item3.Files != null && item3.Files.Count > 0)
+    {
+                            <details>
+                                <summary>
+                                    @item3.Files.Count
+                                    @if (item3.Files.Count == 1)
+        {<text> document</text>}
+else
+{<text> documents</text>}
+                                </summary>
 
-                        </td>
+
+                                <small>
+                                    @{ int loop = 1; }
+                                    @foreach (var item12 in item3.Files.OrderBy(x => x.Description).ToList())
+    {
+
+                                @loop<text>.</text> @Html.ActionLink(item12.Description, "View", "Upload", new { id = item12.Id }, null) <br />
+{ loop = loop + 1; }
+}
+
+                                </small>
+                            </details>
+}
+
+                            </td>
                     </tr>
 
                 }

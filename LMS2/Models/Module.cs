@@ -53,6 +53,7 @@ namespace LMS2.Models
 
 
         //navigational property
+        public virtual ICollection<File> Files { get; set; }
         public virtual Course Course { get; set; }
         [Display(Name = "activities")]
         public virtual ICollection<Activity> Activities { get; set; }

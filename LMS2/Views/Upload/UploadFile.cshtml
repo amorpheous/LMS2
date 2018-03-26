@@ -1,22 +1,28 @@
 ﻿@model LMS2.Models.File
 
-@{ViewBag.Title = "UploadFile";}
+@{ViewBag.Title = "Upload file";}
 
-<h2>UploadFile</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
 
 <div>
-    @Html.TextBox("file", "", new { type = "file" })
+    <div>
+        @Html.TextBox("file", "", new { type = "file" })
+    </div>
+    <br />
 
     @*<div>@Html.TextBoxFor(x => x.CourseId)</div>
-    <div>@Html.TextBoxFor(x => x.ModuleId)</div>
-    <div>@Html.TextBoxFor(x =>x.ActivityId)</div>*@
+        <div>@Html.TextBoxFor(x => x.ModuleId)</div>
+        <div>@Html.TextBoxFor(x =>x.ActivityId)</div>*@
 
-    Description: @Html.TextBoxFor(File => File.Description)
-    <input type="submit" value="Ladda Upp Fil" />
+    File description: @Html.TextBoxFor(File => File.Description)
+    <br />
+    <br />
+
+    <input class="btn btn-primary" type="submit" value="Upload file" />
 
 </div>
 

@@ -67,54 +67,62 @@ namespace LMS2.Controllers
         // GET: ApplicationUsers/Details/5
 
 
-
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = db.Users.Find(id);
-
-
-           
-
-
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
-
-        //public ActionResult OtherUserHomePage()
-        //{
-
-        //    return Red
-        //}
+        /*
+                public ActionResult Details(string id)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    ApplicationUser applicationUser = db.Users.Find(id);
 
 
 
 
-       
+
+                    if (applicationUser == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(applicationUser);
+                }
+
+                //public ActionResult OtherUserHomePage()
+                //{
+
+                //    return Red
+                //}
+
+
+        */
+
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult UserHomePage(string id)
         {
             ApplicationDbContext context = new ApplicationDbContext();
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-
+            int picId;
             if (id != currentUserId)
             {
                 ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
-                ViewBag.Id = otherUser.Id;
+                if (otherUser.Files != null)
+                {
+                    ViewBag.Id = otherUser.Id;
+                    picId = otherUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
+                    ViewBag.pic = otherUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+                }
                 return View(otherUser);
             }
             ViewBag.Id = currentUserId;
+            if (currentUser.Files != null) { 
+            picId = currentUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
+            ViewBag.pic = currentUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+            }
             return View(currentUser);
         }
 
-        
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult EditUserHomePage(string id)
         {
             
@@ -149,6 +157,7 @@ namespace LMS2.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Teacher, Student")]
         [ValidateAntiForgeryToken]
         public ActionResult EditUserHomePage([Bind(Include = "FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
         {
@@ -280,7 +289,7 @@ namespace LMS2.Controllers
 
 
         // GET: ApplicationUsers/Edit/5
-        public ActionResult Edit(string id)
+/*        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -310,7 +319,7 @@ namespace LMS2.Controllers
             }
             return View(applicationUser);
         }
-
+*/
         // GET: ApplicationUsers/Delete/5
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Delete(string id)
