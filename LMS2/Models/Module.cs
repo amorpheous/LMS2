@@ -31,7 +31,7 @@ namespace LMS2.Models
         public string Description { get; set; }
 
         [DefaultDateTimeValue("Now")]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Required]
@@ -45,7 +45,7 @@ namespace LMS2.Models
         public DateTime EndDate { get; set; }
 
         [StringLength(5000, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
-        [Display(Name = "Module Info")]
+        [Display(Name = "Module info")]
         public string ModuleInfo { get; set; }
 
         public int CourseId { get; set; }
