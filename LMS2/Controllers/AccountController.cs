@@ -82,6 +82,12 @@ namespace LMS2.Controllers
                 return View(model);
             }
 
+           // ApplicationUser user = new 
+
+
+          // RedirectToAction("RedirectInactiveUser", "Courses");
+
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -102,14 +108,36 @@ namespace LMS2.Controllers
                     return View(model);
             }
         }
-
         
+        public ActionResult InactiveUser()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+            if (currentUser.IsActive == false)
+                return View("InactiveUser");
+
+            else return RedirectToAction("Login");
+
+        }
+
+
 
         public ActionResult UserSpecificLogin()
         {
             //  Vilken sida som är rätt beror på vem användaren är.
-           
-            if (User.IsInRole(Roles.Teacher))
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+            if (currentUser.IsActive == false)
+                return View ("InactiveUser");
+
+
+
+            else if (User.IsInRole(Roles.Teacher))
                 return RedirectToAction("Index", "Courses");
             else if (User.IsInRole(Roles.Student))
                 return RedirectToAction("Index", "Courses");

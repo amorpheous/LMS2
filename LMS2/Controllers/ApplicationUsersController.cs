@@ -147,6 +147,7 @@ namespace LMS2.Controllers
 
 
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditUserHomePage([Bind(Include = "FirstName,LastName,NickName,IsActive,AdditionalInfo,SpecialInfo,Email")] ApplicationUser applicationUser)
@@ -180,7 +181,24 @@ namespace LMS2.Controllers
 
         }
 
+        //public ActionResult CheckIfUserIsActiveOnLogin()
+        //{
+          
+        //    ApplicationDbContext context = new ApplicationDbContext();
+        //    string currentUserId = User.Identity.GetUserId();
+        //    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
 
+
+        //    if (currentUser.IsActive == false) {
+
+        //        return View("InactiveUser");
+
+        //            }
+
+        //    else return RedirectToAction("Login", "Account");
+
+
+        //}
 
         // GET: ApplicationUsers/Create
         [Authorize(Roles = Roles.Teacher)]
