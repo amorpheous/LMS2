@@ -13,7 +13,7 @@ namespace LMS2.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Course Name")]
+        [Display(Name = "Course name")]
         public string CourseName { get; set; }
 
         [StringLength(200, ErrorMessage = "The description can at most be 200 characters long")]
@@ -21,7 +21,7 @@ namespace LMS2.Models
 
         [DataType(DataType.Date)]
         [DefaultDateTimeValue("Now")]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime StartDate { get; set; }
