@@ -141,11 +141,11 @@ namespace LMS2.Controllers
                 ModelState.AddModelError("EndDate", "End date cannot occur before start date");
 
 
- var conflictingModulesTest1 = db.Modules.Where(x => x.CourseId==module.CourseId).Where(x=>x.StartDate<=module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
+ var conflictingModulesTest1 = db.Modules.Where(x=>x.Id!=module.Id).Where(x => x.CourseId==module.CourseId).Where(x=>x.StartDate<=module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
             if(conflictingModulesTest1>0)
                 ModelState.AddModelError("StartDate", "Conflicts with " +conflictingModulesTest1+ " other module/s");
 
-                var conflictingModulesTest2 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
+                var conflictingModulesTest2 = db.Modules.Where(x => x.Id != module.Id).Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
             if (conflictingModulesTest2 > 0)
                 ModelState.AddModelError("EndDate", "Conflicts with " + conflictingModulesTest2 + " other module/s");
 
