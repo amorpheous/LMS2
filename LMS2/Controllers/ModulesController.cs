@@ -117,8 +117,45 @@ namespace LMS2.Controllers
             var Course = db.Courses.Where(x => x.Id == intCourseId).FirstOrDefault();
             var ViewModel = new Module { Course = db.Courses.Where(x=>x.Id==intCourseId).FirstOrDefault() };
             ViewModel.CourseId = intCourseId;
-            ViewModel.StartDate = Course.StartDate;
-            ViewModel.EndDate = Course.EndDate;
+
+            var courseStartDate = Course.StartDate;
+            var courseEndDate = Course.EndDate;
+
+
+            var firstFreeStartDate = courseStartDate;
+            var previousEndDate = courseStartDate.AddDays(-1);
+            var firstFreeEndDate = courseEndDate;
+            int loop = 0;
+            foreach (var item in Course.Modules.OrderBy(x=>x.StartDate).ThenBy(x=>x.EndDate))
+            {
+                loop++;
+                if (item.StartDate > firstFreeStartDate)
+                {
+                    break;
+                }
+                else {
+                    firstFreeStartDate = item.EndDate.AddDays(1);
+                }
+            }
+
+            int loop2 = 0;
+            foreach (var item in Course.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate))
+            {
+                loop2++;
+                if (loop2==loop+1)
+                {
+                    firstFreeEndDate= item.StartDate.AddDays(-1);
+                    break;
+                }
+            }
+
+            if (firstFreeEndDate < firstFreeStartDate)
+                firstFreeEndDate = firstFreeStartDate;
+            
+            ViewModel.StartDate = firstFreeStartDate;
+            ViewModel.EndDate = firstFreeEndDate;
+
+
             return View(ViewModel);
         }
 
@@ -200,11 +237,11 @@ namespace LMS2.Controllers
                 ModelState.AddModelError("EndDate", "End date cannot occur before start date");
 
 
-            var conflictingModulesTest1 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
+            var conflictingModulesTest1 = db.Modules.Where(x => x.Id != module.Id).Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
             if (conflictingModulesTest1 > 0)
                 ModelState.AddModelError("StartDate", "Conflicts with " + conflictingModulesTest1 + " other module/s");
 
-            var conflictingModulesTest2 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
+            var conflictingModulesTest2 = db.Modules.Where(x => x.Id != module.Id).Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
             if (conflictingModulesTest2 > 0)
                 ModelState.AddModelError("EndDate", "Conflicts with " + conflictingModulesTest2 + " other module/s");
 

@@ -133,11 +133,11 @@ namespace LMS2.Controllers
                 ModelState.AddModelError("EndDate", "End date cannot occur before start date");
 
 
-            var conflictingActivitiesTest1 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
+            var conflictingActivitiesTest1 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.Id != activity.Id).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
             if (conflictingActivitiesTest1 > 0)
                 ModelState.AddModelError("StartDate", "Conflicts with " + conflictingActivitiesTest1 + " other activit/y/ies");
 
-            var conflictingActivitiesTest2 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
+            var conflictingActivitiesTest2 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.Id != activity.Id).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
             if (conflictingActivitiesTest2 > 0)
                 ModelState.AddModelError("EndDate", "Conflicts with " + conflictingActivitiesTest2 + " other activit/y/ies");
 
