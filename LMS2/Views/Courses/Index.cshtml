@@ -170,16 +170,29 @@ else
 
             <small>
                 @{ int loop = 1; }
-                @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
+                @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.NickName).ThenBy(x => x.Email).Where(x => x.IsActive == true).ToList())
     {
 
             @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
 { loop = loop + 1; }
 }
+                @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.NickName).ThenBy(x => x.Email).Where(x => x.IsActive == false).ToList())
+    {
+
+            @loop<text>.</text> <text>inactivated</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
+{ loop = loop + 1; }
+}
 
             </small>
         </details>
+
+
+
+
 }
+
+
+
 
 
             @if (item.Files != null && item.Files.Count > 0)
@@ -197,10 +210,10 @@ else
             <small>
                 @{ int loop = 1; }
                 @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
-    {
+        {
 
             @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
-{ loop = loop + 1; }
+    { loop = loop + 1; }
 }
 
             </small>

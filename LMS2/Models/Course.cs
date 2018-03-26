@@ -8,8 +8,30 @@ using System.Web;
 
 namespace LMS2.Models
 {
-    public class Course
+    public class Course : ICloneable
     {
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public object CleanClone()
+        {
+            this.MemberwiseClone();
+            this.AttendingStudents = this.AttendingStudents.Where(x => x.IsActive == true).ToList();
+            List<ApplicationUser> hideSpecial = new List<ApplicationUser>();
+            foreach (var item in this.AttendingStudents)
+            {
+                item.SpecialInfo = null;
+                hideSpecial.Add(item);
+            }
+            this.AttendingStudents = hideSpecial;
+            return this;
+        }
+
+
+
         public int Id { get; set; }
 
         [Required]

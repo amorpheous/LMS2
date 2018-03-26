@@ -23,77 +23,93 @@ namespace LMS2.Controllers
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
             ViewBag.Filter = "";
-
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             if (User.IsInRole(LMS2.Models.Roles.Student))
             {
-
                 if (user.CourseId != null)
                 {
+                    var course= db.Courses.Where(c => c.Id == user.CourseId).FirstOrDefault();
+                    var editedCourse = (Course)course.CleanClone();
                     ViewBag.Filter = "";
+                    List<Course> courseList = new List<Course>()  
+                    {
+                        editedCourse
+                    };
 
-                    return View(db.Courses.Where(c => c.Id == user.CourseId).ToList());
+                    return View(courseList);
                 }
                 else
                 {
                     ViewBag.Filter = "Something went wrong, talk to your teacher";
                     View();
                 }
+
+
+
             }
 
             var today = DateTime.Now.Date;
-            var Users = db.Users.Where(x=>x.IsActive==true).Where(x => x.CourseId.HasValue == true).Select(x => new StudentList { FullName = x.FullName, CourseId = x.CourseId });
+            ICollection<Course> courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+
             if (id == null | id == 0 )
             {
                 ViewBag.Filter = "Current courses";
-                return View(db.Courses.Where(x => x.EndDate>=today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+                courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                foreach (var course in courses)
+                {
+                    course.AttendingStudents = db.Users.Where(x => x.CourseId == course.Id).Where(x=>x.IsActive==true).ToList();
+                    foreach (var student in course.AttendingStudents)
+                    {
+                        student.SpecialInfo = null;
+                    }
+                }
+
+
+                return View(courses);
             }
             if (id == null |id == 1)
             {
                 ViewBag.Filter = "Upcoming courses";
-                return View(db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+                courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                return View(courses);
             }
             else if (id == 2)
             {
                 ViewBag.Filter = "Past courses";
-                return View(db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+                courses = db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                return View(courses);
             }
             else
                 ViewBag.Filter = "All courses";
-            return View(db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList());
+            courses = db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+            return View(courses);
 
             }
 
-        public class StudentList
-        {
-            public string FullName { get; set; }
-            public int? CourseId { get; set; }
-    }
-
- /*       public ActionResult StudentCourse(string id)
-        {
-            var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
-            if (User.IsInRole(Roles.Student))
-            {
-                if (user.CourseId != null)
-                {
-                    var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
-                    return View(course);
-                }
-                else return View();
-            }
-            if (User.IsInRole(Roles.Teacher))
-            {
-                if(Int32.TryParse(id,out int idint))
-                { 
-                    var course2 = db.Courses.FirstOrDefault(c => c.Id == idint);
-                    return View(course2);
-                }
-                else return View();
-            }
-            else return View();
-        }
-        */
+        /*       public ActionResult StudentCourse(string id)
+               {
+                   var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+                   if (User.IsInRole(Roles.Student))
+                   {
+                       if (user.CourseId != null)
+                       {
+                           var course = db.Courses.FirstOrDefault(c => c.Id == user.CourseId);
+                           return View(course);
+                       }
+                       else return View();
+                   }
+                   if (User.IsInRole(Roles.Teacher))
+                   {
+                       if(Int32.TryParse(id,out int idint))
+                       { 
+                           var course2 = db.Courses.FirstOrDefault(c => c.Id == idint);
+                           return View(course2);
+                       }
+                       else return View();
+                   }
+                   else return View();
+               }
+               */
 
         public ActionResult Redirect()
         {

@@ -25,84 +25,102 @@
                 <li>@Html.ActionLink("Students (all)", "Index", new { id = 5 })</li>
             </ul>
     </ul>}
-    <td>
+
+@if (User.IsInRole("Student"))
+{
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Teachers / Class mates
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Teachers", "Index", new { id = 0 })</li>
+                <li>@Html.ActionLink("Class mates", "Index", new { id = 3 })</li>
+            </ul>
+    </ul>}
+
+
+
+
+<td>
 <pre>
    @ViewBag.Filter
 </pre>
 
-        <form method="get">
+    <form method="get">
 
-            <div>
+        <div>
 
-                <b>@Html.RadioButton("searchBy", "Name", true) <text>Name</text></b>
-                <b>@Html.RadioButton("searchBy", "Email") <text>Email</text></b>
-                @if (User.IsInRole("Teacher"))
-                { 
-            <b>@Html.RadioButton("searchBy", "Course") <text>Course</text></b>
+            <b>@Html.RadioButton("searchBy", "Name", true) <text>Name</text></b>
+            <b>@Html.RadioButton("searchBy", "Email") <text>Email</text></b>
+            @if (User.IsInRole("Teacher"))
+            {
+                <b>@Html.RadioButton("searchBy", "Course") <text>Course</text></b>
                 <b>@Html.RadioButton("searchBy", "Date") <text>Date</text></b>
-                }
-                <br />
-            </div>
+            }
+            <br />
+        </div>
 
-            <div>
-                @Html.TextBox("search")<input type="submit" value="Search" />
-                <p></p>
-            </div>
+        <div>
+            @Html.TextBox("search")<input type="submit" value="Search" />
+            <p></p>
+        </div>
 
-        </form>
+    </form>
 
 
-        <table class="table">
-            <tr>
-                <th>
-                    Avatar
-                </th>
-                <th>
-                    <big>
-                        @Html.DisplayNameFor(model => model.FullName)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.NameSortParm })
-                    </big> <small>
-                        Nick name            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.NickNameSortParm })
-                    </small>
-                </th>
-                @if (User.IsInRole("Teacher"))
-    {
+    <table class="table">
+        <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IsActive)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.IsActiveSortParm })
+                Avatar
+            </th>
+            <th>
+                <big>
+                    @Html.DisplayNameFor(model => model.FullName)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.NameSortParm })
+                </big> <small>
+                    Nick name            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.NickNameSortParm })
+                </small>
+            </th>
+            @if (User.IsInRole("Teacher"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.IsActiveSortParm })
+
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Email)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.EmailSortParm })
 
             </th>
-}
+
+            @if (!ViewBag.Filter.Contains("eacher"))
+            {
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.EmailSortParm })
+                    @Html.DisplayNameFor(model => model.Course)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.CourseNameSortParm })
 
-                </th>
-
-                @if (!ViewBag.Filter.Contains("eacher"))
-    {
-            <th>
-                @Html.DisplayNameFor(model => model.Course)            @Html.ActionLink(HttpUtility.HtmlDecode("&#x2195;"), "Index", new { sortOrder = ViewBag.CourseNameSortParm })
-
-            </th>}
-                <th style="width:10%">
-                </th>
+                </th>}
+            <th style="width:10%">
+            </th>
 
 
 
-            </tr>
-            @{var Name = "";}
-            @foreach (var item in Model)
+        </tr>
+        @{var Name = "";}
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
 
 
                     @if (item.Files != null && item.Files.Where(x => x.FileType == "avatar").Count() > 0)
-    {
-        var base64 = Convert.ToBase64String(item.Files.Where(x => x.FileType == "avatar").LastOrDefault().Content);
-        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                    {
+                        var base64 = Convert.ToBase64String(item.Files.Where(x => x.FileType == "avatar").LastOrDefault().Content);
+                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
 
 
-                <img src='@imgsrc' alt="Picture 300x500" style="max-height:50px ; max-width:150px">
-}
+                        <img src='@imgsrc' alt="Picture 300x500" style="max-height:50px ; max-width:150px">
+                    }
 
 
 
@@ -117,39 +135,39 @@
                         @Html.ActionLink(Name, "UserHomePage", new { id = item.Id })
                     </big>
                     @if (item.NickName != null && item.NickName.Length > 0)
-        {
-            @Html.DisplayFor(modelItem => item.NickName)}
+                    {
+                        @Html.DisplayFor(modelItem => item.NickName)}
                 </td>
 
                 @if (User.IsInRole("Teacher"))
-    {
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-}
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                }
                 <td>
                     <a href="mailto:@item.Email">@item.Email</a>
                 </td>
                 @if (ViewBag.Filter != "Teachers")
-    {
-            <td>
-                @if (item.CourseId != null)
-    {
-            @Html.DisplayFor(model => item.Course.CourseName)<br />
+                {
+                    <td>
+                        @if (item.CourseId != null)
+                        {
+                            @Html.DisplayFor(model => item.Course.CourseName)<br />
 
-            <small>(@Html.DisplayFor(model => item.Course.StartDate) - @Html.DisplayFor(model => item.Course.EndDate))</small>
-}
-            </td>
-}
+                            <small>(@Html.DisplayFor(model => item.Course.StartDate) - @Html.DisplayFor(model => item.Course.EndDate))</small>
+                        }
+                    </td>
+                }
 
 
                 @if (User.IsInRole("Teacher"))
-    {
-            <td>
-                <pre>
+                {
+                    <td>
+                        <pre>
 @Html.ActionLink("Edit", "EditUserHomePage", "ApplicationUsers", new { id = item.Id }, null)<span>|</span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</pre>
-            </td>}
+                    </td>}
             </tr>
-    }
+        }
 
-        </table>
+    </table>

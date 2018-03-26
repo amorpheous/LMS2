@@ -59,8 +59,35 @@ namespace LMS2.Controllers
 
             else
             {
-                ViewBag.Filter = "Teachers";
-                return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList());
+                if (id == 3)
+                {
+                    ViewBag.Filter = "Class mates";
+                    var classMates =
+                        db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList();
+                    List<ApplicationUser> classMateList = new List<ApplicationUser>();
+                    foreach (var item in classMates)
+                    {
+                        item.SpecialInfo = null;
+                        classMateList.Add(item);
+                    }
+
+
+                    return View(classMateList);
+                }
+                else
+                {
+                    ViewBag.Filter = "Teachers";
+                    var teachers = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList();
+                    List<ApplicationUser> teacherList = new List<ApplicationUser>();
+                    foreach (var item in teachers)
+                    {
+                        item.SpecialInfo = null;
+                        teacherList.Add(item);
+                    }
+
+
+                    return View(teacherList);
+                }
             }
         }
 
