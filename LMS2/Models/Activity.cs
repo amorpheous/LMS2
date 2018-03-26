@@ -55,6 +55,7 @@ namespace LMS2.Models
         public virtual Module Module { get; set; }
 
         //   Appendices
+        public virtual ICollection<File> Files { get; set; }
         public int ActivityTypeId { get; set; }
         public virtual ActivityType ActivityType { get; set; }
         
