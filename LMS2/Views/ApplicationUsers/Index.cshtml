@@ -5,6 +5,9 @@
     ViewBag.Title = "User list";
 }
 
+
+
+
 @if (User.IsInRole("Teacher"))
 {
     <ul class="nav navbar-nav">
@@ -49,6 +52,7 @@
 </pre>
 
     <form method="get">
+        <br />
 
         <div>
 
@@ -57,12 +61,8 @@
             @if (User.IsInRole("Teacher"))
             {
                 <b>@Html.RadioButton("searchBy", "Course") <text>Course</text></b>
-                <b>@Html.RadioButton("searchBy", "Date") <text>Date</text></b>
             }
             <br />
-        </div>
-
-        <div>
             @Html.TextBox("search")<input type="submit" value="Search" />
             <p></p>
         </div>
