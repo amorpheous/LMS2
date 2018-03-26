@@ -77,16 +77,17 @@ namespace LMS2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if(db.Users.Where(x => x.UserName == model.Email).Where(x => x.IsActive == false).Count()>0)
+            {
+                ModelState.AddModelError("Email", "User temporarily inactivated. Contact a teacher.");
+
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-           // ApplicationUser user = new 
-
-
-          // RedirectToAction("RedirectInactiveUser", "Courses");
-
+  
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -109,35 +110,14 @@ namespace LMS2.Controllers
             }
         }
         
-        public ActionResult InactiveUser()
-        {
-            ApplicationDbContext context = new ApplicationDbContext();
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-            if (currentUser.IsActive == false)
-                return View("InactiveUser");
-
-            else return RedirectToAction("Login");
-
-        }
-
-
+     
 
         public ActionResult UserSpecificLogin()
         {
             //  Vilken sida som är rätt beror på vem användaren är.
 
-            ApplicationDbContext context = new ApplicationDbContext();
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-            if (currentUser.IsActive == false)
-                return View ("InactiveUser");
-
-
-
-            else if (User.IsInRole(Roles.Teacher))
+           
+           if (User.IsInRole(Roles.Teacher))
                 return RedirectToAction("Index", "Courses");
             else if (User.IsInRole(Roles.Student))
                 return RedirectToAction("Index", "Courses");
@@ -146,29 +126,7 @@ namespace LMS2.Controllers
            
         }
 
-        //public ActionResult UserHomePage()
-        //{
-        //   // var user = db.Users.Single(u => u.UserName == User.Identity.Name);
-
-        //    string currentUserId = User.Identity.GetUserId();
-
-        //    ApplicationDbContext context = new ApplicationDbContext();
-
-        //    ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
-        //    string ID = currentUser.Id;
-        //    string Email = currentUser.Email;
-        //    string Username = currentUser.UserName;
-
-
-        //    return View(currentUser);
-        //}
-
-        //public ActionResult StudentHomePage()
-        //{
-        //    var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
-        //    return View(user);
-        //}
-
+        
 
         //
         // GET: /Account/VerifyCode

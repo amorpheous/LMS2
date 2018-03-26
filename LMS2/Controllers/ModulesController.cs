@@ -131,7 +131,7 @@ namespace LMS2.Controllers
         public ActionResult Create([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,Course,CourseId")] Module module)
         {
 
-            var ViewModel = new Module { Course = db.Courses.Where(x => x.Id == module.CourseId).FirstOrDefault() };
+            var ViewModel = new Module { Course = db.Courses.Where(x => x.Id == module.CourseId ).FirstOrDefault() };
 
             if (module.StartDate < ViewModel.Course.StartDate | module.StartDate > ViewModel.Course.EndDate)
                 ModelState.AddModelError("StartDate", "Start date must be within the course");
@@ -171,11 +171,14 @@ namespace LMS2.Controllers
             }
 
             Module module = db.Modules.Find(id);
+
             if (module == null)
             {
                 return HttpNotFound();
             }
+
             module.Courses = db.Courses.Where(x=>x.Id==module.CourseId).ToList();
+
             return View(module);
         }
 
@@ -187,6 +190,24 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit([Bind(Include = "Id,ModuleName,Description,StartDate,EndDate,ModuleInfo,CourseId,Course")] Module module)
         {
+            var ViewModel = new Module { Course = db.Courses.Where(x => x.Id == module.CourseId).FirstOrDefault() };
+
+            if (module.StartDate < ViewModel.Course.StartDate | module.StartDate > ViewModel.Course.EndDate)
+                ModelState.AddModelError("StartDate", "Start date must be within the course");
+            if (module.EndDate < ViewModel.Course.StartDate | module.EndDate > ViewModel.Course.EndDate)
+                ModelState.AddModelError("EndDate", "End date must be within the course");
+            if (module.EndDate < module.StartDate)
+                ModelState.AddModelError("EndDate", "End date cannot occur before start date");
+
+
+            var conflictingModulesTest1 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.StartDate).Where(x => x.EndDate >= module.StartDate).Count();
+            if (conflictingModulesTest1 > 0)
+                ModelState.AddModelError("StartDate", "Conflicts with " + conflictingModulesTest1 + " other module/s");
+
+            var conflictingModulesTest2 = db.Modules.Where(x => x.CourseId == module.CourseId).Where(x => x.StartDate <= module.EndDate).Where(x => x.EndDate >= module.EndDate).Count();
+            if (conflictingModulesTest2 > 0)
+                ModelState.AddModelError("EndDate", "Conflicts with " + conflictingModulesTest2 + " other module/s");
+
 
 
             if (ModelState.IsValid)
@@ -197,7 +218,7 @@ namespace LMS2.Controllers
             }
            
 
-            return View(module);
+            return View(ViewModel);
         }
 
         // GET: Modules/Delete/5
