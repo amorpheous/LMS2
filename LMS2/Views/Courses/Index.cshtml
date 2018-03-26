@@ -171,10 +171,10 @@ else
             <small>
                 @{ int loop = 1; }
                 @foreach (var item4 in item.AttendingStudents.OrderBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).ToList())
-        {
+    {
 
             @loop<text>.</text> @Html.ActionLink(item4.FullName, "UserHomePage", "ApplicationUsers", new { id = item4.Id }, null)<br />
-    { loop = loop + 1; }
+{ loop = loop + 1; }
 }
 
             </small>

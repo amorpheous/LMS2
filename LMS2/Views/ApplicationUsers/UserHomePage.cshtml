@@ -32,8 +32,14 @@
 
             <div class="row">
 
+                @if (Model.Files != null && Model.Files.Where(x => x.FileType == "avatar").Count() > 0)
+    {
+        var base64 = Convert.ToBase64String(Model.Files.Where(x => x.FileType == "avatar").LastOrDefault().Content);
+        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
 
-                <img src=""    alt="Picture 300x500" height="200" width="300">
+
+            <img src='@imgsrc' alt="Picture 300x500" style="max-height:200px ; max-width:300px">
+}
 
 
                 @if (Model.Id == currentUser.Id || User.IsInRole("Teacher"))
