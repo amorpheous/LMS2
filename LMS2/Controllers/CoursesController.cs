@@ -103,6 +103,12 @@ namespace LMS2.Controllers
                 
         }
 
+        public ActionResult RedirectInactiveUser()
+        {
+            return RedirectToAction("InactiveUser", "Account");
+
+        }
+
         
         // GET: Courses/Details/5
 /*        public ActionResult Details(int? id)

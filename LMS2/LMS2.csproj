@@ -587,6 +587,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\ApplicationUsers\UserHomePage.cshtml" />
     <Content Include="Views\ApplicationUsers\EditUserHomePage.cshtml" />
+    <Content Include="Views\Account\InactiveUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
