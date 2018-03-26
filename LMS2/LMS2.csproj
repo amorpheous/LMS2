@@ -284,10 +284,19 @@
     <Content Include="bin\Microsoft.Owin.Security.Twitter.xml" />
     <Content Include="bin\Microsoft.Owin.Security.xml" />
     <Content Include="bin\Microsoft.Owin.xml" />
+    <Content Include="bin\Microsoft.Web.Administration.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\MvcSiteMapProvider.dll" />
+    <Content Include="bin\MvcSiteMapProvider.WebActivator.dll" />
+    <Content Include="bin\MvcSiteMapProvider.WebActivator.xml" />
+    <Content Include="bin\MvcSiteMapProvider.xml" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\Owin.dll" />
+    <Content Include="bin\PagedList.dll" />
+    <Content Include="bin\PagedList.Mvc.dll" />
+    <Content Include="bin\PagedList.Mvc.xml" />
+    <Content Include="bin\PagedList.xml" />
     <Content Include="bin\roslyn\csc.exe" />
     <Content Include="bin\roslyn\csi.exe" />
     <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
@@ -341,12 +350,14 @@
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\WebActivatorEx.dll" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="Content\LMS2.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -372,6 +383,7 @@
     <Content Include="Pictures\LMS_logo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\DisableAutoFill.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -400,6 +412,9 @@
     <Content Include="obj\Debug\Tsc.out" />
     <Content Include="obj\Release\LMS2.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Release\LMS2.csprojResolveAssemblyReference.cache" />
+    <Content Include="Scripts\GetFileDetails.coffee" />
+    <Content Include="Scripts\FileDetails.coffee" />
+    <Content Include="Scripts\AddFileDetails.coffee" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CourseIndex.js" />
@@ -507,7 +522,10 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\ApplicationUsers\UserHomePage.cshtml" />
     <Content Include="Views\ApplicationUsers\EditUserHomePage.cshtml" />
-    <Content Include="Views\Account\InactiveUser.cshtml" />
+    <Content Include="Views\Upload\UploadFile.cshtml" />
+    <Content Include="Views\EditUserMessageView.cshtml" />
+    <Content Include="Views\ApplicationUsers\ErrorEditUserView.cshtml" />
+    <Content Include="Views\Account\UserHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

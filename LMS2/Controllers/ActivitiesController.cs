@@ -75,11 +75,11 @@ namespace LMS2.Controllers
                 ModelState.AddModelError("EndDate", "End date cannot occur before start date");
 
 
-            var conflictingActivitiesTest1 = db.Activities.Where(x => x.ModuleId== activity.ModuleId).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
+            var conflictingActivitiesTest1 = db.Activities.Where(x => x.Id != activity.Id).Where(x => x.ModuleId== activity.ModuleId).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
             if (conflictingActivitiesTest1 > 0)
                 ModelState.AddModelError("StartDate", "Conflicts with " + conflictingActivitiesTest1 + " other activit/y/ies");
 
-            var conflictingActivitiesTest2 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
+            var conflictingActivitiesTest2 = db.Activities.Where(x => x.Id != activity.Id).Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
             if (conflictingActivitiesTest2 > 0)
                 ModelState.AddModelError("EndDate", "Conflicts with " + conflictingActivitiesTest2 + " other activit/y/ies");
 
@@ -122,6 +122,29 @@ namespace LMS2.Controllers
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Edit([Bind(Include = "Id,Description,ActivityName,StartDate,EndDate,ActivityInfo,ActivityType,ActivityTypeId,Module,ModuleId")] Activity activity)
         {
+
+            var ViewModel = new Activity { Modules = db.Modules.ToList(), ActivityTypes = db.ActivityTypes.ToList(), Module = db.Modules.Where(x => x.Id == activity.ModuleId).FirstOrDefault() };
+
+            if (activity.StartDate < ViewModel.Module.StartDate | activity.StartDate > ViewModel.Module.EndDate)
+                ModelState.AddModelError("StartDate", "Start date must be within the module");
+            if (activity.EndDate < ViewModel.Module.StartDate | activity.EndDate > ViewModel.Module.EndDate)
+                ModelState.AddModelError("EndDate", "End date must be within the module");
+            if (activity.EndDate < activity.StartDate)
+                ModelState.AddModelError("EndDate", "End date cannot occur before start date");
+
+
+            var conflictingActivitiesTest1 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.StartDate).Where(x => x.EndDate >= activity.StartDate).Count();
+            if (conflictingActivitiesTest1 > 0)
+                ModelState.AddModelError("StartDate", "Conflicts with " + conflictingActivitiesTest1 + " other activit/y/ies");
+
+            var conflictingActivitiesTest2 = db.Activities.Where(x => x.ModuleId == activity.ModuleId).Where(x => x.StartDate <= activity.EndDate).Where(x => x.EndDate >= activity.EndDate).Count();
+            if (conflictingActivitiesTest2 > 0)
+                ModelState.AddModelError("EndDate", "Conflicts with " + conflictingActivitiesTest2 + " other activit/y/ies");
+
+
+
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
@@ -129,7 +152,7 @@ namespace LMS2.Controllers
                 return RedirectToAction("Index","Courses");
             }
 
-            return View(activity);
+            return View(ViewModel);
         }
 
         // GET: Activities/Delete/5
