@@ -158,9 +158,8 @@
     {
                 @Html.DisplayFor(model => item.Course.CourseName)<br />
 
-@if (!item.Course.IsActive)
-{<b>Inactivated course</b>}
-                @Html.DisplayFor(model => item.Course.CourseName)<br />
+if (!item.Course.IsActive)
+{<b>Inactivated course</b><br />}
 
                 <small>(@Html.DisplayFor(model => item.Course.StartDate) - @Html.DisplayFor(model => item.Course.EndDate))</small>
 }
