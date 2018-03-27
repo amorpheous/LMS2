@@ -143,8 +143,15 @@ välj ut bra stories mm
                 @if (User.IsInRole("Teacher"))
                 {
                     <td>
-                        <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })|@Html.ActionLink("delete", "Delete", new { id = item.Id })
-add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + " course" }, null)|@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
+                        <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })|@if (item.Modules.Count == 0 && item.AttendingStudents.Count == 0 && item.Files.Count == 0)
+                        {
+		 @Html.ActionLink("delete", "Delete", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("inactivate", "Inactivate", new { id = item.Id })
+                        }
+                        add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + " course" }, null)|@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
                     </td>
                 }
 

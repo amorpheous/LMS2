@@ -221,9 +221,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803261815386_init21.cs" />
-    <Compile Include="Migrations\201803261815386_init21.Designer.cs">
-      <DependentUpon>201803261815386_init21.cs</DependentUpon>
+    <Compile Include="Migrations\201803271124164_init.cs" />
+    <Compile Include="Migrations\201803271124164_init.Designer.cs">
+      <DependentUpon>201803271124164_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -530,6 +530,7 @@
     <Content Include="Views\EditUserMessageView.cshtml" />
     <Content Include="Views\ApplicationUsers\ErrorEditUserView.cshtml" />
     <Content Include="Views\Account\UserHomePage.cshtml" />
+    <Content Include="Views\Courses\Inactivate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -548,8 +549,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803261815386_init21.resx">
-      <DependentUpon>201803261815386_init21.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803271124164_init.resx">
+      <DependentUpon>201803271124164_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

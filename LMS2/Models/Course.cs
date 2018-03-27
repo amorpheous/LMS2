@@ -31,6 +31,28 @@ namespace LMS2.Models
         }
 
 
+        public object InactiveClone()
+        {
+            this.MemberwiseClone();
+            this.IsActive = false;
+            List<ApplicationUser> inactiveStudents = new List<ApplicationUser>();
+            foreach (var item in this.AttendingStudents)
+            {
+                item.IsActive = false;
+                inactiveStudents.Add(item);
+            }
+            this.AttendingStudents = inactiveStudents;
+            return this;
+        }
+
+
+
+
+
+
+
+
+
 
         public int Id { get; set; }
 
@@ -57,6 +79,10 @@ namespace LMS2.Models
 
         [Display(Name = "Urgent information")]
         public string UrgentInfo { get; set; }
+
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; }
+
 
 
         //Appendices/Documents
