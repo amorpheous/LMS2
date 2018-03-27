@@ -14,11 +14,11 @@ namespace LMS2.Models
     {
         //public int UserId { get; set; }
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         protected string fullName;

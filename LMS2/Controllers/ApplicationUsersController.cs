@@ -20,42 +20,45 @@ namespace LMS2.Controllers
         // GET: ApplicationUsers
 
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, string searchBy, string search, string sortOrder)
         {
             ViewBag.Filter = "";
+
+            List<ApplicationUser> userList = new List<ApplicationUser>();
 
             if (User.IsInRole(LMS2.Models.Roles.Teacher))
             {
 
-                if (id == null | id == 0)
+                if (id == 0)
                 {
                     ViewBag.Filter = "Teachers (active)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList());
+
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == true).ToList();
                 }
-                if (id == null | id == 1)
+                if (id == 1)
                 {
                     ViewBag.Filter = "Teachers (inactive)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == false).ToList());
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).Where(x => x.IsActive == false).ToList();
                 }
-                if (id == null | id == 2)
+                if (id == 2)
                 {
                     ViewBag.Filter = "Teachers (all)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList());
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == null).ToList();
                 }
                 if (id == null | id == 3)
                 {
                     ViewBag.Filter = "Students (active)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList());
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList();
                 }
-                if (id == null | id == 4)
+                if (id == 4)
                 {
                     ViewBag.Filter = "Students (inactive)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == false).ToList());
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == false).ToList();
                 }
                 else
                 {
                     ViewBag.Filter = "Students (all)";
-                    return View(db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.NickName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList());
+                    userList = db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.NickName).ThenBy(x => x.Email).Where(x => x.CourseId != null).ToList();
                 }
             }
 
@@ -64,9 +67,6 @@ namespace LMS2.Controllers
 
                 string currentUserId = User.Identity.GetUserId();
                 ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-
-
                 if (id == 3)
                 {
                     ViewBag.Filter = "Class mates";
@@ -78,9 +78,7 @@ namespace LMS2.Controllers
                         item.SpecialInfo = null;
                         classMateList.Add(item);
                     }
-
-
-                    return View(classMateList);
+                    userList = classMateList;
                 }
                 else
                 {
@@ -94,10 +92,92 @@ namespace LMS2.Controllers
                     }
 
 
-                    return View(teacherList);
+                    userList = teacherList;
                 }
             }
+            var userlist2 = userList;
+            ViewBag.CourseSortParm = sortOrder == "Course" ? "Course_desc" : "Course";
+            ViewBag.NameSortParm = sortOrder == "Name" ? "Name_desc" : "Name";
+            ViewBag.LastNameSortParm = sortOrder == "LastName" ? "LastName_desc" : "LastName";
+            ViewBag.NickNameSortParm = sortOrder == "NickName" ? "NickName_desc" : "NickName";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.IsActiveSortParm = sortOrder == "IsActive" ? "IsActive_desc" : "IsActive";
+
+            if (searchBy == "Course")
+            {
+                // listsearch
+                userList = userList.Where(v => v.Course.CourseName.ToString().ToLower().Contains(search.ToLower())
+                || search == null).ToList();
+            }
+            else if (searchBy == "Name")
+            {
+                userList = userList.Where(v => v.FullName.ToString().Contains(search.ToLower())
+                || search == null).ToList();
+            }
+            else if (searchBy == "NickName")
+            {
+                userList = userList.Where(v => v.NickName.ToString().ToLower().Contains(search.ToLower())
+                || search == null).ToList();
+            }
+            else if (searchBy == "Email")
+            {
+                userList = userList.Where(v => v.Email.ToString().ToLower().Contains(search.ToLower())
+                || search == null).ToList();
+            }
+
+            else
+            {
+                switch (sortOrder)
+
+
+                    
+                {
+                    case "Course_desc":
+                        userList = userList.OrderByDescending(s => s.Course.CourseName).ToList();
+                        break;
+                    case "Course":
+                        userList = userList.OrderBy(s => s.Course.CourseName).ToList();
+                        break;
+                    case "IsActive_desc":
+                        userList = userList.OrderByDescending(s => s.IsActive).ToList();
+                        break;
+                    case "IsActive":
+                        userList = userList.OrderBy(s => s.IsActive).ToList();
+                        break;
+                    case "Email_desc":
+                        userList = userList.OrderByDescending(s => s.Email).ToList();
+                        break;
+                    case "Email":
+                        userList = userList.OrderBy(s => s.Email).ToList();
+                        break;
+                    case "Name_desc":
+                        userList = userList.OrderByDescending(s => s.FullName).ToList();
+                        break;
+                    case "Name":
+                        userList = userList.OrderBy(s => s.FullName).ToList();
+                        break;
+                    case "NickName_desc":
+                        userList = userList.OrderByDescending(s => s.NickName).ToList();
+                        break;
+                    case "NickName":
+                        userList = userList.OrderBy(s => s.NickName).ToList();
+                        break;
+                    case "LastName_desc":
+                        userList = userList.OrderByDescending(s => s.LastName).ToList();
+                        break;
+                    case "LastName":
+                        userList = userList.OrderBy(s => s.LastName).ToList();
+                        break;
+
+                    default:
+                        userList = userlist2;
+                        break;
+                }
+
+            }
+            return View(userList);
         }
+
 
         // GET: ApplicationUsers/Details/5
 

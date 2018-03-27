@@ -15,96 +15,95 @@ namespace LMS2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Modules
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Index(string searchBy, string search, int? page, string sortOrder)
-        {
+        /*       // GET: Modules
+               [Authorize(Roles = "Teacher, Student")]
+               public ActionResult Index(string searchBy, string search, int? page, string sortOrder)
+               {
 
-            //ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "ParkingSlot_desc" : "ParkingSlot";
-            ViewBag.StartDateSortParm = sortOrder == "StartDate" ? "StartDate_desc" : "StartDate";
-            ViewBag.ModuleNameSortParm = sortOrder == "ModuleName" ? "ModuleName_desc" : "ModuleName";
-            ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
-            ViewBag.ModuleInfoSortParm = sortOrder == "ModuleInfo" ? "ModuleInfo_desc" : "ModuleInfo";
-            ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_desc" : "Description";
+                   ViewBag.CourseNameSortParm = sortOrder == "CourseName" ? "CourseName_desc" : "CourseName";
+                   ViewBag.FirstNameSortParm = sortOrder == "FirstName" ? "FirstName_desc" : "FirstName";
+                   ViewBag.LastNameSortParm = sortOrder == "LastName" ? "LastName_desc" : "LastName";
+                   ViewBag.FullNameSortParm = sortOrder == "FullName" ? "FullName_desc" : "FullName";
+                   ViewBag.AvatarSortParm = sortOrder == "Avatar" ? "Avatar_desc" : "Avatar";
 
-            var modules = db.Modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName).AsQueryable();
+                   var modules = db.Modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName).AsQueryable();
 
 
-            if (searchBy == "ModuleName")
-            {
-                // listsearch
-                return View(modules.OrderBy(v => v.ModuleName).Where(v => v.ModuleName.ToString().Contains(search)
-                || search == null).ToList());
-            }
-            else if (searchBy == "StartYear")
-            {
-                return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
-                || search == null).ToList());
-            }
-            else if (searchBy == "CourseName")
-            {
-                return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
-                || search == null).ToList());
-            }
-            else
-            {
-                switch (sortOrder)
+                   if (searchBy == "ModuleName")
+                   {
+                       // listsearch
+                       return View(modules.OrderBy(v => v.ModuleName).Where(v => v.ModuleName.ToString().Contains(search)
+                       || search == null).ToList());
+                   }
+                   else if (searchBy == "StartYear")
+                   {
+                       return View(modules.OrderBy(v => v.StartDate.Year).Where(v => v.StartDate.Year.ToString().Contains(search)
+                       || search == null).ToList());
+                   }
+                   else if (searchBy == "CourseName")
+                   {
+                       return View(modules.OrderBy(v => v.Course.CourseName).Where(v => v.Course.CourseName.ToString().Contains(search)
+                       || search == null).ToList());
+                   }
+                   else
+                   {
+                       switch (sortOrder)
+                       {
+                           case "StartDate_desc":
+                               modules = modules.OrderByDescending(s => s.StartDate);
+                               break;
+                           case "StartDate":
+                               modules = modules.OrderBy(s => s.StartDate);
+                               break;
+                           case "ModuleName_desc":
+                               modules = modules.OrderByDescending(s => s.ModuleName);
+                               break;
+                           case "ModuleName":
+                               modules = modules.OrderBy(s => s.ModuleName);
+                               break;
+
+                           case "Description_desc":
+                               modules = modules.OrderByDescending(s => s.Description);
+                               break;
+                           case "Description":
+                               modules = modules.OrderBy(s => s.Description);
+                               break;
+                           case "ModuleInfo_desc":
+                               modules = modules.OrderByDescending(s => s.ModuleInfo);
+                               break;
+                           case "ModuleInfo":
+                               modules = modules.OrderBy(s => s.ModuleInfo);
+                               break;
+                           case "CourseName_desc":
+                               modules = modules.OrderByDescending(s => s.Course.CourseName);
+                               break;
+                           case "CourseName":
+                               modules = modules.OrderBy(s => s.Course.CourseName);
+                               break;
+                           default:
+                               modules = modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName);
+                               break;
+                       }
+
+                       return View(modules.ToList().ToPagedList(page ?? 1, 25));
+                   }
+       }
+       */
+        /*        // GET: Modules/Details/5
+                public ActionResult Details(int? id)
                 {
-                    case "StartDate_desc":
-                        modules = modules.OrderByDescending(s => s.StartDate);
-                        break;
-                    case "StartDate":
-                        modules = modules.OrderBy(s => s.StartDate);
-                        break;
-                    case "ModuleName_desc":
-                        modules = modules.OrderByDescending(s => s.ModuleName);
-                        break;
-                    case "ModuleName":
-                        modules = modules.OrderBy(s => s.ModuleName);
-                        break;
-
-                    case "Description_desc":
-                        modules = modules.OrderByDescending(s => s.Description);
-                        break;
-                    case "Description":
-                        modules = modules.OrderBy(s => s.Description);
-                        break;
-                    case "ModuleInfo_desc":
-                        modules = modules.OrderByDescending(s => s.ModuleInfo);
-                        break;
-                    case "ModuleInfo":
-                        modules = modules.OrderBy(s => s.ModuleInfo);
-                        break;
-                    case "CourseName_desc":
-                        modules = modules.OrderByDescending(s => s.Course.CourseName);
-                        break;
-                    case "CourseName":
-                        modules = modules.OrderBy(s => s.Course.CourseName);
-                        break;
-                    default:
-                        modules = modules.OrderBy(s => s.Course.StartDate).ThenBy(s => s.Course.CourseName).ThenBy(s => s.StartDate).ThenBy(s => s.ModuleName);
-                        break;
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Module module = db.Modules.Find(id);
+                    if (module == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(module);
                 }
-
-                return View(modules.ToList().ToPagedList(page ?? 1, 25));
-            }
-}
-
-/*        // GET: Modules/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Module module = db.Modules.Find(id);
-            if (module == null)
-            {
-                return HttpNotFound();
-            }
-            return View(module);
-        }
-*/
+        */
         // GET: Modules/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create(string CourseId)
