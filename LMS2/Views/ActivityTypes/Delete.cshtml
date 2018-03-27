@@ -4,30 +4,58 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ActivityType</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ActivityTypeName)
-        </dt>
+@{ if (ViewBag.activityList.Count == 0)
+    {
+        <h3>Are you sure you want to delete this activity type?</h3>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ActivityTypeName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ActivityTypeName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ActivityTypeName)
+                </dd>
 
 
-    </dl>
+            </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
         </div>
     }
-</div>
+    else
+    {
+
+        <h3>This activity type is currently in use. It cannot be deleted</h3>
+        <details><summary>How to be able to delete it</summary>Edit the activities in the list and choose another activity type for them. When there are no activities using this activity type it can be deleted.</details>
+
+
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ActivityTypeName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ActivityTypeName)
+                </dd>
+            </dl>
+            <br />
+            <br />
+            <p>This activity type is currently used in these activites:</p>
+            <pre>@{ var iterator = 0;}@{ foreach (var activity in ViewBag.activityList){iterator++;<text>@iterator</text><text>.</text> <text><b>Course: </b></text>@activity.Module.Course.CourseName<text><b> Module: </b></text>@activity.Module.ModuleName<text><b> Activity: </b></text>@activity.ActivityName <text>  </text>@Html.ActionLink("Edit", "Edit", "Activities", new { id = activity.Id }, null)}}</pre>
+
+        </div>
+    }
+}

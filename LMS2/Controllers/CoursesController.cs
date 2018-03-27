@@ -35,10 +35,10 @@ namespace LMS2.Controllers
             {
                 if (user.CourseId != null)
                 {
-                    var course= db.Courses.Where(c => c.Id == user.CourseId).FirstOrDefault();
+                    var course = db.Courses.Where(c => c.Id == user.CourseId).FirstOrDefault();
                     var editedCourse = (Course)course.CleanClone();
                     ViewBag.Filter = "";
-                    List<Course> courseList = new List<Course>()  
+                    List<Course> courseList = new List<Course>()
                     {
                         editedCourse
                     };
@@ -70,13 +70,13 @@ namespace LMS2.Controllers
 
             ICollection<Course> courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
 
-            if (id == null | id == 0 )
+            if (id == null | id == 0)
             {
                 ViewBag.Filter = "Current courses";
                 courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
                 foreach (var course in courses)
                 {
-                    course.AttendingStudents = db.Users.Where(x => x.CourseId == course.Id).Where(x=>x.IsActive==true).ToList();
+                    course.AttendingStudents = db.Users.Where(x => x.CourseId == course.Id).Where(x => x.IsActive == true).ToList();
                     foreach (var student in course.AttendingStudents)
                     {
                         student.SpecialInfo = null;
@@ -86,7 +86,7 @@ namespace LMS2.Controllers
 
                 return View(courses);
             }
-            if (id == null |id == 1)
+            if (id == null | id == 1)
             {
                 ViewBag.Filter = "Upcoming courses";
                 courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
@@ -103,7 +103,7 @@ namespace LMS2.Controllers
             courses = db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
             return View(courses);
 
-            }
+        }
 
         /*       public ActionResult StudentCourse(string id)
                {
@@ -135,25 +135,25 @@ namespace LMS2.Controllers
             //Det enda den här metoden gör att routa om tillbaks till UserSpecificLogin i Accountcontroller.
             //Men därmed har nu en 'identitytoken' hunnits sättas.
             return RedirectToAction("UserSpecificLogin", "Account");
-                
+
         }
 
-        
+
         // GET: Courses/Details/5
-/*        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-*/
+        /*        public ActionResult Details(int? id)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Course course = db.Courses.Find(id);
+                    if (course == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(course);
+                }
+        */
         // GET: Courses/Create
 
         [Authorize(Roles = Roles.Teacher)]
@@ -173,6 +173,7 @@ namespace LMS2.Controllers
 
             if (ModelState.IsValid)
             {
+                course.IsActive = true;
                 db.Courses.Add(course);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -203,10 +204,11 @@ namespace LMS2.Controllers
         [HttpPost]
         [Authorize(Roles = Roles.Teacher)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,CourseName,Description,StartDate,EndDate,UrgentInfo,IsActive")] Course course)
         {
             if (ModelState.IsValid)
             {
+                course.IsActive = true;
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -237,7 +239,50 @@ namespace LMS2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Course course = db.Courses.Find(id);
+            //if (course.Modules == null && course.AttendingStudents == null && course.Files == null)
+            //{
             db.Courses.Remove(course);
+            //}
+            //else
+            //{
+            //    course.IsActive = false;
+            //}
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Courses/Inactivate/5
+        [Authorize(Roles = Roles.Teacher)]
+        public ActionResult Inactivate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            if (course.Modules.Count == 0 && course.AttendingStudents.Count == 0 && course.Files.Count == 0)
+            {
+                return RedirectToAction("Delete");
+            }
+            return View(course);
+        }
+
+        // POST: Courses/Inactivate/5
+        [Authorize(Roles = Roles.Teacher)]
+        [HttpPost, ActionName("Inactivate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Inactivate(int id)
+        {
+            Course course = db.Courses.Find(id);
+            foreach (var student in course.AttendingStudents)
+            {
+                student.IsActive = false;
+            }
+            course.IsActive = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -252,7 +297,7 @@ namespace LMS2.Controllers
             base.Dispose(disposing);
         }
 
-       
+
 
     }
 }
