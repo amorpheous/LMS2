@@ -20,17 +20,17 @@ namespace LMS2.Migrations
     protected override void Seed(ApplicationDbContext context)
     {
         var courses = new[] {
-                new Course {  CourseName = ".NET Höst 2015", Description = ".NET", StartDate = DateTime.Parse("2015-10-01"), EndDate = DateTime.Parse("2015-11-30") },
-                                new Course {  CourseName = ".NET Vår 2016", Description = ".NET", StartDate = DateTime.Parse("2016-04-01"),  EndDate = DateTime.Parse("2016-11-25") },
-                new Course {  CourseName = ".NET Höst 2016", Description = ".NET", StartDate = DateTime.Parse("2016-10-01"),  EndDate = DateTime.Parse("2016-12-31") },
-                new Course {  CourseName = ".NET Vår 2017", Description = ".NET", StartDate = DateTime.Parse("2017-04-01"),  EndDate = DateTime.Parse("2017-10-31") },
-                new Course {  CourseName = ".NET Höst 2017", Description = ".NET", StartDate = DateTime.Parse("2017-10-01"),  EndDate = DateTime.Parse("2018-12-01")},
-                new Course {  CourseName = ".NET Vår 2018", Description = ".NET", StartDate = DateTime.Parse("2018-04-01"),  EndDate = DateTime.Parse("2018-12-01")},
-                new Course {  CourseName = "Java Höst 2017", Description = "Java", StartDate = DateTime.Parse("2017-10-01"),  EndDate = DateTime.Parse("2017-12-31") },
-                new Course {  CourseName = "Java Vår 2018", Description = "Java", StartDate = DateTime.Parse("2018-04-01"),  EndDate = DateTime.Parse("2018-11-30") },
-                new Course {  CourseName = "Communism", Description = "An improvement on the crumbling capitalist society", StartDate = DateTime.Parse("2017-12-04"),  EndDate = DateTime.Parse("2018-05-31")},
-                new Course {  CourseName = "SheepFarming", Description = "Those wooly things", StartDate = DateTime.Parse("2018-01-28"),  EndDate = DateTime.Parse("2018-02-28")},
-                new Course {  CourseName = "BerryProduction", Description = "Basically, you pick them", StartDate = DateTime.Parse("2018-01-29"),  EndDate = DateTime.Parse("2018-03-31") },
+                new Course {  CourseName = ".NET Höst 2015", Description = ".NET", StartDate = DateTime.Parse("2015-10-01"), EndDate = DateTime.Parse("2015-11-30"), IsActive = true },
+                                new Course {  CourseName = ".NET Vår 2016", Description = ".NET", StartDate = DateTime.Parse("2016-04-01"),  EndDate = DateTime.Parse("2016-11-25"), IsActive = true },
+                new Course {  CourseName = ".NET Höst 2016", Description = ".NET", StartDate = DateTime.Parse("2016-10-01"),  EndDate = DateTime.Parse("2016-12-31"), IsActive = true },
+                new Course {  CourseName = ".NET Vår 2017", Description = ".NET", StartDate = DateTime.Parse("2017-04-01"),  EndDate = DateTime.Parse("2017-10-31"), IsActive = true },
+                new Course {  CourseName = ".NET Höst 2017", Description = ".NET", StartDate = DateTime.Parse("2017-10-01"),  EndDate = DateTime.Parse("2018-12-01"), IsActive = true},
+                new Course {  CourseName = ".NET Vår 2018", Description = ".NET", StartDate = DateTime.Parse("2018-04-01"),  EndDate = DateTime.Parse("2018-12-01"), IsActive = true},
+                new Course {  CourseName = "Java Höst 2017", Description = "Java", StartDate = DateTime.Parse("2017-10-01"),  EndDate = DateTime.Parse("2017-12-31"), IsActive = true },
+                new Course {  CourseName = "Java Vår 2018", Description = "Java", StartDate = DateTime.Parse("2018-04-01"),  EndDate = DateTime.Parse("2018-11-30"), IsActive = true },
+                new Course {  CourseName = "Communism", Description = "An improvement on the crumbling capitalist society", StartDate = DateTime.Parse("2017-12-04"),  EndDate = DateTime.Parse("2018-05-31"), IsActive = true},
+                new Course {  CourseName = "SheepFarming", Description = "Those wooly things", StartDate = DateTime.Parse("2018-01-28"),  EndDate = DateTime.Parse("2018-02-28"), IsActive = true},
+                new Course {  CourseName = "BerryProduction", Description = "Basically, you pick them", StartDate = DateTime.Parse("2018-01-29"),  EndDate = DateTime.Parse("2018-03-31"), IsActive = true },
 
             };
         context.Courses.AddOrUpdate(

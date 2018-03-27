@@ -135,6 +135,7 @@ namespace LMS2.Controllers
         public ActionResult UserHomePage(string id)
         {
             ApplicationDbContext context = new ApplicationDbContext();
+
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
             int picId;
@@ -143,9 +144,19 @@ namespace LMS2.Controllers
                 ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
                 if (otherUser.Files != null)
                 {
+                    if (User.IsInRole("Student"))
+                    {
+                        ViewBag.Id = otherUser.Id;
+                        picId = otherUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
+                        ViewBag.pic = otherUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+                        otherUser.SpecialInfo = null;
+                        // hur dölja studenter som är inaktiva och lärare som är inaktiva samt studenter från andra kurser
+                    }
+                    else { 
                     ViewBag.Id = otherUser.Id;
                     picId = otherUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
                     ViewBag.pic = otherUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+                }
                 }
                 return View(otherUser);
             }

@@ -21,22 +21,15 @@
 <body>
 
     <pre class="hidden">
-activities, hur ska vi ge tidsförslag?
-Footern, göra någonting med den?
-feedback, hantera
-</pre>
-    <pre>
-Erik: Auth controllers, kolla så att allt som ska vara låst är låst
-Erik: delete (cascade)
-Erik: Jquery cookies, kan det lösa det?
-Jonas: Schemavy (klickbar på veckor och dagar) visa innevarande vecka som standard
-Jonas: Documents, saknas funktionalitet!!!!!
-Jonas: Åter till create om man vill (om vi inte får till partial views i indexvyn)
-Jonas: Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
-Jonas: Userlist, search radioknapparna, fixa till så att de funkar
-Jonas: Userlist, sortering mha jquery
-Fredrik: Back-to-knappar
-Fredrik: delete files
+Jquery cookies, kan det lösa det?
+Documents, saknas funktionalitet!!!!!
+Åter till create om man vill (om vi inte får till partial views i indexvyn)
+Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
+Userlist, search radioknapparna, fixa till så att de funkar
+Userlist, sortering mha jquery
+delete files
+Inactive courses, följdhanteringar (eget filter, samt filtrera bort dem i övrigt)
+kolla deletarna
 </pre>
 
     @if (User.IsInRole("Teacher"))
@@ -56,6 +49,8 @@ Fredrik: delete files
                     <li>@Html.ActionLink("All courses", "Index", new { id = 3 })</li>
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Add new course", "Create")</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Inactivated courses", "Index", new { id = 4 })</li>
 
                 </ul>
         </ul>
@@ -76,23 +71,350 @@ Fredrik: delete files
             <pre>
 @ViewBag.Filter</pre>}
 
+        {
+            if (ViewBag.SchedulePast.Count + ViewBag.ScheduleToday.Count + ViewBag.ScheduleThisWeekFromTomorrow.Count + ViewBag.ScheduleNextWeek.Count + ViewBag.ScheduleAfterNextWeek.Count > 0)
+            {
 
-        <text>* Schedule, current week. already passed, overlined, be able to choose previos and next week
-            show module + activity</text><br />
-        <text>* Incoming feedback?</text><br />
-        <text>* Document things</text><br />
-        <text>* Statistics regarding assignments</text><br />
-
+                <h2>Schedule</h2>
 
 
+                {
+                    if (ViewBag.SchedulePast.Count > 0)
+                    {
+
+                    }
+                }
+
+                <details>
+                    <summary>Past</summary>
+                    <table id="schedulePast">
+                        <tr class="title">
+                            <th style="width:7%">
+                                Date
+                            </th>
+                            <th style="width:8%">
+                                Time
+                            </th>
+                            <th style="width:8%">
+                                Type
+                            </th>
+                            <th style="width:10%">
+                                Name
+                            </th>
+                            <th style="width:10%">
+                                In module
+                            </th>
+                            <th style="width:50%">
+                                Information
+                            </th>
+
+                        </tr>
+                        @{ foreach (var activity in ViewBag.SchedulePast)
+                            {
+                                <tr class="border_bottom">
+                                    <td style="width:7%">
+                                        @activity.StartDate.Date.ToShortDateString()
+                                    </td>
+                                    <td style="width:8%">
+
+                                        @activity.StartDate.ToString("HH:mm")
+                                        <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                    </td>
+                                    <td style="width:8%">
+                                        <b>
+                                            @activity.ActivityType.ActivityTypeName
+                                        </b>
+                                    </td>
+                                    <td style="width:10%">
+                                        @activity.ActivityName
+
+                                    </td>
+                                    <td style="width:10%">
+                                        @activity.Module.ModuleName
+                                    </td>
+                                    <td style="width:50%">
+                                        <b>@activity.Description</b><br />
+                                        @activity.ActivityInfo
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    </table>
+                </details>
+
+                {
+                    if (ViewBag.ScheduleToday.Count > 0)
+                    {
+
+
+                        <details open>
+                            <summary>Today</summary>
+                            <table id="scheduleToday">
+                                <tr class="title">
+                                    <th style="width:7%">
+                                        Date
+                                    </th>
+                                    <th style="width:8%">
+                                        Time
+                                    </th>
+                                    <th style="width:8%">
+                                        Type
+                                    </th>
+                                    <th style="width:10%">
+                                        Name
+                                    </th>
+                                    <th style="width:10%">
+                                        In module
+                                    <th style="width:50%">
+                                        Information
+                                    </th>
+
+                                </tr>
+                                @{ foreach (var activity in ViewBag.ScheduleToday)
+                                    {
+                                        <tr class="border_bottom">
+                                            <td style="width:7%">
+                                                @activity.StartDate.Date.ToShortDateString()
+                                            </td>
+                                            <td style="width:8%">
+
+                                                @activity.StartDate.ToString("HH:mm")
+                                                <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                            </td>
+                                            <td style="width:8%">
+                                                <b>
+                                                    @activity.ActivityType.ActivityTypeName
+                                                </b>
+                                            </td>
+                                            <td style="width:10%">
+                                                @activity.ActivityName
+
+                                            </td>
+                                            <td style="width:10%">
+                                                @activity.Module.ModuleName
+                                            </td>
+                                            <td style="width:50%">
+                                                <b>@activity.Description</b><br />
+                                                @activity.ActivityInfo
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </details>
+                    }
+                }
+
+
+                if (ViewBag.ScheduleThisWeekFromTomorrow.Count > 0)
+                {
 
 
 
 
+                    <details>
+                        <summary>This week (from tomorrow)</summary>
+
+                        <table id="scheduleThisWeekFromTomorrow">
+                            <tr class="title">
+                                <th style="width:7%">
+                                    Date
+                                </th>
+                                <th style="width:8%">
+                                    Time
+                                </th>
+                                <th style="width:8%">
+                                    Type
+                                </th>
+                                <th style="width:10%">
+                                    Name
+                                </th>
+                                <th style="width:10%">
+                                    In module
+                                <th style="width:50%">
+                                    Information
+                                </th>
+
+                            </tr>
+                            @{ foreach (var activity in ViewBag.ScheduleThisWeekFromTomorrow)
+                                {
+                                    <tr class="border_bottom">
+                                        <td style="width:7%">
+                                            @activity.StartDate.Date.ToShortDateString()
+                                        </td>
+                                        <td style="width:8%">
+
+                                            @activity.StartDate.ToString("HH:mm")
+                                            <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                        </td>
+                                        <td style="width:8%">
+                                            <b>
+                                                @activity.ActivityType.ActivityTypeName
+                                            </b>
+                                        </td>
+                                        <td style="width:10%">
+                                            @activity.ActivityName
+
+                                        </td>
+                                        <td style="width:10%">
+                                            @activity.Module.ModuleName
+                                        </td>
+                                        <td style="width:50%">
+                                            <b>@activity.Description</b><br />
+                                            @activity.ActivityInfo
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+                    </details>
+
+                    {
+                        if (ViewBag.ScheduleNextWeek.Count > 0)
+                        {
+
+
+                            <details>
+                                <summary>Next week</summary>
+                                <table id="scheduleNextWeek">
+                                    <tr class="title">
+                                        <th style="width:7%">
+                                            Date
+                                        </th>
+                                        <th style="width:8%">
+                                            Time
+                                        </th>
+                                        <th style="width:8%">
+                                            Type
+                                        </th>
+                                        <th style="width:10%">
+                                            Name
+                                        </th>
+                                        <th style="width:10%">
+                                            In module
+                                        </th>
+                                        <th style="width:50%">
+                                            Information
+                                        </th>
+
+                                    </tr>
+                                    @{ foreach (var activity in ViewBag.ScheduleNextWeek)
+                                        {
+                                            <tr class="border_bottom">
+                                                <td style="width:7%">
+                                                    @activity.StartDate.Date.ToShortDateString()
+                                                </td>
+                                                <td style="width:8%">
+
+                                                    @activity.StartDate.ToString("HH:mm")
+                                                    <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                                </td>
+                                                <td style="width:8%">
+                                                    <b>
+                                                        @activity.ActivityType.ActivityTypeName
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.ActivityName
+
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.Module.ModuleName
+                                                </td>
+                                                <td style="width:50%">
+                                                    <b>@activity.Description</b><br />
+                                                    @activity.ActivityInfo
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </details> }
+                    }
+
+
+                    {
+                        if (ViewBag.ScheduleAfterNextWeek.Count > 0)
+                        {
 
 
 
+                            <details>
+                                <summary>After next week</summary>
+                                <table id="scheduleAfterNextWeek">
+                                    <tr class="title">
+                                        <th style="width:7%">
+                                            Date
+                                        </th>
+                                        <th style="width:8%">
+                                            Time
+                                        </th>
+                                        <th style="width:8%">
+                                            Type
+                                        </th>
+                                        <th style="width:10%">
+                                            Name
+                                        </th>
+                                        <th style="width:10%">
+                                            In module
+                                        </th>
+                                        <th style="width:50%">
+                                            Information
+                                        </th>
+
+                                    </tr>
+                                    @{ foreach (var activity in ViewBag.ScheduleAfterNextWeek)
+                                        {
+                                            <tr class="border_bottom">
+                                                <td style="width:7%">
+                                                    @activity.StartDate.Date.ToShortDateString()
+                                                </td>
+                                                <td style="width:8%">
+
+                                                    @activity.StartDate.ToString("HH:mm")
+                                                    <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                                </td>
+                                                <td style="width:8%">
+                                                    <b>
+                                                        @activity.ActivityType.ActivityTypeName
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.ActivityName
+
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.Module.ModuleName
+                                                </td>
+                                                <td style="width:50%">
+                                                    <b>@activity.Description</b><br />
+                                                    @activity.ActivityInfo
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </details>
+                        }
+                    }
+
+                }
+            }
+        }
+        <br />
+        <h2>Assignments</h2>
+        <br />
+        <h2>Details</h2>
     }
+
+
     <table class="table">
         <tr>
             <th style="width:30%">
@@ -141,7 +463,15 @@ Fredrik: delete files
                 @if (User.IsInRole("Teacher"))
                 {
                     <td>
-                        <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })|@Html.ActionLink("delete", "Delete", new { id = item.Id })
+                        <pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })@if(item.IsActive){<text>|</text>if (item.Modules.Count == 0 && item.AttendingStudents.Count == 0 && item.Files.Count == 0)
+                        {
+		 @Html.ActionLink("delete", "Delete", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("inactivate", "Inactivate", new { id = item.Id })
+                        }}<br>
+
 add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + " course" }, null)|@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)|@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)</pre>
                     </td>
                 }
@@ -227,10 +557,10 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + "
 
                             <small>
                                 @{ int loop = 1; }
-                                @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
+                                @foreach (var item10 in item.Files.OrderByDescending(x => x.TimeStamp).ToList())
                                 {
 
-                                    @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
+                                    @loop<text>.</text> @Html.ActionLink(item10.FileName, "View", "Upload", new { id = item10.Id }, null) <text>  </text>@item10.Description <br />
                                     { loop = loop + 1; }
                                 }
 

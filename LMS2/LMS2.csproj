@@ -221,6 +221,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803271456290_inti.cs" />
+    <Compile Include="Migrations\201803271456290_inti.Designer.cs">
+      <DependentUpon>201803271456290_inti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803271459302_inti2.cs" />
+    <Compile Include="Migrations\201803271459302_inti2.Designer.cs">
+      <DependentUpon>201803271459302_inti2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -541,6 +549,7 @@
     <Content Include="Views\EditUserMessageView.cshtml" />
     <Content Include="Views\ApplicationUsers\ErrorEditUserView.cshtml" />
     <Content Include="Views\Account\UserHomePage.cshtml" />
+    <Content Include="Views\Courses\Inactivate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -557,6 +566,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803271456290_inti.resx">
+      <DependentUpon>201803271456290_inti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803271459302_inti2.resx">
+      <DependentUpon>201803271459302_inti2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

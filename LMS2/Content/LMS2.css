@@ -41,3 +41,11 @@
 .editProfileKey{
     padding-left: 0px
 }
+
+tr.border_bottom>td {
+    border-bottom: 1pt dotted black;
+}
+tr.title > th {
+    color:white;
+    background-color: darkgrey
+}
