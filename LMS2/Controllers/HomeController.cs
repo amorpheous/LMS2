@@ -8,7 +8,7 @@ namespace LMS2.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+ /*       public ActionResult Index()
         {
             return View();
         }
@@ -25,6 +25,6 @@ namespace LMS2.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
+        }*/
     }
 }

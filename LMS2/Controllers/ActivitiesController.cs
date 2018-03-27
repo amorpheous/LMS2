@@ -14,27 +14,27 @@ namespace LMS2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Activities
-        public ActionResult Index()
-        {
-            return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList());
-        }
+        /*        // GET: Activities
+                public ActionResult Index()
+                {
+                    return View(db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ActivityName).ToList());
+                }
 
-        // GET: Activities/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activity activity = db.Activities.Find(id);
-            if (activity == null)
-            {
-                return HttpNotFound();
-            }
-            return View(activity);
-        }
-
+                // GET: Activities/Details/5
+                public ActionResult Details(int? id)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Activity activity = db.Activities.Find(id);
+                    if (activity == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(activity);
+                }
+                */
         // GET: Activities/Create
 
         [Authorize(Roles = Roles.Teacher)]
