@@ -59,11 +59,17 @@ namespace LMS2.Controllers
 
             else
             {
+
+                string currentUserId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+
+
                 if (id == 3)
                 {
                     ViewBag.Filter = "Class mates";
                     var classMates =
-                        db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList();
+                        db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == currentUser.CourseId).Where(x => x.IsActive == true).ToList();
                     List<ApplicationUser> classMateList = new List<ApplicationUser>();
                     foreach (var item in classMates)
                     {
