@@ -526,6 +526,7 @@
     <Content Include="Views\EditUserMessageView.cshtml" />
     <Content Include="Views\ApplicationUsers\ErrorEditUserView.cshtml" />
     <Content Include="Views\Account\UserHomePage.cshtml" />
+    <Content Include="Views\Account\InactiveUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

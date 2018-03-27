@@ -540,10 +540,10 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + "
 
                             <small>
                                 @{ int loop = 1; }
-                                @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
+                                @foreach (var item10 in item.Files.OrderByDescending(x => x.TimeStamp).ToList())
                                 {
 
-                                    @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
+                                    @loop<text>.</text> @Html.ActionLink(item10.FileName, "View", "Upload", new { id = item10.Id }, null) <text>  </text>@item10.Description <br />
                                     { loop = loop + 1; }
                                 }
 
