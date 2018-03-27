@@ -221,6 +221,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803271017166_Alaska.cs" />
+    <Compile Include="Migrations\201803271017166_Alaska.Designer.cs">
+      <DependentUpon>201803271017166_Alaska.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -380,6 +384,21 @@
     <Content Include="obj\Debug\LMS2.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\LMS2.dll" />
     <Content Include="obj\Debug\LMS2.pdb" />
+    <Content Include="Pictures\Avatarer\4eef.jpg" />
+    <Content Include="Pictures\Avatarer\EmmettBrown1_400x400.jpg" />
+    <Content Include="Pictures\Avatarer\Galadriel.jpg" />
+    <Content Include="Pictures\Avatarer\Gimli.jpg" />
+    <Content Include="Pictures\Avatarer\Gimli_-_FOTR.png" />
+    <Content Include="Pictures\Avatarer\goblin-king.jpg" />
+    <Content Include="Pictures\Avatarer\Gollum-Lord-of-the-Rings-Screengrab_ffhtlk.jpg" />
+    <Content Include="Pictures\Avatarer\haddock.jpg" />
+    <Content Include="Pictures\Avatarer\Legolas_-_in_Two_Towers.png" />
+    <Content Include="Pictures\Avatarer\My-friend-went-to-see-The-Hobbit-came-home-and-3D-sculpted-Azog-The-Defiler-Worked-out-quite-well.jpg" />
+    <Content Include="Pictures\Avatarer\Professor_Calculus.png" />
+    <Content Include="Pictures\Avatarer\Rastapopoulos.jpg" />
+    <Content Include="Pictures\Avatarer\saruman.jpg" />
+    <Content Include="Pictures\Avatarer\taxi-driver-robert-de-niro-i22529.jpg" />
+    <Content Include="Pictures\Avatarer\TTTOrcsugly.jpg" />
     <Content Include="Pictures\LMS_logo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -542,6 +561,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803271017166_Alaska.resx">
+      <DependentUpon>201803271017166_Alaska.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
