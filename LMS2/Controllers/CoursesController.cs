@@ -100,7 +100,7 @@ namespace LMS2.Controllers
             }
             else if (id == 4)
             {
-                ViewBag.Filter = "Inactive courses";
+                ViewBag.Filter = "Inactivated courses";
                 courses = db.Courses.Where(x => x.IsActive==false).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
                 return View(courses);
             }
