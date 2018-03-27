@@ -153,14 +153,18 @@
                 </td>
                 @if (ViewBag.Filter != "Teachers")
                 {
-                    <td>
-                        @if (item.CourseId != null)
-                        {
-                            @Html.DisplayFor(model => item.Course.CourseName)<br />
+                <td>
+                    @if (item.CourseId != null)
+    {
+                @Html.DisplayFor(model => item.Course.CourseName)<br />
 
-                            <small>(@Html.DisplayFor(model => item.Course.StartDate) - @Html.DisplayFor(model => item.Course.EndDate))</small>
-                        }
-                    </td>
+@if (!item.Course.IsActive)
+{<b>Inactivated course</b>}
+                @Html.DisplayFor(model => item.Course.CourseName)<br />
+
+                <small>(@Html.DisplayFor(model => item.Course.StartDate) - @Html.DisplayFor(model => item.Course.EndDate))</small>
+}
+                </td>
                 }
 
 
