@@ -108,6 +108,9 @@ namespace LMS2.Controllers
             {
                 return HttpNotFound();
             }
+            List<Activity> activityList = db.Activities.Where(x => x.ActivityTypeId == id).ToList();
+            ViewBag.activityList = activityList;
+
             return View(activityType);
         }
 
