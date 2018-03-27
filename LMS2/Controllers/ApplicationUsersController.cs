@@ -18,6 +18,8 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ApplicationUsers
+
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int? id)
         {
             ViewBag.Filter = "";

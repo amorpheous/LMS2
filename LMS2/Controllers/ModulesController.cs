@@ -16,6 +16,7 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(string searchBy, string search, int? page, string sortOrder)
         {
 
@@ -89,7 +90,7 @@ namespace LMS2.Controllers
             }
 }
 
-        // GET: Modules/Details/5
+/*        // GET: Modules/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -103,7 +104,7 @@ namespace LMS2.Controllers
             }
             return View(module);
         }
-
+*/
         // GET: Modules/Create
         [Authorize(Roles = Roles.Teacher)]
         public ActionResult Create(string CourseId)
@@ -288,6 +289,7 @@ namespace LMS2.Controllers
             return RedirectToAction("Index","Courses");
         }
 
+        [Authorize(Roles = "Teacher")]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

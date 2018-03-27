@@ -11,7 +11,7 @@ namespace LMS2.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Display(Name = "Activity Type")]
+        [Display(Name = "Activity type")]
         [StringLength(50, ErrorMessage = "The {0} must be between {1} and {2} characters long", MinimumLength = 1)]
         [Required]
         public string ActivityTypeName { get; set; }
