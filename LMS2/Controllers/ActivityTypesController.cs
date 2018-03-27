@@ -15,13 +15,14 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ActivityTypes
+        [Authorize(Roles = Roles.Teacher)]
         public ActionResult Index()
         {
             return View(db.ActivityTypes.OrderBy(x => x.ActivityTypeName).ToList());
         }
 
         // GET: ActivityTypes/Details/5
-        public ActionResult Details(int? id)
+/*        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -34,6 +35,7 @@ namespace LMS2.Controllers
             }
             return View(activityType);
         }
+        */
 
         // GET: ActivityTypes/Create
         [Authorize(Roles = Roles.Teacher)]
@@ -106,12 +108,16 @@ namespace LMS2.Controllers
             {
                 return HttpNotFound();
             }
+            List<Activity> activityList = db.Activities.Where(x => x.ActivityTypeId == id).ToList();
+            ViewBag.activityList = activityList;
+
             return View(activityType);
         }
 
         // POST: ActivityTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Teacher)]
         public ActionResult DeleteConfirmed(int id)
         {
             ActivityType activityType = db.ActivityTypes.Find(id);
@@ -120,6 +126,7 @@ namespace LMS2.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = Roles.Teacher)]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

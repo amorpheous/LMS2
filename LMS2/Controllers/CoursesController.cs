@@ -22,6 +22,13 @@ namespace LMS2.Controllers
         [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int? id, string searchBy, string search, int? page, string sortOrder)
         {
+            var today = DateTime.Now.Date;
+            var tomorrow = DateTime.Now.Date.AddDays(1);
+            int todayDay = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek; ;
+            var lastDayThisWeek = today.AddDays(7 - todayDay);
+            var firstDayNextWeek = lastDayThisWeek.AddDays(1);
+            var lastDayNextWeekPlusOneDay = lastDayThisWeek.AddDays(8);
+
             ViewBag.Filter = "";
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             if (User.IsInRole(LMS2.Models.Roles.Student))
@@ -36,6 +43,19 @@ namespace LMS2.Controllers
                         editedCourse
                     };
 
+                    List<Activity> SchedulePast = db.Activities.OrderBy(x=>x.StartDate).ThenBy(x=>x.EndDate).Where(c => c.StartDate < today).Where(c => c.Module.Course.Id == user.CourseId).ToList();
+                    List<Activity> ScheduleToday = db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).Where(c => c.StartDate >= today).Where(c => c.StartDate <= tomorrow).Where(c => c.Module.Course.Id == user.CourseId).ToList();
+                    List<Activity> ScheduleThisWeekFromTomorrow = db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).Where(c=>c.StartDate >= tomorrow).Where(c => c.StartDate <= firstDayNextWeek).Where(c=>c.Module.Course.Id==user.CourseId).ToList();
+                    List<Activity> ScheduleNextWeek = db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).Where(c => c.StartDate >= firstDayNextWeek).Where(c => c.StartDate <= lastDayNextWeekPlusOneDay).Where(c => c.Module.Course.Id == user.CourseId).ToList();
+                    List<Activity> ScheduleAfterNextWeek = db.Activities.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).Where(c => c.StartDate >= lastDayNextWeekPlusOneDay).Where(c => c.Module.Course.Id == user.CourseId).ToList();
+
+                    ViewBag.SchedulePast = SchedulePast;
+                    ViewBag.ScheduleToday = ScheduleToday;
+                    ViewBag.ScheduleThisWeekFromTomorrow = ScheduleThisWeekFromTomorrow;
+                    ViewBag.ScheduleNextWeek = ScheduleNextWeek;
+                    ViewBag.ScheduleAfterNextWeek = ScheduleAfterNextWeek;
+
+
                     return View(courseList);
                 }
                 else
@@ -48,7 +68,6 @@ namespace LMS2.Controllers
 
             }
 
-            var today = DateTime.Now.Date;
             ICollection<Course> courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
 
             if (id == null | id == 0)

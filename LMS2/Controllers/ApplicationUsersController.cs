@@ -18,6 +18,8 @@ namespace LMS2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ApplicationUsers
+
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int? id)
         {
             ViewBag.Filter = "";
@@ -59,11 +61,17 @@ namespace LMS2.Controllers
 
             else
             {
+
+                string currentUserId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+
+
                 if (id == 3)
                 {
                     ViewBag.Filter = "Class mates";
                     var classMates =
-                        db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId != null).Where(x => x.IsActive == true).ToList();
+                        db.Users.OrderBy(x => x.Course.StartDate).ThenBy(x => x.Course.EndDate).ThenBy(x => x.Course.CourseName).ThenBy(x => x.LastName).ThenBy(x => x.NickName).ThenBy(x => x.FirstName).ThenBy(x => x.Email).Where(x => x.CourseId == currentUser.CourseId).Where(x => x.IsActive == true).ToList();
                     List<ApplicationUser> classMateList = new List<ApplicationUser>();
                     foreach (var item in classMates)
                     {
@@ -127,6 +135,7 @@ namespace LMS2.Controllers
         public ActionResult UserHomePage(string id)
         {
             ApplicationDbContext context = new ApplicationDbContext();
+
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = context.Users.FirstOrDefault(x => x.Id == currentUserId);
             int picId;
@@ -135,9 +144,19 @@ namespace LMS2.Controllers
                 ApplicationUser otherUser = context.Users.FirstOrDefault(x => x.Id == id);
                 if (otherUser.Files != null)
                 {
+                    if (User.IsInRole("Student"))
+                    {
+                        ViewBag.Id = otherUser.Id;
+                        picId = otherUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
+                        ViewBag.pic = otherUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+                        otherUser.SpecialInfo = null;
+                        // hur dölja studenter som är inaktiva och lärare som är inaktiva samt studenter från andra kurser
+                    }
+                    else { 
                     ViewBag.Id = otherUser.Id;
                     picId = otherUser.Files.Where(x => x.FileType == "avatar").Select(x => x.Id).LastOrDefault();
                     ViewBag.pic = otherUser.Files.Where(x => x.FileType == "avatar").LastOrDefault();
+                }
                 }
                 return View(otherUser);
             }

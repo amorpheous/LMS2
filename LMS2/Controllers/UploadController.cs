@@ -19,6 +19,7 @@ namespace LMS2.Controllers
 
 
         // GET: /File/
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult View(int id)
         {
             var fileToRetrieve = db.Files.Find(id);
@@ -27,8 +28,14 @@ namespace LMS2.Controllers
 
 
     [HttpGet]
-        public ActionResult UploadFile()
+        [Authorize(Roles = "Teacher, Student")]
+        public ActionResult UploadFile(string id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Courses", null);
+            }
+            
             var userStore = new UserStore<ApplicationUser>(db);
             var UserManager = new UserManager<ApplicationUser>(userStore);
 
@@ -38,6 +45,7 @@ namespace LMS2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult UploadFile(string Id, Models.File fileModel, HttpPostedFileBase file)
         {
             //try
