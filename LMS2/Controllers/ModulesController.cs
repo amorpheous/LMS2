@@ -142,7 +142,7 @@ namespace LMS2.Controllers
             foreach (var item in Course.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate))
             {
                 loop2++;
-                if (loop2==loop+1)
+                if (loop2==loop)
                 {
                     firstFreeEndDate= item.StartDate.AddDays(-1);
                     break;
@@ -150,8 +150,10 @@ namespace LMS2.Controllers
             }
 
             if (firstFreeEndDate < firstFreeStartDate)
-                firstFreeEndDate = firstFreeStartDate;
-            
+                return RedirectToAction("Index", "Courses", null);
+
+
+
             ViewModel.StartDate = firstFreeStartDate;
             ViewModel.EndDate = firstFreeEndDate;
 
