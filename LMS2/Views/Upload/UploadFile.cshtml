@@ -8,26 +8,26 @@
 {
 
 
-<div>
     <div>
-        @Html.TextBox("file", "", new { type = "file" })
+        <div>
+            @Html.TextBox("file", "", new { type = "file" })
+        </div>
+        <br />
+
+        @*<div>@Html.TextBoxFor(x => x.CourseId)</div>
+            <div>@Html.TextBoxFor(x => x.ModuleId)</div>
+            <div>@Html.TextBoxFor(x =>x.ActivityId)</div>*@
+
+        File description: @Html.TextBoxFor(File => File.Description)
+        <br />
+        <br />
+
+        <input class="btn btn-primary" type="submit" value="Upload file" />
+
     </div>
+
     <br />
-
-    @*<div>@Html.TextBoxFor(x => x.CourseId)</div>
-        <div>@Html.TextBoxFor(x => x.ModuleId)</div>
-        <div>@Html.TextBoxFor(x =>x.ActivityId)</div>*@
-
-    File description: @Html.TextBoxFor(File => File.Description)
-    <br />
-    <br />
-
-    <input class="btn btn-primary" type="submit" value="Upload file" />
-
-</div>
-
-
-
+    @Html.ActionLink("Back to List", "Index", "Courses")<span></span>
 
     @*<div class="form-group">
             @Html.Label("Upload File", new { @class = "control-label col-md-2" })

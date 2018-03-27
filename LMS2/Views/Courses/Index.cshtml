@@ -21,21 +21,15 @@
 <body>
 
     <pre class="hidden">
-activities, hur ska vi ge tidsförslag?
-Footern, göra någonting med den?
-feedback, hantera
-</pre>
-    <pre class="hidden">
-Erik: Auth controllers, kolla så att allt som ska vara låst är låst
-Erik: delete (cascade)
-Erik: Jquery cookies, kan det lösa det?
-Jonas: Documents, saknas funktionalitet!!!!!
-Jonas: Åter till create om man vill (om vi inte får till partial views i indexvyn)
-Jonas: Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
-Jonas: Userlist, search radioknapparna, fixa till så att de funkar
-Jonas: Userlist, sortering mha jquery
-Fredrik: Back-to-knappar
-Fredrik: delete files
+Jquery cookies, kan det lösa det?
+Documents, saknas funktionalitet!!!!!
+Åter till create om man vill (om vi inte får till partial views i indexvyn)
+Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
+Userlist, search radioknapparna, fixa till så att de funkar
+Userlist, sortering mha jquery
+delete files
+Inactive courses, följdhanteringar (eget filter, samt filtrera bort dem i övrigt)
+kolla deletarna
 </pre>
 
     @if (User.IsInRole("Teacher"))
@@ -562,10 +556,10 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + "
 
                             <small>
                                 @{ int loop = 1; }
-                                @foreach (var item10 in item.Files.OrderBy(x => x.Description).ToList())
+                                @foreach (var item10 in item.Files.OrderByDescending(x => x.TimeStamp).ToList())
                                 {
 
-                                    @loop<text>.</text> @Html.ActionLink(item10.Description, "View", "Upload", new { id = item10.Id }, null) <br />
+                                    @loop<text>.</text> @Html.ActionLink(item10.FileName, "View", "Upload", new { id = item10.Id }, null) <text>  </text>@item10.Description <br />
                                     { loop = loop + 1; }
                                 }
 
