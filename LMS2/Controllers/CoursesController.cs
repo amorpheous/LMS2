@@ -73,7 +73,7 @@ namespace LMS2.Controllers
             if (id == null | id == 0)
             {
                 ViewBag.Filter = "Current courses";
-                courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                courses = db.Courses.Where(x => x.IsActive).Where(x => x.EndDate >= today).Where(x => x.StartDate <= today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
                 foreach (var course in courses)
                 {
                     course.AttendingStudents = db.Users.Where(x => x.CourseId == course.Id).Where(x => x.IsActive == true).ToList();
@@ -89,18 +89,24 @@ namespace LMS2.Controllers
             if (id == null | id == 1)
             {
                 ViewBag.Filter = "Upcoming courses";
-                courses = db.Courses.Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                courses = db.Courses.Where(x => x.IsActive).Where(x => x.EndDate >= today).Where(x => x.StartDate > today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
                 return View(courses);
             }
             else if (id == 2)
             {
                 ViewBag.Filter = "Past courses";
-                courses = db.Courses.Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                courses = db.Courses.Where(x => x.IsActive).Where(x => x.EndDate < today).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+                return View(courses);
+            }
+            else if (id == 4)
+            {
+                ViewBag.Filter = "Inactive courses";
+                courses = db.Courses.Where(x => x.IsActive==false).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
                 return View(courses);
             }
             else
                 ViewBag.Filter = "All courses";
-            courses = db.Courses.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
+            courses = db.Courses.Where(x => x.IsActive).OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.CourseName).ToList();
             return View(courses);
 
         }
