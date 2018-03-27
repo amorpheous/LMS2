@@ -29,7 +29,6 @@ feedback, hantera
 Erik: Auth controllers, kolla så att allt som ska vara låst är låst
 Erik: delete (cascade)
 Erik: Jquery cookies, kan det lösa det?
-Jonas: Schemavy (klickbar på veckor och dagar) visa innevarande vecka som standard
 Jonas: Documents, saknas funktionalitet!!!!!
 Jonas: Åter till create om man vill (om vi inte får till partial views i indexvyn)
 Jonas: Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
@@ -80,7 +79,7 @@ Fredrik: delete files
             if (ViewBag.SchedulePast.Count + ViewBag.ScheduleToday.Count + ViewBag.ScheduleThisWeekFromTomorrow.Count + ViewBag.ScheduleNextWeek.Count + ViewBag.ScheduleAfterNextWeek.Count > 0)
             {
 
-<h2>Schedule</h2>
+                <h2>Schedule</h2>
 
 
                 {
@@ -113,34 +112,34 @@ Fredrik: delete files
 
                         </tr>
                         @{ foreach (var activity in ViewBag.SchedulePast)
-        {
-                    <tr class="border_bottom">
-                        <td style="width:7%">
-                            @activity.StartDate.Date.ToShortDateString()
-                        </td>
-                        <td style="width:8%">
+                            {
+                                <tr class="border_bottom">
+                                    <td style="width:7%">
+                                        @activity.StartDate.Date.ToShortDateString()
+                                    </td>
+                                    <td style="width:8%">
 
-                            @activity.StartDate.ToString("HH:mm")
-                            <text> - </text> @activity.EndDate.ToString("HH:mm")
-                        </td>
-                        <td style="width:8%">
-                            <b>
-                                @activity.ActivityType.ActivityTypeName
-                            </b>
-                        </td>
-                        <td style="width:10%">
-                            @activity.ActivityName
+                                        @activity.StartDate.ToString("HH:mm")
+                                        <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                    </td>
+                                    <td style="width:8%">
+                                        <b>
+                                            @activity.ActivityType.ActivityTypeName
+                                        </b>
+                                    </td>
+                                    <td style="width:10%">
+                                        @activity.ActivityName
 
-                        </td>
-                        <td style="width:10%">
-                            @activity.Module.ModuleName
-                        </td>
-                        <td style="width:50%">
-                            @activity.ActivityInfo
-                        </td>
+                                    </td>
+                                    <td style="width:10%">
+                                        @activity.Module.ModuleName
+                                    </td>
+                                    <td style="width:50%">
+                                        @activity.ActivityInfo
+                                    </td>
 
-                    </tr>
-}
+                                </tr>
+                            }
                         }
                     </table>
                 </details>
@@ -150,7 +149,7 @@ Fredrik: delete files
                     {
 
 
-                        <details  open>
+                        <details open>
                             <summary>Today</summary>
                             <table id="scheduleToday">
                                 <tr class="title">
@@ -173,35 +172,35 @@ Fredrik: delete files
 
                                 </tr>
                                 @{ foreach (var activity in ViewBag.ScheduleToday)
-        {
-                            <tr class="border_bottom">
-                                <td style="width:7%">
-                                    @activity.StartDate.Date.ToShortDateString()
-                                </td>
-                                <td style="width:8%">
+                                    {
+                                        <tr class="border_bottom">
+                                            <td style="width:7%">
+                                                @activity.StartDate.Date.ToShortDateString()
+                                            </td>
+                                            <td style="width:8%">
 
-                                    @activity.StartDate.ToString("HH:mm")
-                                    <text> - </text> @activity.EndDate.ToString("HH:mm")
-                                </td>
-                                <td style="width:8%">
-                                    <b>
-                                        @activity.ActivityType.ActivityTypeName
-                                    </b>
-                                </td>
-                                <td style="width:10%">
-                                    @activity.ActivityName
+                                                @activity.StartDate.ToString("HH:mm")
+                                                <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                            </td>
+                                            <td style="width:8%">
+                                                <b>
+                                                    @activity.ActivityType.ActivityTypeName
+                                                </b>
+                                            </td>
+                                            <td style="width:10%">
+                                                @activity.ActivityName
 
-                                </td>
-                                <td style="width:10%">
-                                    @activity.Module.ModuleName
-                                </td>
-                                <td style="width:50%">
-                                    @activity.ActivityInfo
-                                </td>
+                                            </td>
+                                            <td style="width:10%">
+                                                @activity.Module.ModuleName
+                                            </td>
+                                            <td style="width:50%">
+                                                @activity.ActivityInfo
+                                            </td>
 
 
-                            </tr>
-}
+                                        </tr>
+                                    }
                                 }
                             </table>
                         </details>
@@ -239,34 +238,34 @@ Fredrik: delete files
 
                             </tr>
                             @{ foreach (var activity in ViewBag.ScheduleThisWeekFromTomorrow)
-        {
-                        <tr class="border_bottom">
-                            <td style="width:7%">
-                                @activity.StartDate.Date.ToShortDateString()
-                            </td>
-                            <td style="width:8%">
+                                {
+                                    <tr class="border_bottom">
+                                        <td style="width:7%">
+                                            @activity.StartDate.Date.ToShortDateString()
+                                        </td>
+                                        <td style="width:8%">
 
-                                @activity.StartDate.ToString("HH:mm")
-                                <text> - </text> @activity.EndDate.ToString("HH:mm")
-                            </td>
-                            <td style="width:8%">
-                                <b>
-                                    @activity.ActivityType.ActivityTypeName
-                                </b>
-                            </td>
-                            <td style="width:10%">
-                                @activity.ActivityName
+                                            @activity.StartDate.ToString("HH:mm")
+                                            <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                        </td>
+                                        <td style="width:8%">
+                                            <b>
+                                                @activity.ActivityType.ActivityTypeName
+                                            </b>
+                                        </td>
+                                        <td style="width:10%">
+                                            @activity.ActivityName
 
-                            </td>
-                            <td style="width:10%">
-                                @activity.Module.ModuleName
-                            </td>
-                            <td style="width:50%">
-                                @activity.ActivityInfo
-                            </td>
+                                        </td>
+                                        <td style="width:10%">
+                                            @activity.Module.ModuleName
+                                        </td>
+                                        <td style="width:50%">
+                                            @activity.ActivityInfo
+                                        </td>
 
-                        </tr>
-}
+                                    </tr>
+                                }
                             }
 
                         </table>
@@ -300,34 +299,34 @@ Fredrik: delete files
 
                                     </tr>
                                     @{ foreach (var activity in ViewBag.ScheduleNextWeek)
-        {
-                                <tr class="border_bottom">
-                                    <td style="width:7%">
-                                        @activity.StartDate.Date.ToShortDateString()
-                                    </td>
-                                    <td style="width:8%">
+                                        {
+                                            <tr class="border_bottom">
+                                                <td style="width:7%">
+                                                    @activity.StartDate.Date.ToShortDateString()
+                                                </td>
+                                                <td style="width:8%">
 
-                                        @activity.StartDate.ToString("HH:mm")
-                                        <text> - </text> @activity.EndDate.ToString("HH:mm")
-                                    </td>
-                                    <td style="width:8%">
-                                        <b>
-                                            @activity.ActivityType.ActivityTypeName
-                                        </b>
-                                    </td>
-                                    <td style="width:10%">
-                                        @activity.ActivityName
+                                                    @activity.StartDate.ToString("HH:mm")
+                                                    <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                                </td>
+                                                <td style="width:8%">
+                                                    <b>
+                                                        @activity.ActivityType.ActivityTypeName
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.ActivityName
 
-                                    </td>
-                                    <td style="width:10%">
-                                        @activity.Module.ModuleName
-                                    </td>
-                                    <td style="width:50%">
-                                        @activity.ActivityInfo
-                                    </td>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.Module.ModuleName
+                                                </td>
+                                                <td style="width:50%">
+                                                    @activity.ActivityInfo
+                                                </td>
 
-                                </tr>
-}
+                                            </tr>
+                                        }
                                     }
                                 </table>
                             </details> }
@@ -363,46 +362,48 @@ Fredrik: delete files
 
                                     </tr>
                                     @{ foreach (var activity in ViewBag.ScheduleAfterNextWeek)
-        {
-                                <tr class="border_bottom">
-                                    <td style="width:7%">
-                                        @activity.StartDate.Date.ToShortDateString()
-                                    </td>
-                                    <td style="width:8%">
+                                        {
+                                            <tr class="border_bottom">
+                                                <td style="width:7%">
+                                                    @activity.StartDate.Date.ToShortDateString()
+                                                </td>
+                                                <td style="width:8%">
 
-                                        @activity.StartDate.ToString("HH:mm")
-                                        <text> - </text> @activity.EndDate.ToString("HH:mm")
-                                    </td>
-                                    <td style="width:8%">
-                                        <b>
-                                            @activity.ActivityType.ActivityTypeName
-                                        </b>
-                                    </td>
-                                    <td style="width:10%">
-                                        @activity.ActivityName
+                                                    @activity.StartDate.ToString("HH:mm")
+                                                    <text> - </text> @activity.EndDate.ToString("HH:mm")
+                                                </td>
+                                                <td style="width:8%">
+                                                    <b>
+                                                        @activity.ActivityType.ActivityTypeName
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.ActivityName
 
-                                    </td>
-                                    <td style="width:10%">
-                                        @activity.Module.ModuleName
-                                    </td>
-                                    <td style="width:50%">
-                                        @activity.ActivityInfo
-                                    </td>
+                                                </td>
+                                                <td style="width:10%">
+                                                    @activity.Module.ModuleName
+                                                </td>
+                                                <td style="width:50%">
+                                                    @activity.ActivityInfo
+                                                </td>
 
-                                </tr>
-}
+                                            </tr>
+                                        }
                                     }
                                 </table>
                             </details>
-                                                            }
-                                                        }
+                        }
+                    }
 
-                                                    }
-                                                }
-                                            }
-                                            <br/>
-                                            <h2>Details</h2>
-                                        }
+                }
+            }
+        }
+        <br />
+        <h2>Assignments</h2>
+        <br />
+        <h2>Details</h2>
+    }
 
 
     <table class="table">
