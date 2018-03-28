@@ -303,6 +303,7 @@ namespace LMS2.Controllers
                 }
                 if (User.Identity.GetUserId()==user.Id)
                 {
+                    user.IsActive = true;
                     user.NickName = applicationUser.NickName;
                     user.AdditionalInfo = applicationUser.AdditionalInfo;
                     user.SpecialInfo = applicationUser.SpecialInfo;
