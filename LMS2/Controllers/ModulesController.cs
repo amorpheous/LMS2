@@ -144,7 +144,7 @@ namespace LMS2.Controllers
             foreach (var item in Course.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate))
             {
                 loop2++;
-                if (loop2==loop)
+                if (loop2==loop+1)
                 {
                     firstFreeEndDate= item.StartDate.AddDays(-1);
                     break;
