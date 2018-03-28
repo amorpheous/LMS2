@@ -4,11 +4,19 @@
     ViewBag.Title = "Delete module";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this module?</h3>
+@if (@Model.Activities.Count() + @Model.Files.Count() > 0)
+{<text><h3>
+            Please empty module on activities and files before removing it
+        </h3></text> }
+else
+{
+
+
+<h3>Are you sure you want to delete this module?</h3>}
 <div>
     <hr />
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ModuleName)
@@ -72,18 +80,18 @@
 
         <dd>
             @{int files = 0;
-            int mFiles = 0;
-            int aFiles = 0; }
+                int mFiles = 0;
+                int aFiles = 0; }
             @{files += Model.Files.Count();}
             @{mFiles += Model.Files.Count();}
             @if (@Model.Activities != null)
-        {
-            foreach (var activity in Model.Activities)
             {
-                files += activity.Files.Count();
-                aFiles += activity.Files.Count();
+                foreach (var activity in Model.Activities)
+                {
+                    files += activity.Files.Count();
+                    aFiles += activity.Files.Count();
+                }
             }
-        }
             <text>@files (Modules: @mFiles, Activities: @aFiles)</text>
 
         </dd>
@@ -95,13 +103,16 @@
 
 
     </dl>
+    @if (Model.Activities.Count() + Model.Files.Count() == 0)
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+            </div>
+        }
     }
+    @Html.ActionLink("Back to list", "Index", "Courses")
 </div>

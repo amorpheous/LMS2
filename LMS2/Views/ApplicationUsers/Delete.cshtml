@@ -33,7 +33,14 @@
     {
         @Html.AntiForgeryToken()
 
-if (currentUserId != Model.Id)
+if (Model.Files.Count() > 0)
+{
+        <text>
+            User has uploaded files, cannot be deleted
+        </text>
+
+}
+else if (currentUserId != Model.Id)
 {
         <div class="form-actions">
             <br />
@@ -60,7 +67,7 @@ else
 
 
 }
-        </div>
+</div>
     </div>
 </div>
 

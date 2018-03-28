@@ -7,6 +7,7 @@
 @using Microsoft.AspNet.Identity
 @model IEnumerable<LMS2.Models.Course>
 
+
 <head>
     @if (User.IsInRole("Student"))
     {
@@ -17,19 +18,15 @@
         ViewBag.Title = "Course list";
     }
 </head>
+@{var cBox = "cBox";}
+@{var mBox = "mBox";}
+@{var aBox = "aBox";}
 
 <body>
 
     <pre class="hidden">
-Jquery cookies, kan det lösa det?
 Documents, saknas funktionalitet!!!!!
-Åter till create om man vill (om vi inte får till partial views i indexvyn)
-Partial views för edit, add, delete från indexsidan (hoppas att den inte laddar om då)
-Userlist, search radioknapparna, fixa till så att de funkar
-Userlist, sortering mha jquery
 delete files
-Inactive courses, följdhanteringar (eget filter, samt filtrera bort dem i övrigt)
-kolla deletarna
 </pre>
 
     @if (User.IsInRole("Teacher"))
@@ -59,7 +56,7 @@ kolla deletarna
 </pre>
 
 
-        <div class="usa"></div>
+        <div class="inform"></div>
         <p>
 
         </p>
@@ -143,9 +140,9 @@ kolla deletarna
                     </table>
                 </details>
 
-                {
-                    if (ViewBag.ScheduleToday.Count > 0)
-                    {
+                            {
+                                if (ViewBag.ScheduleToday.Count > 0)
+                                {
 
 
                         <details open>
@@ -205,12 +202,12 @@ kolla deletarna
                                 }
                             </table>
                         </details>
-                    }
-                }
+                                        }
+                                    }
 
 
-                if (ViewBag.ScheduleThisWeekFromTomorrow.Count > 0)
-                {
+                                    if (ViewBag.ScheduleThisWeekFromTomorrow.Count > 0)
+                                    {
 
 
 
@@ -274,9 +271,9 @@ kolla deletarna
                         </table>
                     </details>
 
-                    {
-                        if (ViewBag.ScheduleNextWeek.Count > 0)
-                        {
+                                {
+                                    if (ViewBag.ScheduleNextWeek.Count > 0)
+                                    {
 
 
                             <details>
@@ -335,12 +332,12 @@ kolla deletarna
                                     }
                                 </table>
                             </details> }
-                    }
+                                        }
 
 
-                    {
-                        if (ViewBag.ScheduleAfterNextWeek.Count > 0)
-                        {
+                                        {
+                                            if (ViewBag.ScheduleAfterNextWeek.Count > 0)
+                                            {
 
 
 
@@ -401,20 +398,20 @@ kolla deletarna
                                     }
                                 </table>
                             </details>
-                        }
-                    }
+                                                        }
+                                                    }
 
-                }
-            }
-        }
+                                                }
+                                            }
+                                        }
         <br />
         <h2>Assignments</h2>
         <br />
         <h2>Details</h2>
-    }
+                                        }
 
 
-    <table class="table">
+    <table class="table" id="mainCourseIndexTable">
         <tr>
             <th style="width:30%">
                 Name
@@ -440,12 +437,19 @@ kolla deletarna
                 </div>
             </th>
         </tr>
+        @{var courseAndNumber = "course" + 0;}
+        @{var moduleAndNumber = "module" + 0;}
+        @{var activityAndNumber = "activity" + 0;}
 
         @foreach (var item in Model)
         {
-            <tr class="course">
+            {
+                courseAndNumber = "course" + item.Id;
+            }
+            <tr class="course" id="@courseAndNumber">
                 <td class="coursename">
-                    <input type="checkbox" class="coursenamebox" unchecked /> <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
+                    @{cBox = "cBox" + item.Id;}
+                    <input type="checkbox" class="coursenamebox" id="@cBox" unchecked /> <b class="btn-success" , style="color: black">C</b> @Html.DisplayFor(modelItem => item.CourseName)
                     @if (item.UrgentInfo != null && item.UrgentInfo.Length > 0)
                     {
                         <br />
@@ -462,11 +466,11 @@ kolla deletarna
                 @if (User.IsInRole("Teacher"))
                 {
                     <td>
-<pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })@if (item.IsActive){<text>|</text>if (item.Modules.Count == 0 && item.AttendingStudents.Count == 0 && item.Files.Count == 0){@Html.ActionLink("delete", "Delete", new { id = item.Id })}else{@Html.ActionLink("inactivate", "Inactivate", new { id = item.Id })}}
+<pre>@Html.ActionLink("edit", "Edit", new { id = item.Id })@if (item.IsActive) {<text>|</text>if (item.Modules.Count == 0 && item.AttendingStudents.Count == 0 && item.Files.Count == 0) {@Html.ActionLink("delete", "Delete", new { id = item.Id })} else {@Html.ActionLink("inactivate", "Inactivate", new { id = item.Id })} }
 <text><br />add: </text>@Html.ActionLink("document", "UploadFile", "Upload", new { Id = item.Id + " course" }, null)<text>|</text>@Html.ActionLink("module", "Create", "Modules", new { CourseId = item.Id }, null)<text>|</text>@Html.ActionLink("student", "Register", "Account", new { CourseId = item.Id }, null)
 </pre>
-</td>}
-                
+                    </td>}
+
 
                 <td class="subitem">
                     @if (item.Description != null && item.Description.Length > 0)
@@ -480,8 +484,8 @@ kolla deletarna
                             <summary>
                                 @item.Modules.Count@if (item.Modules.Count == 1)
                                 {<text> module</text>}
-                            else
-                            {<text> modules</text>}
+                                else
+                                {<text> modules</text>}
                             </summary>
                             <small>
                                 @{int loopM = 1;}
@@ -495,7 +499,7 @@ kolla deletarna
                             </small>
 
                         </details>
-                    }
+                                    }
                     @if (item.AttendingStudents != null && item.AttendingStudents.Count > 0)
                     {
                         <details>
@@ -503,8 +507,8 @@ kolla deletarna
                                 @item.AttendingStudents.Count
                                 @if (item.AttendingStudents.Count == 1)
                                 {<text> student</text>}
-                            else
-                            {<text> students</text>}
+                                else
+                                {<text> students</text>}
                             </summary>
 
 
@@ -529,7 +533,7 @@ kolla deletarna
 
 
 
-                    }
+                                    }
 
 
 
@@ -542,23 +546,23 @@ kolla deletarna
                                 @item.Files.Count
                                 @if (item.Files.Count == 1)
                                 {<text> document</text>}
-                            else
-                            {<text> documents</text>}
+                                else
+                                {<text> documents</text>}
                             </summary>
 
 
                             <small>
                                 @{ int loop = 1; }
                                 @foreach (var item10 in item.Files.OrderByDescending(x => x.TimeStamp).ToList())
-                                {
+    {
 
-                                    @loop<text>.</text> @Html.ActionLink(item10.FileName, "View", "Upload", new { id = item10.Id }, null) <text>  </text>@item10.Description <br />
-                                    { loop = loop + 1; }
-                                }
+                            @loop<text>.</text> @Html.ActionLink(item10.FileName, "View", "Upload", new { id = item10.Id }, null) <text>  </text>@item10.Description<text>|</text> @Html.ActionLink("delete", "Delete", "Upload", new { id = item10.Id }, null) <br />
+{ loop = loop + 1; }
+}
 
                             </small>
                         </details>
-                    }
+                                    }
 
 
 
@@ -566,11 +570,17 @@ kolla deletarna
 
             </tr>
 
-            foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
-            {
-                <tr class="module hidden">
+                                    foreach (var item2 in item.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate).ThenBy(x => x.ModuleName))
+                                    {
+                                        {
+                                            moduleAndNumber = "module" + item2.Id;
+                                        }
+
+                <tr class="module hidden" id="@moduleAndNumber">
                     <td class="modulename">
-                        <text>&#160; &#160; &#160;</text><input class="modulenamebox" type="checkbox" unchecked /> <b class="btn-danger" , style="color: black">M</b> @Html.DisplayFor(modelItem => item2.ModuleName)
+                        @{mBox = "mBox" + item2.Id;}
+
+                        <text>&#160; &#160; &#160;</text><input class="modulenamebox" id="@mBox" type="checkbox" unchecked /> <b class="btn-danger" , style="color: black">M</b> @Html.DisplayFor(modelItem => item2.ModuleName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item2.StartDate)
@@ -597,8 +607,8 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item2.Id + 
                                 <summary>
                                     @item2.Activities.Count@if (item2.Activities.Count == 1)
                                     {<text> activity</text>}
-                                else
-                                {<text> activities</text>}
+                                    else
+                                    {<text> activities</text>}
                                 </summary>
                                 @{int loopM = 1;}
 
@@ -608,7 +618,7 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item2.Id + 
                                     <small>@item9.StartDate.ToShortDateString() (@item9.StartDate.ToShortTimeString()) - @item9.EndDate.ToShortDateString() (@item9.EndDate.ToShortTimeString())</small>
                                     <br />}
                             </details>
-                        }
+                                    }
 
                         @if (item2.Files != null && item2.Files.Count > 0)
                         {
@@ -617,33 +627,40 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item2.Id + 
                                     @item2.Files.Count
                                     @if (item2.Files.Count == 1)
                                     {<text> document</text>}
-                                else
-                                {<text> documents</text>}
+                                    else
+                                    {<text> documents</text>}
                                 </summary>
 
 
                                 <small>
-                                    @{ int loop = 1; }
+                                    @{ int loop3 = 1;
+        var text = "";}
                                     @foreach (var item11 in item2.Files.OrderBy(x => x.Description).ToList())
-                                    {
-
-                                        @loop<text>.</text> @Html.ActionLink(item11.Description, "View", "Upload", new { id = item11.Id }, null) <br />
-                                        { loop = loop + 1; }
+    {
+        if (item11.Description == null) { text = item11.FileType + " " + item11.Id; } else { text = item11.FileType + " " + item11.Id + " (" + item11.Description + ")"; }
+                                @loop3<text>.</text> @Html.ActionLink(item11.FileName, "View", "Upload", new { id = item11.Id }, null) @item11.Description<text>|</text>@Html.ActionLink("delete", "Delete", "Upload", new { id = item11.Id },null) <br />
+                                    { loop3 = loop3 + 1; }
                                     }
 
                                 </small>
                             </details>
-                        }
+                                        }
                     </td>
 
 
 
                 </tr>
-                foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).OrderBy(x => x.EndDate).ThenBy(x => x.ActivityName))
-                {
-                    <tr class="activity hidden">
+                                        foreach (var item3 in item2.Activities.OrderBy(x => x.StartDate).OrderBy(x => x.EndDate).ThenBy(x => x.ActivityName))
+                                        {
+                                            {
+                                                activityAndNumber = "activity" + item3.Id;
+                                            }
+
+                    <tr class="activity hidden" id="@activityAndNumber">
                         <td class="activityname">
-                            <text>&#160; &#160; &#160;</text><text>&#160; &#160; &#160;</text><input class="activitynamebox" type="checkbox" unchecked /> <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName): @Html.DisplayFor(modelItem => item3.ActivityName)
+                            @{aBox = "aBox" + item3.Id;}
+
+                            <text>&#160; &#160; &#160;</text><text>&#160; &#160; &#160;</text><input class="activitynamebox" id="@aBox" type="checkbox" unchecked /> <b class="btn-primary" style="color: black">A</b> @Html.DisplayFor(modelItem => item3.ActivityType.ActivityTypeName): @Html.DisplayFor(modelItem => item3.ActivityName)
                         </td>
                         <td>
                             @item3.StartDate.ToShortDateString()<br />
@@ -675,33 +692,33 @@ add: @Html.ActionLink("document", "UploadFile", "Upload", new { Id = item3.Id + 
                                         @item3.Files.Count
                                         @if (item3.Files.Count == 1)
                                         {<text> document</text>}
-                                    else
-                                    {<text> documents</text>}
+                                        else
+                                        {<text> documents</text>}
                                     </summary>
 
 
                                     <small>
                                         @{ int loop = 1; }
                                         @foreach (var item12 in item3.Files.OrderBy(x => x.Description).ToList())
-                                        {
+    {
 
-                                            @loop<text>.</text> @Html.ActionLink(item12.Description, "View", "Upload", new { id = item12.Id }, null) <br />
-                                            { loop = loop + 1; }
-                                        }
+                                    @loop<text>.</text> @Html.ActionLink(item12.FileName, "View", "Upload", new { id = item12.Id }, null) @item12.Description<text>|</text> @Html.ActionLink("delete", "Delete", "Upload", new { id = item12.Id }, null) <br />
+{ loop = loop + 1; }
+}
 
                                     </small>
                                 </details>
-                            }
+                                            }
 
                         </td>
                     </tr>
 
-                }
+                                                    }
 
-            }
+                                                }
 
 
-        }
+                                            }
 
 
     </table>

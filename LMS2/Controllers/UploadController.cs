@@ -42,6 +42,7 @@ namespace LMS2.Controllers
             var ViewModel = new Models.File {};
 
             return View(ViewModel);
+            
         }
 
         [HttpPost]
@@ -110,7 +111,7 @@ namespace LMS2.Controllers
                 db.Files.Add(upload);
                 db.SaveChanges();
                 ViewBag.Message = "File Uploaded Successfully!";
-                return View();
+                return RedirectToAction("Index", "Courses", null);
             }
             catch
             {
@@ -147,7 +148,7 @@ namespace LMS2.Controllers
             Models.File File = db.Files.Find(Id);
             db.Files.Remove(File);
             db.SaveChanges();
-            return View("index", "Courses");
+            return RedirectToAction("Index", "Courses", null); 
         }
 
         protected override void Dispose(bool disposing)

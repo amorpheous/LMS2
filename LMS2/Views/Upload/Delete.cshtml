@@ -1,0 +1,42 @@
+﻿@model LMS2.Models.File
+
+@{ViewBag.Title = "Delete file";}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Delete", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+<div>
+    <br />
+
+    <div>File: @Html.TextBoxFor(File => File.Id) (@Html.TextBoxFor(File => File.Description))</div>
+        <div>Course: @Html.TextBoxFor(x => x.CourseId)</div>
+        <div>Module: @Html.TextBoxFor(x => x.ModuleId)</div>
+        <div>Activity: @Html.TextBoxFor(x => x.ActivityId)</div>
+        <div>User: @Html.TextBoxFor(x => x.Id)</div>
+
+
+
+        <br />
+        <br />
+
+        <input class="btn btn-danger" type="submit" value="Delete file" />
+
+    </div>
+
+    <br />
+    @Html.ActionLink("Back to List", "Index", "Courses")<span></span>
+
+    @*<div class="form-group">
+            @Html.Label("Upload File", new { @class = "control-label col-md-2" })
+            @Html.TextBox("file", "", new { type = "file" }) <br />
+            @Html.DropDownListFor(model => model.FileTypeId, new SelectList(Model.FileTypes, "Id", "FileTypeName"), "Choose a file type", htmlAttributes: new { @class = "form-control" })
+            <div class="col-md-10">
+                <input type="file" name="upload" />
+            </div>
+        </div>*@
+
+}
+@ViewBag.Message

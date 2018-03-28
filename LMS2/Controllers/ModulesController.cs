@@ -126,18 +126,20 @@ namespace LMS2.Controllers
             var previousEndDate = courseStartDate.AddDays(-1);
             var firstFreeEndDate = courseEndDate;
             int loop = 0;
+            List<string> moduleDates = new List<string>();
             foreach (var item in Course.Modules.OrderBy(x=>x.StartDate).ThenBy(x=>x.EndDate))
             {
                 loop++;
                 if (item.StartDate > firstFreeStartDate)
                 {
+                    moduleDates.Add(item.StartDate.ToShortDateString() + " - " + item.EndDate.ToShortDateString() + " " + item.ModuleName);
                     break;
                 }
                 else {
                     firstFreeStartDate = item.EndDate.AddDays(1);
                 }
             }
-
+            ViewBag.moduleDates = moduleDates;
             int loop2 = 0;
             foreach (var item in Course.Modules.OrderBy(x => x.StartDate).ThenBy(x => x.EndDate))
             {

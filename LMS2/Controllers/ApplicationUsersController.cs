@@ -22,6 +22,7 @@ namespace LMS2.Controllers
         [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(int? id, string searchBy, string search, string sortOrder)
         {
+
             ViewBag.Filter = "";
 
             List<ApplicationUser> userList = new List<ApplicationUser>();
