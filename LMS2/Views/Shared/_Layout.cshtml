@@ -54,17 +54,15 @@
     {
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Admin
+                            Other
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
 
-                            <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
+                            <li>@Html.ActionLink("Teacher/student list", "Index", "ApplicationUsers")</li>
                             <li>@Html.ActionLink("Add teacher", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                             <li class="divider"></li>
-                            <li>@Html.ActionLink("Teacher/student list", "Index", "ApplicationUsers")</li>
-                            <li class="divider"></li>
-                            <li>@Html.ActionLink("Edit homepage", "EditUserHomePage", "ApplicationUsers", new { id = User.Identity.GetUserId() }, null)</li>
+                            <li>@Html.ActionLink("Activity types", "Index", "ActivityTypes")</li>
 
 
                         </ul>

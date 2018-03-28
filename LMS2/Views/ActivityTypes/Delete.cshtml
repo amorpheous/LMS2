@@ -54,7 +54,10 @@
             <br />
             <br />
             <p>This activity type is currently used in these activites:</p>
-            <pre>@{ var iterator = 0;}@{ foreach (var activity in ViewBag.activityList){iterator++;<text>@iterator</text><text>.</text> <text><b>Course: </b></text>@activity.Module.Course.CourseName<text><b> Module: </b></text>@activity.Module.ModuleName<text><b> Activity: </b></text>@activity.ActivityName <text>  </text>@Html.ActionLink("Edit", "Edit", "Activities", new { id = activity.Id }, null)}<br />}</pre>
+            <pre>@{ var iterator = 0;}@{ foreach (var activity in ViewBag.activityList){iterator++;<text>@iterator</text><text>.</text> <text><b>Course: </b></text>@activity.Module.Course.CourseName<text><b> Module: </b></text>@activity.Module.ModuleName<text><b> Activity: </b></text>@activity.ActivityName <text>  </text>@Html.ActionLink("Edit", "Edit", "Activities", new { id = activity.Id }, null)<br/>}
+
+            }
+</pre>
 
         </div>
     }
